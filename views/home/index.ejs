@@ -1,91 +1,216 @@
-<!-- Default home page -->
-<link type="text/css" href='http://sailsjs.org/styles/fonts.css' rel='stylesheet'/>
-<style>
-    /* Styles included inline since you'll probably be deleting this page anyway */
-    html,body{text-align:left;font-size:1em}html,body,img,form,textarea,input,fieldset,div,p,div,ul,li,ol,dl,dt,dd,h1,h2,h3,h4,h5,h6,pre,code{margin:0;padding:0}ul,li{list-style:none}img{display:block}a img{border:0}a{text-decoration:none;font-weight:normal;font-family:inherit}*:active,*:focus{outline:0;-moz-outline-style:none}h1,h2,h3,h4,h5,h6{font-weight:normal}div.clear{clear:both}.clearfix:after{clear:both;content:".";display:block;font-size:0;height:0;line-height:0;visibility:hidden}body{font-family:"Open Sans",Arial,sans-serif;font-weight:300;font-size:15px}h1{color:#0c8da0;font-size:2em;font-weight:300}h2{font-size:1.5em;font-weight:300;margin-top:4%}h3{font-size:1.25em;font-weight:300;font-style:italic;margin-bottom:5px}h4{color:#0c8da0;font-weight:300;font-size:1.5em}span{font-weight:700}ul{margin-top:5%;margin-bottom:5%}a{text-decoration:none;color:inherit}p{margin-bottom:7px;font-size:.9em}.container{max-width:997px;margin:0 auto;padding:0 4%}.sprite{font-weight:normal;background:url(http://sailsjs.org/images/newapp.sprite.png) no-repeat}.top-bar{position:relative;padding-top:10px;background-color:#001c20;height:55px}.main{float:left;max-width:610px;height:555px;margin-top:50px}.steps{height:250px}.getting-started p{ margin-bottom: 30px; line-height: 26px; }.getting-started div{float:left;width:540px}.getting-started li{clear:both;height:60px;margin-top:20px;margin-bottom:20px}.getting-started .sprite{margin-left:10px;padding-left:60px;height:42px;width:0}.getting-started .one{background-position:0 0}.getting-started .two{background-position:0 -42px}.getting-started .three{background-position:0 -83px}.delete{margin-top:5%;height:52px;background:#e3f0f1;border:1px solid #118798;color:#118798;clear:both}.delete .sprite{margin-top:10px;margin-bottom:10px;margin-left:9%;padding-left:42px;padding-top:7px;height:25px;background-position:0 -126px}.delete a{color:#0c8da0;font-weight:bold;padding-left:1%}.side-bar{max-width:327px;height:555px;float:left;border-left:1px solid #0c8da0;margin-left:25px;margin-top:50px;padding-left:25px}.side-bar ul{margin-bottom:10%}.side-bar ul li{margin-top:5px;margin-bottom:.25em}.side-bar ul li a{margin-bottom:.25em}.side-bar .sprite{padding-left:25px}.side-bar .single_page{background-position:0 -199px}.side-bar .traditional{background-position:0 -219px}.side-bar .realtime{background-position:0 -179px}.side-bar .api{background-position:0 -158px}.boxy{font-family:Courier,"Courier New",sans-serif;background-color:#e4edec;border:1px solid #d0d6d6;padding-left:5px;padding-right:5px;padding-top:2px;padding-bottom:2px;font-weight:100}.sixteen{margin-right:10px}.nineteen{margin-right:7px}
-</style>
-<!--[if IE 7]>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>tuktuk - Application Example</title>
+    <!-- Mobile Specific Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="/styles/tuktuk.css">
+    <link rel="stylesheet" href="/styles/tuktuk.theme.mock.css">
+    <!-- TUKTUK.WIDGETS -->
+    <link rel="stylesheet" href="/styles/tuktuk.icons.css">
     <style>
-    .getting-started li{overflow:visible;clear:both}.delete{width:690px}
+        aside > header .logo {
+            margin-top: 10px;
+            max-height: 30px; }
+
+        aside footer img {
+          height: 16px;
+          position: relative;
+          top: 5px;
+          left: 2px; }
+
+        .thumb {
+            height: 96px;
+            margin-bottom: 2.5em;
+            text-align: center;
+            line-height: 96px;
+        }
+        .column_4.thumb {
+            height: 220px;
+            line-height: 220px;
+        }
     </style>
-<![endif]-->
+</head>
+<body data-tuktuk="boxes">
+    <aside id="menu" class="absolute bck light column_3">
+        <header class="bck dark">
+            <div class="session on-left">
+                <strong>logged in as <a href="#" class="color default">soyjavi</a></strong>
+            </div>
+            <a href="#" data-box="close" class="on-right text big icon remove color white"></a>
+        </header>
+        <article class="bck light scroll">
+            <img src="http://cdn.tapquo.com/photos/javi_color.jpg" class="responsive padding-left padding-top padding-right"/>
 
-<div class="top-bar">
-    <div class="container clearfix">
-        <img class="logo" src="http://sailsjs.org/images/sails-logo.jpg" />
-    </div>
-</div>
+            <div class="margin-left margin-right">
+                <h4 class="text bold color theme inline">Javi Jiménez</h4>
+                <span class="margin-left tag bck color inline text bold">pro</span>
+                <a href="#" class="block"><span class="icon twitter"></span> soyjavi</a>
+            </div>
 
-<div class="container clearfix">
-    <div class="main">
-        <h1 id="main-title">Welcome</h1>
-        <h2>Getting started</h2>
-        <p>Don't worry, we've got your back.</p>
-        <div class="steps">
-            <ul class="getting-started">
-                <li>
-                    <div class="sprite one"></div>
-                    <div>
-                        <h3>Get your API going.</h3>
-                        <p>
-                            Run <span class="boxy">sails generate foo</span>.  This will create a model <span class="boxy">Foo</span> and controller <span class="boxy">FooController</span>
-                        </p>
-                    </div>
-                </li>
-                <li>
-                    <div class="sprite two"></div>
-                    <div>
-                        <h3>
-                            Lift your app.
-                        </h3>
-                        <p>
-                            Run <span class="boxy">sails lift</span> to start up your app.  If you visit <span class="boxy">http://localhost:1337/foo</span> in your browser, you'll see a socket.io-compatible REST API was generated for your 'Foo' model.
-                        </p>
-                    </div>
-                </li>
-                <li>
-                    <div class="sprite three"></div>
-                    <div>
-                        <h3>
-                            Dive in and start building.
-                        </h3>
-                        <p>From here, you can modify your models, create custom controller methods as Express middleware, and create custom routes (routes are set up in <span class="boxy">config/routes.js</span>).  Visit <a href="http://sailsjs.org">the Sails website</a> for more information on next steps.</p>
-                    </div>
-                </li>
+            <hr/>
+            <div class="margin" data-tuktuk="buttons">
+                <button data-tuktuk-modal="modal" class="theme" data-tip="Click to view a modal window">Modal</button>
+                <button data-tuktuk-modal="modal-right" data-tip="Click to view a side window" class="">Aside Right</button>
+            </div>
+            <hr>
+            <ul class="margin" data-tuktuk="totals">
+                <li><strong>3609</strong><small>followers</small></li>
+                <li><strong>138</strong><small>following</small></li>
+                <li><strong>14</strong><small>lists</small></li>
             </ul>
-        </div>
-        <div class="delete">
-            <div class="sprite">You're looking at: <span class="boxy">views/home/index.ejs</span></div>
-        </div>
+            <hr>
+            <div class="margin">
+                <strong class="text big normal block ">About <a href="#">Orman Clark</a></strong>
+                <div class="display block  text justify small">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</div>
+            </div>
+            <nav data-tuktuk="menu" class="text bold">
+                <a href="#" class="active"><span class="icon user"></span>Shots<small>(100)</small></a>
+                <a href="#"><span class="icon heart"></span>Trending<small>(3)</small></a>
+                <a href="#"><span class="icon group"></span>Following<small>(192)</small></a>
+                <a href="#"><span class="icon star"></span>Debuts<small>(160)</small></a>
+            </nav>
+        </article>
+    </aside>
+
+    <aside class="column_3">
+        <header class="bck theme text center ">
+            <img src="../images/logo-white.png" class="logo on-left"/>
+            <a href="#" class="on-right text big icon cog" data-tuktuk-box="menu"></a>
+        </header>
+        <article class="bck dark scroll">
+            <img src="http://cdn.tapquo.com/photos/javi_color.jpg" class="responsive padding-left padding-top padding-right"/>
+
+            <div class="margin-left margin-right">
+                <h4 class="text bold color theme inline">Javi Jiménez</h4>
+                <span class="margin-left tag bck theme inline text bold">pro</span>
+                <a href="#" class="block"><span class="icon twitter"></span> soyjavi</a>
+            </div>
+
+            <hr/>
+            <div class="margin" data-tuktuk="buttons">
+                <button data-tuktuk-modal="modal" class="theme" data-tip="Click to view a modal window">Modal</button>
+                <button data-tuktuk-modal="modal-right" data-tip="Click to view a side window" class="">Aside Right</button>
+            </div>
+            <hr>
+            <ul class="margin" data-tuktuk="totals">
+                <li><strong>3609</strong><small>followers</small></li>
+                <li><strong>138</strong><small>following</small></li>
+                <li><strong>14</strong><small>lists</small></li>
+            </ul>
+            <hr>
+            <div class="margin">
+                <strong class="text big normal block ">About <a href="#">Orman Clark</a></strong>
+                <div class="display block  text justify small">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</div>
+            </div>
+            <nav data-tuktuk="menu" class="text bold">
+                <a href="#" class="active"><span class="icon user"></span>Shots<small>(100)</small></a>
+                <a href="#"><span class="icon heart"></span>Trending<small>(3)</small></a>
+                <a href="#"><span class="icon group"></span>Following<small>(192)</small></a>
+                <a href="#"><span class="icon star"></span>Debuts<small>(160)</small></a>
+            </nav>
+        </article>
+        <footer class="bck dark text center">
+            Handcrafted by <a href="http://tapquo.com" class="display inline"><img src="http://cdn.tapquo.com/images/logo_footer.png"/></a>
+        </footer>
+    </aside>
+
+
+    <section>
+        <header style="background:#ECF0F1;">
+            <h3 class="on-left text thin">Web Application <span class="tag bck theme">NEW!</span></h3>
+            <nav class="on-right">
+                <button class="tiny">tiny</button>
+                <button class="small success">small</button>
+                <button class="alert">normal</button>
+            </nav>
+        </header>
+        <article class="padding scroll">
+            <div class="margin-bottom">
+                <h4 class="text book inline"><span class="icon star color theme "></span> Featured</h4>
+                <nav class="inline on-right">
+                    <a href="#" class="button small"><span class="icon search"></span>Search</a>
+                    <a href="#" class="button theme small"><span class="icon envelope"></span>Send</a>
+                </nav>
+            </div>
+            <div class="inline">
+                <div class="column_4 thumb bck light">thumb</div>
+                <div class="column_4 thumb bck light">thumb</div>
+            </div>
+
+            <div class="margin-bottom">
+                <h4 class="text book inline"><span class="icon group color theme"></span> Friends</h4>
+                <nav class="inline on-right">
+                    <a href="#" class="button  small"><span class="icon search"></span>Search</a>
+                </nav>
+            </div>
+            <div class="inline">
+                <div class="column_2 thumb bck light">thumb</div>
+                <div class="column_2 thumb bck light">thumb</div>
+                <div class="column_2 thumb bck light">thumb</div>
+                <div class="column_2 thumb bck light">thumb</div>
+                <div class="column_2 thumb bck light">thumb</div>
+                <div class="column_2 thumb bck light">thumb</div>
+                <div class="column_2 thumb bck light">thumb</div>
+                <div class="column_2 thumb bck light">thumb</div>
+                <div class="column_2 thumb bck light">thumb</div>
+                <div class="column_2 thumb bck light">thumb</div>
+                <div class="column_2 thumb bck light">thumb</div>
+            </div>
+        </article>
+
+        <footer class="bck light">
+            <nav class="on-left text bold" data-tuktuk="menu">
+                <a href="#" class="active">Shots<small>(100)</small></a>
+                <a href="#">Projects<small>(3)</small></a>
+                <a href="#">Likes<small>(192)</small></a>
+                <a href="#">Tags<small>(160)</small></a>
+            </nav>
+
+            <nav class="on-right">
+                <button class="tiny">tiny</button>
+                <button class="small success">small</button>
+                <button class="alert">normal</button>
+            </nav>
+        </footer>
+    </section>
+
+    <div id="modal" data-tuktuk="modal" class="column_5">
+        <header>
+            <h4 class="text book inline">Normal window</h4>
+            <button data-modal="close" class="transparent small on-right inline icon remove"></button>
+        </header>
+        <article>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum assumenda aperiam nobis quam earum nihil veritatis modi possimus blanditiis perferendis obcaecati voluptatibus fuga eaque ad et atque nostrum porro expedita!
+        </article>
     </div>
-    <div class="side-bar">
-        <h4 id="new">
-            New to Sails?
-        </h4>
-        <ul>
-            <li>
-                <a href="http://sailsjs.org">Visit sailsjs.org</a>
-            </li>
-            <li>
-                <a href="http://sailsjs.org/#!documentation">Documentation</a>
-            </li>
-        </ul>
-        <h4>
-            Next Steps
-        </h4>
-        <ul>
-            <li class="sprite single_page">
-                <a target="_blank" href="http://sailsjs.org">Build a single page app</a>
-            </li>
-            <li class="sprite traditional">
-                <a target="_blank" href="http://sailsjs.org">Build a traditional webapp</a>
-            </li>
-            <li class="sprite realtime">
-                <a target="_blank" href="http://sailsjs.org">Build a realtime app</a>
-            </li>
-            <li class="sprite api">
-                <a target="_blank" href="http://sailsjs.org">Build an API</a>
-            </li>
-        </ul>
+
+    <div id="modal-right" data-tuktuk="modal" class="side column_5">
+        <header>
+            <h4 class="inline text book">Side window.</h4>
+            <button data-modal="close" class="transparent small on-right inline icon remove"></button>
+        </header>
+        <article class="form">
+            <label>example of input</label>
+            <input type="text" value="text" />
+            <input type="text" class="large" value="text" />
+
+            <label>Example of textarea</label>
+            <textarea>textarea</textarea>
+            <textarea class="large">textarea</textarea>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt quos dolorum minus fugiat rem similique velit aperiam est sequi neque nulla tenetur minima autem facilis temporibus quaerat consectetur impedit praesentium.
+        </article>
+        <footer>
+            <button data-modal="close">Save</button>
+        </footer>
     </div>
-</div>
+
+    <script src="/js/jquery-1.9.1.min.js"></script>
+    <script src="/js/tuktuk.js"></script>
+    <script>
+        TukTuk.Modal.loading();
+        setTimeout( TukTuk.Modal.hide, 1000);
+    </script>
+</body> 
+</html>
