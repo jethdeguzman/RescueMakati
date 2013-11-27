@@ -1,0 +1,2 @@
+# rescue
+### a Sails application
