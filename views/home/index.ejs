@@ -30,6 +30,16 @@
             height: 220px;
             line-height: 220px;
         }
+        #map-canvas {
+          height: 577px;
+          width:100%;
+          margin: 0px;
+          padding: 0px
+        }
+        .alert-title{
+          
+          margin-bottom: -20px;
+        }     
     </style>
 </head>
 <body data-tuktuk="boxes">
@@ -85,9 +95,9 @@
             <!-- img src="../images/logo-white.png" class="logo on-left"/> -->
             
         </header>
-        <!-- <article class="bck light">
-            
-        </article> -->
+        <header class="bck dark text center ">
+            <button class="normal" data-tuktuk-box="menu"><span class="icon eye-open"></span> View All Records</button>
+        </header>
         <header class="bck dark">
 
                 <h5 class="text normal align center"><span class="icon bell"></span> Incoming Alerts</h5>
@@ -159,37 +169,6 @@
             </ul>
         </article>
        
-              
-            <!-- <img src="http://cdn.tapquo.com/photos/javi_color.jpg" class="responsive padding-left padding-top padding-right"/>
-
-            <div class="margin-left margin-right">
-                <h4 class="text bold color theme inline">Javi Jiménez</h4>
-                <span class="margin-left tag bck theme inline text bold">pro</span>
-                <a href="#" class="block"><span class="icon twitter"></span> soyjavi</a>
-            </div>
-
-            <hr/>
-            <div class="margin" data-tuktuk="buttons">
-                <button data-tuktuk-modal="modal" class="theme" data-tip="Click to view a modal window">Modal</button>
-                <button data-tuktuk-modal="modal-right" data-tip="Click to view a side window" class="">Aside Right</button>
-            </div>
-            <hr>
-            <ul class="margin" data-tuktuk="totals">
-                <li><strong>3609</strong><small>followers</small></li>
-                <li><strong>138</strong><small>following</small></li>
-                <li><strong>14</strong><small>lists</small></li>
-            </ul>
-            <hr>
-            <div class="margin">
-                <strong class="text big normal block ">About <a href="#">Orman Clark</a></strong>
-                <div class="display block  text justify small">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</div>
-            </div>
-            <nav data-tuktuk="menu" class="text bold">
-                <a href="#" class="active"><span class="icon user"></span>Shots<small>(100)</small></a>
-                <a href="#"><span class="icon heart"></span>Trending<small>(3)</small></a>
-                <a href="#"><span class="icon group"></span>Following<small>(192)</small></a>
-                <a href="#"><span class="icon star"></span>Debuts<small>(160)</small></a>
-            </nav> -->
         
 
 
@@ -211,8 +190,8 @@
                 <button class="tiny secondary"><span class="icon signout"></span> Logout</button>
             </nav>
         </header> 
-        <article class="padding ">
-            
+        <article id="map-wrapper"  class="">
+             <div id="map-canvas"></div>
         </article>
 
         <footer class="bck light">
@@ -223,9 +202,7 @@
                 <a href="#">Decline<small>(160)</small></a>
             </nav>
 
-            <nav class="on-right">
-                <button class="normal" data-tuktuk-box="menu"><span class="icon eye-open"></span> View All Records</button>
-            </nav> 
+            
         </footer>
     </section>
 
@@ -260,12 +237,42 @@
             <button data-modal="close">Save</button>
         </footer>
     </div>
-
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script src="/js/jquery-2.0.0.min.js"></script>
     <script src="/js/tuktuk.js"></script>
     <script>
         TukTuk.Modal.loading();
         setTimeout( TukTuk.Modal.hide, 1000);
+    </script>
+    <script>
+        jQuery(function($){
+            var mapHeight = $("#map-wrapper").height();
+            $("#map-canvas").css({
+                height : mapHeight
+            });
+            $(window).resize(function(){
+                var mapHeight = $("#map-wrapper").height();
+                $("#map-canvas").css({
+                    height : mapHeight
+                });
+                initialize();
+            });
+        });
+    
+    // var map;
+    function initialize() {
+    // alert("asd");
+      var mapOptions = {
+        zoom: 14,
+        center: new google.maps.LatLng(14.558496, 121.023819),
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      map = new google.maps.Map(document.getElementById('map-canvas'),
+          mapOptions);
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+
     </script>
 </body> 
 </html>
