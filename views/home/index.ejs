@@ -33,6 +33,9 @@
     </style>
 </head>
 <body data-tuktuk="boxes">
+    <!--Side Bar -->
+
+    <!-- Hidden SideBar -->
     <aside id="menu" class="absolute bck light column_3">
         <header class="bck dark">
             <div class="session on-left">
@@ -74,13 +77,90 @@
         </article>
     </aside>
 
+
+    <!--Shown Side Bar -->
     <aside class="column_3">
-        <header class="bck theme text center ">
-            <img src="../images/logo-white.png" class="logo on-left"/>
-            <a href="#" class="on-right text big icon cog" data-tuktuk-box="menu"></a>
+        <header class="bck color text center ">
+            <h3 class="color white"><strong>Rescue</strong> Makati </h3>
+            <!-- img src="../images/logo-white.png" class="logo on-left"/> -->
+            
         </header>
-        <article class="bck dark scroll">
-            <img src="http://cdn.tapquo.com/photos/javi_color.jpg" class="responsive padding-left padding-top padding-right"/>
+        <!-- <article class="bck light">
+            
+        </article> -->
+        <header class="bck dark">
+
+                <h5 class="text normal align center"><span class="icon bell"></span> Incoming Alerts</h5>
+                
+        </header>
+        <article class="bck dark scroll" style="height:-30px;">
+            
+            <ul class="margin" style="list-style:none;">
+                <li>
+                    <strong class="color theme text bold" style="font-size:25px;"><span class="icon ambulance "></span> Ambulance</strong><br>
+                    <small>Status: <span>New</span></small>
+                    <br>
+                    <small class="color white text normal" style="text-indent:10px;"><span class="icon info-sign"></span> Jethro De Guzman, 21</small><br>
+                    <small class="color white text normal" style="text-indent:10px;"><span class="icon phone"></span> 09228239751</small><br>
+                    <small class="color white text normal" style="text-indent:10px;"><span class="icon home"></span>12 A Maligaya St. San Jose Manila Philippines</small><br>
+                    <small class="color white text normal" style="text-indent:10px;"><span class="icon calendar"></span> 2013-11-13 / 1:00:00 </small><br>
+                    <div data-tuktuk="buttons">
+                        <button class="alert tiny" style="margin-top:20px;"> Decline</button> 
+                        <button class="tiny success" style="margin-top:20px;"> Respond</button> 
+                        <button class="secondary tiny" style="margin-top:20px;">View</button>
+                    </div>
+                    <hr>
+                </li>
+                
+
+                <li>
+                    <strong class="color theme text bold" style="font-size:25px;"><span class="icon ambulance "></span> Ambulance</strong><br>
+                    <small>Status: <span>On Process</span></small>
+                    <br>
+                    <small class="color white text normal" style="text-indent:10px;"><span class="icon info-sign"></span> Jethro De Guzman, 21</small><br>
+                    <small class="color white text normal" style="text-indent:10px;"><span class="icon phone"></span> 09228239751</small><br>
+                    <small class="color white text normal" style="text-indent:10px;"><span class="icon home"></span>12 A Maligaya St. San Jose Manila Philippines</small><br>
+                    <small class="color white text normal" style="text-indent:10px;"><span class="icon calendar"></span> 2013-11-13 / 1:00:00 </small><br>
+                    <div data-tuktuk="buttons">
+                        <button class="alert tiny" style="margin-top:20px;">Failed</button> 
+                        <button class="tiny success" style="margin-top:20px;">Successful</button> 
+                        <button class="secondary tiny" style="margin-top:20px;">View</button>
+                    </div>
+                    <hr>
+                </li>
+
+                <li>
+                    <strong class="color theme text bold" style="font-size:25px;"><span class="icon fighter-jet"></span> Police</strong><br><br>
+                    <small class="color white text normal" style="text-indent:10px;"><span class="icon info-sign"></span> Jethro De Guzman, 21</small><br>
+                    <small class="color white text normal" style="text-indent:10px;"><span class="icon phone"></span> 09228239751</small><br>
+                    <small class="color white text normal" style="text-indent:10px;"><span class="icon home"></span>12 A Maligaya St. San Jose Manila Philippines</small><br>
+                    <small class="color white text normal" style="text-indent:10px;"><span class="icon calendar"></span> 2013-11-13 / 1:00:00 </small><br>
+                    <div data-tuktuk="buttons">
+                        <button class="alert tiny" style="margin-top:20px;"> Decline</button> 
+                        <button class="tiny success" style="margin-top:20px;"> Respond</button> 
+                        <button class="secondary tiny" style="margin-top:20px;">View</button>
+                    </div>
+                    <hr>
+                </li>
+
+                <li>
+                    <strong class="color theme text bold" style="font-size:25px;"><span class="icon fire"></span> Fire truck</strong><br><br>
+                    <small class="color white text normal" style="text-indent:10px;"><span class="icon info-sign"></span> Jethro De Guzman, 21</small><br>
+                    <small class="color white text normal" style="text-indent:10px;"><span class="icon phone"></span> 09228239751</small><br>
+                    <small class="color white text normal" style="text-indent:10px;"><span class="icon home"></span>12 A Maligaya St. San Jose Manila Philippines</small><br>
+                    <small class="color white text normal" style="text-indent:10px;"><span class="icon calendar"></span> 2013-11-13 / 1:00:00 </small><br>
+                    <div data-tuktuk="buttons">
+                        <button class="alert tiny" style="margin-top:20px;"> Decline</button> 
+                        <button class="tiny success" style="margin-top:20px;"> Respond</button> 
+                        <button class="secondary tiny" style="margin-top:20px;">View</button>
+                    </div>
+                    <hr>
+                </li>
+            </ul>
+        </article>
+       
+              
+            <!-- <img src="http://cdn.tapquo.com/photos/javi_color.jpg" class="responsive padding-left padding-top padding-right"/>
 
             <div class="margin-left margin-right">
                 <h4 class="text bold color theme inline">Javi Jiménez</h4>
@@ -109,73 +189,47 @@
                 <a href="#"><span class="icon heart"></span>Trending<small>(3)</small></a>
                 <a href="#"><span class="icon group"></span>Following<small>(192)</small></a>
                 <a href="#"><span class="icon star"></span>Debuts<small>(160)</small></a>
-            </nav>
-        </article>
-        <footer class="bck dark text center">
-            Handcrafted by <a href="http://tapquo.com" class="display inline"><img src="http://cdn.tapquo.com/images/logo_footer.png"/></a>
+            </nav> -->
+        
+
+
+        <footer class="bck color text center" style="padding:5px;">
+             Handcrafted by <a href="http://tapquo.com" class="display inline"><img src="http://cdn.tapquo.com/images/logo_footer.png"/></a>
+            
         </footer>
     </aside>
 
 
+
+    <!-- Main Content -->
+
     <section>
         <header style="background:#ECF0F1;">
-            <h3 class="on-left text thin">Web Application <span class="tag bck theme">NEW!</span></h3>
+            <h3 class="on-left text thin">Mobile Emergency Response Application</h3>
             <nav class="on-right">
-                <button class="tiny">tiny</button>
-                <button class="small success">small</button>
-                <button class="alert">normal</button>
+                <span>Welcome Admin</span>
+                <button class="tiny secondary">Logout</button>
             </nav>
-        </header>
-        <article class="padding scroll">
-            <div class="margin-bottom">
-                <h4 class="text book inline"><span class="icon star color theme "></span> Featured</h4>
-                <nav class="inline on-right">
-                    <a href="#" class="button small"><span class="icon search"></span>Search</a>
-                    <a href="#" class="button theme small"><span class="icon envelope"></span>Send</a>
-                </nav>
-            </div>
-            <div class="inline">
-                <div class="column_4 thumb bck light">thumb</div>
-                <div class="column_4 thumb bck light">thumb</div>
-            </div>
-
-            <div class="margin-bottom">
-                <h4 class="text book inline"><span class="icon group color theme"></span> Friends</h4>
-                <nav class="inline on-right">
-                    <a href="#" class="button  small"><span class="icon search"></span>Search</a>
-                </nav>
-            </div>
-            <div class="inline">
-                <div class="column_2 thumb bck light">thumb</div>
-                <div class="column_2 thumb bck light">thumb</div>
-                <div class="column_2 thumb bck light">thumb</div>
-                <div class="column_2 thumb bck light">thumb</div>
-                <div class="column_2 thumb bck light">thumb</div>
-                <div class="column_2 thumb bck light">thumb</div>
-                <div class="column_2 thumb bck light">thumb</div>
-                <div class="column_2 thumb bck light">thumb</div>
-                <div class="column_2 thumb bck light">thumb</div>
-                <div class="column_2 thumb bck light">thumb</div>
-                <div class="column_2 thumb bck light">thumb</div>
-            </div>
+        </header> 
+        <article class="padding ">
+            
         </article>
 
         <footer class="bck light">
             <nav class="on-left text bold" data-tuktuk="menu">
-                <a href="#" class="active">Shots<small>(100)</small></a>
-                <a href="#">Projects<small>(3)</small></a>
-                <a href="#">Likes<small>(192)</small></a>
-                <a href="#">Tags<small>(160)</small></a>
+                <a href="#">Emergency Alerts<small>(100)</small></a>
+                <a href="#">Successful<small>(3)</small></a>
+                <a href="#">Failed<small>(192)</small></a>
+                <a href="#">Decline<small>(160)</small></a>
             </nav>
 
             <nav class="on-right">
-                <button class="tiny">tiny</button>
-                <button class="small success">small</button>
-                <button class="alert">normal</button>
-            </nav>
+                <button class="normal" data-tuktuk-box="menu">View All Records</button>
+            </nav> 
         </footer>
     </section>
 
+    <!-- Modal-->
     <div id="modal" data-tuktuk="modal" class="column_5">
         <header>
             <h4 class="text book inline">Normal window</h4>
@@ -186,6 +240,7 @@
         </article>
     </div>
 
+    <!-- Aside Right -->
     <div id="modal-right" data-tuktuk="modal" class="side column_5">
         <header>
             <h4 class="inline text book">Side window.</h4>
@@ -206,7 +261,7 @@
         </footer>
     </div>
 
-    <script src="/js/jquery-1.9.1.min.js"></script>
+    <script src="/js/jquery-2.0.0.min.js"></script>
     <script src="/js/tuktuk.js"></script>
     <script>
         TukTuk.Modal.loading();
