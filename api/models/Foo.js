@@ -13,6 +13,10 @@ module.exports = {
   	/* e.g.
   	nickname: 'string'
   	*/
+
+
+
+
     
   }
 

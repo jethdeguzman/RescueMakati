@@ -105,14 +105,14 @@
         </header>
         <article class="bck dark scroll" style="height:-30px;">
             
-            <ul class="margin" style="list-style:none;">
-                <li>
+            <ul class="margin side-bar-alert" style="list-style:none;">
+                <!-- <li>
                     <strong class="color theme text bold" style="font-size:25px;"><span class="icon ambulance "></span> Ambulance</strong><br>
                     <small>Status: <span>New</span></small>
                     <br>
                     <small class="color white text normal" style="text-indent:10px;"><span class="icon info-sign"></span> Jethro De Guzman, 21</small><br>
                     <small class="color white text normal" style="text-indent:10px;"><span class="icon phone"></span> 09228239751</small><br>
-                    <small class="color white text normal" style="text-indent:10px;"><span class="icon home"></span>12 A Maligaya St. San Jose Manila Philippines</small><br>
+                    <small class="color white text normal" style="text-indent:10px;"><span class="icon home"></span>4408 Old Sta. Mesa, Manila, Philippines</small><br>
                     <small class="color white text normal" style="text-indent:10px;"><span class="icon calendar"></span> 2013-11-13 / 1:00:00 </small><br>
                     <div data-tuktuk="buttons">
                         <button class="alert tiny" style="margin-top:20px;"> Decline</button> 
@@ -120,10 +120,10 @@
                         <button class="secondary tiny" style="margin-top:20px;">View</button>
                     </div>
                     <hr>
-                </li>
+                </li> -->
                 
 
-                <li>
+                <!-- <li>
                     <strong class="color theme text bold" style="font-size:25px;"><span class="icon ambulance "></span> Ambulance</strong><br>
                     <small>Status: <span>On Process</span></small>
                     <br>
@@ -165,7 +165,7 @@
                         <button class="secondary tiny" style="margin-top:20px;">View</button>
                     </div>
                     <hr>
-                </li>
+                </li> -->
             </ul>
         </article>
        
@@ -240,6 +240,7 @@
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script src="/js/jquery-2.0.0.min.js"></script>
     <script src="/js/tuktuk.js"></script>
+    <script src="/js/jquery.playSound.js"></script>
     <script>
         TukTuk.Modal.loading();
         setTimeout( TukTuk.Modal.hide, 1000);
@@ -257,18 +258,49 @@
                 });
                 initialize();
             });
+
+            socket.on('alert', function(res){
+                $.playSound('/sound/alert');
+                var res = JSON.parse(res);
+                var request;
+                switch(res.request){
+                    case "Ambulance": 
+                       request = '<strong class="color theme text bold" style="font-size:25px;"><span class="icon ambulance "></span> Ambulance</strong>';
+                    break;
+
+                    case "Police":
+                        request = '<strong class="color theme text bold" style="font-size:25px;"><span class="icon fighter-jet"></span> Police</strong>';
+                    break;
+
+                    case "Fire Truck":
+                       request = '<strong class="color theme text bold" style="font-size:25px;"><span class="icon fire"></span> Fire truck</strong>';
+                    break;
+
+                }
+                $(".side-bar-alert").prepend('<li>'+request+'<br><small>Status: <span>New</span></small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon info-sign"></span>'+ res.name+', '+res.age+'</small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon phone"></span> '+ res.mobile+'</small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon home"></span>'+ res.address+'</small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon calendar"></span> 2013-11-13 / 1:00:00 </small><br><div data-tuktuk="buttons"><button class="alert tiny" style="margin-top:20px;"> Decline</button><button class="tiny success" style="margin-top:20px;"> Respond</button><button class="secondary tiny" style="margin-top:20px;">View</button></div><hr></li>');
+                // $(".side-bar-alert").append("");
+                // console.log(res);
+            });
+
         });
     
-    // var map;
+    var map;
     function initialize() {
     // alert("asd");
       var mapOptions = {
-        zoom: 14,
-        center: new google.maps.LatLng(14.558496, 121.023819),
+        zoom: 15,
+        center: new google.maps.LatLng(14.600684,121.018179),
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
+
       map = new google.maps.Map(document.getElementById('map-canvas'),
           mapOptions);
+      // var points = new google.maps.LatLng (14.600684,121.018179); 
+      // var infowindow = new google.maps.InfoWindow({
+      //     map: map,
+      //     position: points,
+      //     content: '<strong class="color theme text bold" style="font-size:12px;"><span class="icon ambulance "></span>Ambulance</strong><br><small class="color text normal" style="text-indent:10px;"><span class="icon info-sign"></span> Jethro De Guzman, 21</small><br><small class="color text normal" style="text-indent:10px;"><span class="icon home"></span>4408 Old Sta. Mesa, Manila, Philippines</small><br><small class="color text normal" style="text-indent:10px;"><span class="icon  calendar"></span> 2013-11-13 / 1:00:00 </small><br><div class="on-right"><button class="alert tiny" style="margin-top:20px;"> Decline</button> <button class="tiny success" style="margin-top:20px;"> Respond</button></div>'
+      //   });
     }
 
     google.maps.event.addDomListener(window, 'load', initialize);

@@ -1,5 +1,5 @@
 /**
- * FooController
+ * RequestController
  *
  * @module		:: Controller
  * @description	:: Contains logic for handling requests.
@@ -12,10 +12,17 @@ module.exports = {
     res.send('hello world!');
   }
   */
-  
   index : function(req, res){
-  	Foo.findOne({name : 'jeth'}).done(function(err, foo){
-  		console.log(foo.id);
-  	});
+  	var socket = req.socket;
+  	var io = sails.io;
+  	var data = req.param('data');
+
+
+  	// save to model
+
+  	io.sockets.emit('alert', data);
+  	res.json({status : 'successfully sent'});
+  	// res.send('request');
   }
+
 };
