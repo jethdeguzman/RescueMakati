@@ -10,10 +10,18 @@ module.exports = {
 
   attributes: {
   	
-  	/* e.g.
-  	nickname: 'string'
-  	*/
-    
+  
+    status   : 'STRING',
+  	request : 'STRING',
+  	userid : 'STRING',
+  	name : 'STRING',
+  	age : 'INTEGER',
+  	mobie : 'STRING',
+  	lat : 'FLOAT',
+  	lng : 'FLOAT',
+  	date : 'STRING',
+  	time : 'STRING'
+  	
   }
 
 };

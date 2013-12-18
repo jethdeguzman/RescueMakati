@@ -12,17 +12,52 @@ module.exports = {
     res.send('hello world!');
   }
   */
-  index : function(req, res){
+  add : function(req, res){
   	var socket = req.socket;
   	var io = sails.io;
   	var data = req.param('data');
+    var parsed = JSON.parse(data);
+    var date = new Date();
+    var hour = date.getHours();
+    var min = date.getMinutes();
+    var sec = date.getSeconds();
+    var timenow = hour + ":" + min + ":" + sec;
+    var year = date.getFullYear();
+    var month = date.getMonth()+1;
+    var day = date.getDate();
+    var datenow = year + "-" + month + "-" + day;
+    var datetime = datenow + " " + timenow;  	// save to model
+    var json = {status : "new", request : parsed.request, userid : parsed.userid, name : parsed.name, age : parsed.age, mobile : parsed.mobile, lat : parsed.lat, lng : parsed.lng, address : parsed.address, date : datenow, time : timenow};
+    Request.create(json).done(function(error){
+      if (error){
+        return console.log(error);
+      }else{
+        io.sockets.emit('alert', json);
+      }
+    });
 
+    
 
-  	// save to model
-
-  	io.sockets.emit('alert', data);
+  	// io.sockets.emit('alert', {data : data, datetime : datetime});
   	res.json({status : 'successfully sent'});
   	// res.send('request');
-  }
+  },
+
+  index : function(req, res){
+    var status = req.param('status');
+    if (status == "new"){
+      Request.find({status : status}).sort('createdAt DESC').done(function(err, req){
+        if (err){
+          return console.log(err);
+        } else { 
+          res.json({'data' : req});
+        }
+      });
+    }else{
+
+    }
+   
+  } 
+
 
 };
