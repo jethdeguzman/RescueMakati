@@ -5,10 +5,13 @@
     <title>tuktuk - Application Example</title>
     <!-- Mobile Specific Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
     <link rel="stylesheet" href="/styles/tuktuk.css">
     <link rel="stylesheet" href="/styles/tuktuk.theme.mock.css">
     <!-- TUKTUK.WIDGETS -->
     <link rel="stylesheet" href="/styles/tuktuk.icons.css">
+    <link rel="stylesheet" href="/styles/jquery.pnotify.default.css">
+    <link rel="stylesheet" href="/styles/jquery.pnotify.default.icons.css">
     <style>
         aside > header .logo {
             margin-top: 10px;
@@ -39,7 +42,11 @@
         .alert-title{
           
           margin-bottom: -20px;
-        }     
+        }
+        .bg{
+            background: white;
+        }
+
     </style>
 </head>
 <body data-tuktuk="boxes">
@@ -241,12 +248,16 @@
     <script src="/js/jquery-2.0.0.min.js"></script>
     <script src="/js/tuktuk.js"></script>
     <script src="/js/jquery.playSound.js"></script>
+     <script src="/js/jquery.pnotify.js"></script>
     <script>
         TukTuk.Modal.loading();
         setTimeout( TukTuk.Modal.hide, 1000);
     </script>
     <script>
         jQuery(function($){
+
+            
+
             var mapHeight = $("#map-wrapper").height();
             $("#map-canvas").css({
                 height : mapHeight
@@ -273,9 +284,13 @@
 
             socket.on('alert', function(res){
                 $.playSound('/sound/alert');
-                // var datetime = res.datetime;
-                // var res = JSON.parse(res.data);
-                // console.log(res);
+                $.pnotify({
+                    title: 'Regular Success',
+                    text: 'That thing that you were trying to do worked!',
+                    addclass: 'bck dark'
+                    
+                    
+                });
                 $(".side-bar-alert").prepend(displayAlert(res));
             });
 
