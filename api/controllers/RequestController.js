@@ -33,6 +33,7 @@ module.exports = {
         return console.log(error);
       }else{
         io.sockets.emit('alert', json);
+        io.sockets.emit('addmark', {lat : parsed.lat, lng : parsed.lng });
       }
     });
 
@@ -57,6 +58,13 @@ module.exports = {
 
     }
    
+  },
+
+  addmark : function(req, res){
+    var socket = req.socket;
+    var io = sails.io;
+    io.sockets.emit('mark', 'jethro');
+    res.send("added");
   } 
 
 

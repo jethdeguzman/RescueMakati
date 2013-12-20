@@ -254,10 +254,18 @@
         setTimeout( TukTuk.Modal.hide, 1000);
     </script>
     <script>
+
+    var map;
+    //lat, lng points
+    var alertPoints = [];
+    //markers
+    var markers = [];
+
+    var alerts = [];
         jQuery(function($){
 
             
-
+            // resize the map when window resize
             var mapHeight = $("#map-wrapper").height();
             $("#map-canvas").css({
                 height : mapHeight
@@ -270,35 +278,55 @@
                 initialize();
             });
 
+            //append to sidebar all the request with status new
             $.ajax({
                 url : "/request?status=new",
                 type : "GET",
                 dataType: "JSON",
                 success : function(data){
                     var data = data.data;
+                    // localStorage.alert = JSON.stringify(data);
+
                     for (var key in data){
+                        alerts.push(data[key]);
+                        // alerts[key] = data; 
+                        // alerts.push(data);
                        $(".side-bar-alert").append(displayAlert(data[key]));
                     }
                 }
             });
 
-            socket.on('alert', function(res){
+            //listen to socket, append to sidebar realtime when theres an alert and display notification upper right side
+            socket.on('alert', function(data){
                 $.playSound('/sound/alert');
                 $.pnotify({
-                    title: 'Regular Success',
-                    text: 'That thing that you were trying to do worked!',
+                    title: data.request,
+                    text: data.address,
                     addclass: 'bck dark'
                     
                     
                 });
-                $(".side-bar-alert").prepend(displayAlert(res));
+
+                $(".side-bar-alert").prepend(displayAlert(data));
+
+                addMarker(new google.maps.LatLng (data.lat,data.lng));
+            });
+
+            socket.on('addmark', function(data){
+                 addMarker(new google.maps.LatLng (data.lat,data.lng));
+            });
+            socket.on('mark', function(){
+                addMark();
             });
 
         });
     
-    function displayAlert(data){
+
+    //html format to display to sidebar the alert
+    function displayAlert(data, location){
         
         var request;
+
         switch(data.request){
             case "Ambulance": 
                request = '<strong class="color theme text bold" style="font-size:25px;"><span class="icon ambulance "></span> Ambulance</strong>';
@@ -316,25 +344,101 @@
         html = '<li>'+request+'<br><small>Status: <span>New</span></small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon info-sign"></span>'+ data.name+', '+data.age+'</small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon phone"></span> '+ data.mobile+'</small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon home"></span>'+ data.address+'</small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon calendar"></span> '+data.date+' '+ data.time +' </small><br><div data-tuktuk="buttons"><button class="alert tiny" style="margin-top:20px;"> Decline</button><button class="tiny success" style="margin-top:20px;"> Respond</button><button class="secondary tiny" style="margin-top:20px;">View</button></div><hr></li>';
         return html;
     }
-    var map;
+    
+    function displayInfowindow(data){
+        var request;
+
+        switch(data.request){
+            case "Ambulance": 
+               request = '<strong class="color theme text bold" style="font-size:14px;"><span class="icon ambulance "></span> Ambulance</strong>';
+            break;
+
+            case "Police":
+                request = '<strong class="color theme text bold" style="font-size:25px;"><span class="icon fighter-jet"></span> Police</strong>';
+            break;
+
+            case "Fire Truck":
+               request = '<strong class="color theme text bold" style="font-size:25px;"><span class="icon fire"></span> Fire truck</strong>';
+            break;
+
+        }
+        html = request+'<br><small>Status: <span>New</span></small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon info-sign"></span>'+ data.name+', '+data.age+'</small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon phone"></span> '+ data.mobile+'</small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon home"></span>'+ data.address+'</small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon calendar"></span> '+data.date+' '+ data.time +' </small><br><div data-tuktuk="buttons" class="" style="margin-top:10px;"><button class="alert tiny">Decline</button><button class="tiny success">Respond</button></div>';
+        return html;
+    }
+    
+
+    function addMark(){
+        addMarker(new google.maps.LatLng (14.554613,121.034657)); 
+        // updateMapPoints();
+    }
+
+    //map initialization
     function initialize() {
-    // alert("asd");
+    
       var mapOptions = {
-        zoom: 15,
-        center: new google.maps.LatLng(14.600684,121.018179),
+        zoom: 14,
+        center: new google.maps.LatLng(14.554729,121.024445),
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
 
       map = new google.maps.Map(document.getElementById('map-canvas'),
           mapOptions);
-      // var points = new google.maps.LatLng (14.600684,121.018179); 
-      // var infowindow = new google.maps.InfoWindow({
-      //     map: map,
-      //     position: points,
-      //     content: '<strong class="color theme text bold" style="font-size:12px;"><span class="icon ambulance "></span>Ambulance</strong><br><small class="color text normal" style="text-indent:10px;"><span class="icon info-sign"></span> Jethro De Guzman, 21</small><br><small class="color text normal" style="text-indent:10px;"><span class="icon home"></span>4408 Old Sta. Mesa, Manila, Philippines</small><br><small class="color text normal" style="text-indent:10px;"><span class="icon  calendar"></span> 2013-11-13 / 1:00:00 </small><br><div class="on-right"><button class="alert tiny" style="margin-top:20px;"> Decline</button> <button class="tiny success" style="margin-top:20px;"> Respond</button></div>'
-      //   });
+      alertPoints = [
+          [14.559327,121.019529],
+          [14.557312,121.029722],
+          [14.542878,121.024379],
+          [14.565848,121.051072]
+      ];
+      updateMapPoints();
+      showMarkers();
     }
 
+
+    // var marker;
+    //add marker
+    function addMarker(location, html) {
+      var marker = new google.maps.Marker({
+        position: location,
+        map: map,
+        animation: google.maps.Animation.BOUNCE,
+        html : html
+      });
+      markers.push(marker);
+      google.maps.event.addListener(marker, 'click', function() {
+            console.log(this.html);
+            infowindow.setContent(this.html); 
+          infowindow.open(map,this);
+      });
+    }
+
+    //convert points to gmaps lat lng
+    function updateMapPoints(){
+
+      for (var i in alerts) {
+             
+         addMarker(new google.maps.LatLng (alerts[i].lat, alerts[i].lng), displayInfowindow(alerts[i]));
+            
+      }
+
+    }
+    var infowindow = new google.maps.InfoWindow({
+        
+    });
+   
+    
+    
+    //show markers on map
+    function showMarkers() {
+      setAllMap(map);
+    }
+
+    //set the markers to map
+    function setAllMap(map) {
+      for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(map);
+      }
+    }
+   
     google.maps.event.addDomListener(window, 'load', initialize);
 
     </script>
