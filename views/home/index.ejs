@@ -264,7 +264,26 @@
     var alerts = [];
         jQuery(function($){
 
-            
+            $.ajax({
+                url : "/request?status=pending",
+                type : "GET",
+                dataType: "JSON",
+                success : function(data){
+                    var data = data.data;
+                    // localStorage.alert = JSON.stringify(data);
+
+                    for (var key in data){
+                        alerts.push(data[key]);
+                        // alerts[key] = data; 
+                        // alerts.push(data);
+                       $(".side-bar-alert").append(displayAlert(data[key]));
+                    }
+                    initialize();
+                },
+                error : function(err){
+                    alert(err);
+                }
+            });
             // resize the map when window resize
             var mapHeight = $("#map-wrapper").height();
             $("#map-canvas").css({
@@ -279,46 +298,41 @@
             });
 
             //append to sidebar all the request with status new
-            $.ajax({
-                url : "/request?status=new",
-                type : "GET",
-                dataType: "JSON",
-                success : function(data){
-                    var data = data.data;
-                    // localStorage.alert = JSON.stringify(data);
-
-                    for (var key in data){
-                        alerts.push(data[key]);
-                        // alerts[key] = data; 
-                        // alerts.push(data);
-                       $(".side-bar-alert").append(displayAlert(data[key]));
-                    }
-                }
-            });
+            
 
             //listen to socket, append to sidebar realtime when theres an alert and display notification upper right side
             socket.on('alert', function(data){
+                var data = data[0];
                 $.playSound('/sound/alert');
                 $.pnotify({
                     title: data.request,
                     text: data.address,
-                    addclass: 'bck dark'
-                    
-                    
+                    addclass: 'bck dark'           
                 });
 
                 $(".side-bar-alert").prepend(displayAlert(data));
-
-                addMarker(new google.maps.LatLng (data.lat,data.lng));
+                alerts.push(data);
+                // console.log(data);
+                addMarker(new google.maps.LatLng (data.lat, data.lng), displayInfowindow(data));
+                // addMarker(new google.maps.LatLng (data.lat,data.lng));
             });
 
-            socket.on('addmark', function(data){
-                 addMarker(new google.maps.LatLng (data.lat,data.lng));
+            // socket.on('addmark', function(data){
+            //      addMarker(new google.maps.LatLng (data.lat,data.lng));
+            // });
+            // socket.on('mark', function(){
+            //     addMark();
+            // });
+            
+            $(".side-bar-alert").on("click"," li button.view-btn",function(){
+                
+                alertid = $(this).data("id");
+                for (var i in alerts) {
+                    if (alerts[i].id == alertid){
+                        showInfo(markers[i]);
+                    }
+                }
             });
-            socket.on('mark', function(){
-                addMark();
-            });
-
         });
     
 
@@ -341,7 +355,7 @@
             break;
 
         }
-        html = '<li>'+request+'<br><small>Status: <span>New</span></small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon info-sign"></span>'+ data.name+', '+data.age+'</small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon phone"></span> '+ data.mobile+'</small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon home"></span>'+ data.address+'</small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon calendar"></span> '+data.date+' '+ data.time +' </small><br><div data-tuktuk="buttons"><button class="alert tiny" style="margin-top:20px;"> Decline</button><button class="tiny success" style="margin-top:20px;"> Respond</button><button class="secondary tiny" style="margin-top:20px;">View</button></div><hr></li>';
+        html = '<li>'+request+'<br><small>Status: <span>Pending</span></small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon info-sign"></span>'+ data.name+', '+data.age+'</small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon phone"></span> '+ data.mobile+'</small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon home"></span>'+ data.address+'</small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon calendar"></span> '+data.date+' '+ data.time +' </small><br><div data-tuktuk="buttons"><button class="alert tiny" style="margin-top:20px;"> Decline</button><button class="tiny success" style="margin-top:20px;"> Respond</button><button data-id="'+data.id+'" class="secondary tiny view-btn" style="margin-top:20px;">View</button></div><hr></li>';
         return html;
     }
     
@@ -354,15 +368,15 @@
             break;
 
             case "Police":
-                request = '<strong class="color theme text bold" style="font-size:25px;"><span class="icon fighter-jet"></span> Police</strong>';
+                request = '<strong class="color theme text bold" style="font-size:14px;"><span class="icon fighter-jet"></span> Police</strong>';
             break;
 
             case "Fire Truck":
-               request = '<strong class="color theme text bold" style="font-size:25px;"><span class="icon fire"></span> Fire truck</strong>';
+               request = '<strong class="color theme text bold" style="font-size:14px;"><span class="icon fire"></span> Fire truck</strong>';
             break;
 
         }
-        html = request+'<br><small>Status: <span>New</span></small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon info-sign"></span>'+ data.name+', '+data.age+'</small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon phone"></span> '+ data.mobile+'</small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon home"></span>'+ data.address+'</small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon calendar"></span> '+data.date+' '+ data.time +' </small><br><div data-tuktuk="buttons" class="" style="margin-top:10px;"><button class="alert tiny">Decline</button><button class="tiny success">Respond</button></div>';
+        html = request+'<br><small>Status: <span>Pending</span></small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon info-sign"></span>'+ data.name+', '+data.age+'</small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon phone"></span> '+ data.mobile+'</small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon home"></span>'+ data.address+'</small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon calendar"></span> '+data.date+' '+ data.time +' </small><br><div data-tuktuk="buttons" class="" style="margin-top:10px;"><button class="alert tiny">Decline</button><button class="tiny success">Respond</button></div>';
         return html;
     }
     
@@ -371,10 +385,10 @@
         addMarker(new google.maps.LatLng (14.554613,121.034657)); 
         // updateMapPoints();
     }
-
+   
     //map initialization
     function initialize() {
-    
+      
       var mapOptions = {
         zoom: 14,
         center: new google.maps.LatLng(14.554729,121.024445),
@@ -389,14 +403,16 @@
           [14.542878,121.024379],
           [14.565848,121.051072]
       ];
+      markers = [];
       updateMapPoints();
-      showMarkers();
+      // showMarkers();
     }
 
 
     // var marker;
     //add marker
     function addMarker(location, html) {
+      // console.log(location);
       var marker = new google.maps.Marker({
         position: location,
         map: map,
@@ -405,9 +421,7 @@
       });
       markers.push(marker);
       google.maps.event.addListener(marker, 'click', function() {
-            console.log(this.html);
-            infowindow.setContent(this.html); 
-          infowindow.open(map,this);
+          showInfo(marker);
       });
     }
 
@@ -421,25 +435,27 @@
       }
 
     }
-    var infowindow = new google.maps.InfoWindow({
-        
-    });
+    var infowindow = new google.maps.InfoWindow({});
    
-    
-    
-    //show markers on map
-    function showMarkers() {
-      setAllMap(map);
+    function showInfo(marker){
+        map.panTo(marker.getPosition());
+        infowindow.setContent(marker.html); 
+        infowindow.open(map,marker);
+        map.setZoom(15);
     }
+    // //show markers on map
+    // function showMarkers() {
+    //   setAllMap(map);
+    // }
 
-    //set the markers to map
-    function setAllMap(map) {
-      for (var i = 0; i < markers.length; i++) {
-        markers[i].setMap(map);
-      }
-    }
+    // //set the markers to map
+    // function setAllMap(map) {
+    //   for (var i = 0; i < markers.length; i++) {
+    //     markers[i].setMap(map);
+    //   }
+    // }
    
-    google.maps.event.addDomListener(window, 'load', initialize);
+    // google.maps.event.addDomListener(window, 'load', initialize);
 
     </script>
 </body> 
