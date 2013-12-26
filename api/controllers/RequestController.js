@@ -119,6 +119,12 @@ module.exports = {
 
       // io.sockets.emit('alert', {data : data, datetime : datetime});
       res.json({status : 'added'});
+  },
+  alert : function(req, res){
+    var socket = req.socket;
+    var io = sails.io;
+    alert = req.param('alert');
+    io.sockets.emit('show', {name: alert});
   } 
 
 

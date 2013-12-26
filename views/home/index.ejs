@@ -103,11 +103,12 @@
             
         </header>
         <header class="bck dark text center ">
-            <button class="normal" data-tuktuk-box="menu"><span class="icon eye-open"></span> View All Records</button>
+            <button class="normal refreshmap-btn"><span class="icon refresh"></span> Refresh Map</button>
         </header>
         <header class="bck dark">
 
-                <h5 class="text normal align center"><span class="icon bell"></span> Incoming Alerts</h5>
+                <h5 class="text normal align center"><span class="icon bell"></span> Incoming Alerts </h5>
+
                 
         </header>
         <article class="bck dark scroll" style="height:-30px;">
@@ -333,6 +334,26 @@
                     }
                 }
             });
+
+            $(".refreshmap-btn").click(function(){
+
+                refreshMap();
+            });
+
+            $(".side-bar-alert").on("click"," li button.respond-btn",function(){
+                // alertid = $(this).data("id");
+                alert = $(this).parent().parent();
+                // alert.remove();
+                socket.get('/request/alert', {alert : JSON.stringify(alert)});
+            });
+
+            $(".decline-btn").click(function(){
+                
+            });
+
+            socket.on('show', function(data){
+                alert(data.name);
+            });
         });
     
 
@@ -355,10 +376,10 @@
             break;
 
         }
-        html = '<li>'+request+'<br><small>Status: <span>Pending</span></small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon info-sign"></span>'+ data.name+', '+data.age+'</small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon phone"></span> '+ data.mobile+'</small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon home"></span>'+ data.address+'</small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon calendar"></span> '+data.date+' '+ data.time +' </small><br><div data-tuktuk="buttons"><button class="alert tiny" style="margin-top:20px;"> Decline</button><button class="tiny success" style="margin-top:20px;"> Respond</button><button data-id="'+data.id+'" class="secondary tiny view-btn" style="margin-top:20px;">View</button></div><hr></li>';
+        html = '<li>'+request+'<br><small>Status: <span>Pending</span></small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon info-sign"></span>'+ data.name+', '+data.age+'</small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon phone"></span> '+ data.mobile+'</small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon home"></span>'+ data.address+'</small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon calendar"></span> '+data.date+' '+ data.time +' </small><br><div data-tuktuk="buttons"><button data-id="'+data.id+'" class="alert tiny decline-btn" style="margin-top:20px;"> Decline</button><button data-id="'+data.id+'" class="tiny success respond-btn" style="margin-top:20px;"> Respond</button><button data-id="'+data.id+'" class="secondary tiny view-btn" style="margin-top:20px;">View</button></div><hr></li>';
         return html;
     }
-    
+    //html format to display to infowindow the alert
     function displayInfowindow(data){
         var request;
 
@@ -376,15 +397,10 @@
             break;
 
         }
-        html = request+'<br><small>Status: <span>Pending</span></small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon info-sign"></span>'+ data.name+', '+data.age+'</small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon phone"></span> '+ data.mobile+'</small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon home"></span>'+ data.address+'</small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon calendar"></span> '+data.date+' '+ data.time +' </small><br><div data-tuktuk="buttons" class="" style="margin-top:10px;"><button class="alert tiny">Decline</button><button class="tiny success">Respond</button></div>';
+        html = request+'<br><small>Status: <span>Pending</span></small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon info-sign"></span>'+ data.name+', '+data.age+'</small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon phone"></span> '+ data.mobile+'</small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon home"></span>'+ data.address+'</small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon calendar"></span> '+data.date+' '+ data.time +' </small><br><div data-tuktuk="buttons" class="" style="margin-top:10px;"><button data-id="'+data.id+'" class="alert tiny decline-btn">Decline</button><button data-id="'+data.id+'" class="tiny success respond-btn">Respond</button></div>';
         return html;
     }
     
-
-    function addMark(){
-        addMarker(new google.maps.LatLng (14.554613,121.034657)); 
-        // updateMapPoints();
-    }
    
     //map initialization
     function initialize() {
@@ -409,14 +425,14 @@
     }
 
 
-    // var marker;
-    //add marker
+    
+    //push marker to markers array and plot points as marker on map
     function addMarker(location, html) {
       // console.log(location);
       var marker = new google.maps.Marker({
         position: location,
         map: map,
-        animation: google.maps.Animation.BOUNCE,
+        animation: google.maps.Animation.DROP,
         html : html
       });
       markers.push(marker);
@@ -425,7 +441,7 @@
       });
     }
 
-    //convert points to gmaps lat lng
+    //get the points on alerts array, convert to gmaps lat lng
     function updateMapPoints(){
 
       for (var i in alerts) {
@@ -435,13 +451,38 @@
       }
 
     }
+    //info window initialization
     var infowindow = new google.maps.InfoWindow({});
    
+    //show info window when view btn and marker click
     function showInfo(marker){
         map.panTo(marker.getPosition());
         infowindow.setContent(marker.html); 
         infowindow.open(map,marker);
-        map.setZoom(15);
+        map.setZoom(16);
+    }
+
+    //refresh the map, center map to makati
+    function refreshMap(){
+        map.panTo(new google.maps.LatLng(14.554729,121.024445));
+        map.setZoom(14);
+        for (var i in markers){
+            infowindow.close(map, markers[i]);
+        }
+    }
+
+    function changeStatus(type, alertid){
+
+        switch(type){
+            case "Respond":
+
+            break;
+
+            case "Decline":
+
+            break;
+
+        }
     }
     // //show markers on map
     // function showMarkers() {
