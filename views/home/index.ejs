@@ -264,7 +264,7 @@
 
     var alerts = [];
         jQuery(function($){
-
+            //append to sidebar all the request with status new
             $.ajax({
                 url : "/request?status=pending",
                 type : "GET",
@@ -298,10 +298,8 @@
                 initialize();
             });
 
-            //append to sidebar all the request with status new
-            
-
-            //listen to socket, append to sidebar realtime when theres an alert and display notification upper right side
+           
+            //listen to socket, append to sidebar realtime when theres an alert, display notification upper right side, push adata to alerts array
             socket.on('alert', function(data){
                 var data = data[0];
                 $.playSound('/sound/alert');
@@ -318,13 +316,36 @@
                 // addMarker(new google.maps.LatLng (data.lat,data.lng));
             });
 
-            // socket.on('addmark', function(data){
-            //      addMarker(new google.maps.LatLng (data.lat,data.lng));
-            // });
-            // socket.on('mark', function(){
-            //     addMark();
-            // });
-            
+            //update client side when respond and decline button clicked
+            socket.on('update', function(){
+             
+                $(".side-bar-alert li").each(function(){
+                    $(this).remove();
+                });
+                alerts = [];
+                markers = [];
+                $.ajax({
+                    url : "/request?status=pending",
+                    type : "GET",
+                    dataType: "JSON",
+                    success : function(data){
+                        var data = data.data;
+                        // localStorage.alert = JSON.stringify(data);
+
+                        for (var key in data){
+                            alerts.push(data[key]);
+                            // alerts[key] = data; 
+                            // alerts.push(data);
+                           $(".side-bar-alert").append(displayAlert(data[key]));
+                        }
+                         initialize();
+                    },
+                    error : function(err){
+                        alert(err);
+                    }
+                });
+
+            });
             $(".side-bar-alert").on("click"," li button.view-btn",function(){
                 
                 alertid = $(this).data("id");
@@ -341,19 +362,19 @@
             });
 
             $(".side-bar-alert").on("click"," li button.respond-btn",function(){
-                // alertid = $(this).data("id");
-                alert = $(this).parent().parent();
+                alertid = $(this).data("id");
+                changeStatus("Responded", alertid);
+                // alert = $(this).parent().parent();
                 // alert.remove();
-                socket.get('/request/alert', {alert : JSON.stringify(alert)});
+               
             });
 
-            $(".decline-btn").click(function(){
-                
+            $(".side-bar-alert").on("click"," li button.decline-btn",function(){
+                alertid = $(this).data("id");
+                changeStatus("Declined", alertid);
             });
 
-            socket.on('show', function(data){
-                alert(data.name);
-            });
+            
         });
     
 
@@ -424,8 +445,6 @@
       // showMarkers();
     }
 
-
-    
     //push marker to markers array and plot points as marker on map
     function addMarker(location, html) {
       // console.log(location);
@@ -471,19 +490,17 @@
         }
     }
 
-    function changeStatus(type, alertid){
-
-        switch(type){
-            case "Respond":
-
-            break;
-
-            case "Decline":
-
-            break;
-
-        }
+    function changeStatus(status, alertid){
+        $.ajax({
+            url : '/request/update',
+            type : 'POST',
+            data : {
+                status : status,
+                id     : alertid
+            }
+        });
     }
+
     // //show markers on map
     // function showMarkers() {
     //   setAllMap(map);
