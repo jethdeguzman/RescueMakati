@@ -28,5 +28,32 @@ module.exports = {
 			}
 		});
 		res.send('ok');
+	},
+	mail : function(req, res){
+		var nodemailer = require("nodemailer");
+
+		var smtpTransport = nodemailer.createTransport("SMTP",{
+		   service: "Gmail",  // sets automatically host, port and connection security settings
+		   auth: {
+		       user: "jethdeguzman@gmail.com",
+		       pass: "orhtej14"
+		   }
+		});
+
+		smtpTransport.sendMail({  //email options
+		   from: "Rescue Makati <jethdeguzman@gmail.com>", // sender address.  Must be the same as authenticated user if using Gmail.
+		   to: "riojarosiliza@gmail.com", // receiver
+		   subject: "email test", // subject
+		   text: "testing" // body
+		}, function(error, response){  //callback
+		   if(error){
+		       console.log(error);
+		   }else{
+		       console.log("Message sent: " + response.message);
+		   }
+		   
+		   smtpTransport.close(); // shut down the connection pool, no more messages.  Comment this line out to continue sending emails.
+		});
+		res.send('sent');
 	}
 };

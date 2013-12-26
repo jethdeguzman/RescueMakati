@@ -102,15 +102,17 @@
             <!-- img src="../images/logo-white.png" class="logo on-left"/> -->
             
         </header>
-        <header class="bck dark text center ">
-            <button class="normal refreshmap-btn"><span class="icon refresh"></span> Refresh Map</button>
-        </header>
+        
         <header class="bck dark">
 
                 <h5 class="text normal align center"><span class="icon bell"></span> Incoming Alerts </h5>
 
-                
         </header>
+
+        <header class="bck dark text center ">
+            <button class="normal refreshmap-btn"><span class="icon refresh"></span> Refresh Map</button>
+        </header>
+        
         <article class="bck dark scroll" style="height:-30px;">
             
             <ul class="margin side-bar-alert" style="list-style:none;">
@@ -196,6 +198,7 @@
             <nav class="on-right">
                 <span>Welcome Admin</span>
                 <button class="tiny secondary"><span class="icon signout"></span> Logout</button>
+                
             </nav>
         </header> 
         <article id="map-wrapper"  class="">
@@ -204,12 +207,17 @@
 
         <footer class="bck light">
             <nav class="on-left text bold" data-tuktuk="menu">
-                <a href="#">Emergency Alerts<small>(100)</small></a>
-                <a href="#">Successful<small>(3)</small></a>
-                <a href="#">Failed<small>(192)</small></a>
-                <a href="#">Decline<small>(160)</small></a>
+                <a href="#" class="active"><span class="icon bell-alt"></span> Incoming Alerts</a>
+                <a href="#"><span class="icon eye-open"></span> View Records</a>
+                <a href="#"><span class="icon road"></span> Track Units</a>
+                <a href="#"><span class="icon cogs"></span> Settings</a>
+                
             </nav>
-
+            <!-- <nav class="on-left" data-tuktuk="menu">
+                <button class="tiny" style="margin-right:10px;"><span class="icon cog"></span>View All Records</button>
+                <button class="tiny alert" style="margin-right:10px;"><span class="icon cog"></span>Track Units</button>
+                <button class="tiny secondary"><span class="icon cog"></span>Settings</button>
+            </nav> -->
             
         </footer>
     </section>
