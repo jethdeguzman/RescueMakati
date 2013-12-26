@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rescue Makati</title>
+    <!-- Mobile Specific Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+    <link rel="stylesheet" href="/styles/tuktuk.css">
+    <link rel="stylesheet" href="/styles/tuktuk.theme.mock.css">
+    <!-- TUKTUK.WIDGETS -->
+    <link rel="stylesheet" href="/styles/tuktuk.icons.css">
+    <link rel="stylesheet" href="/styles/jquery.pnotify.default.css">
+    <link rel="stylesheet" href="/styles/jquery.pnotify.default.icons.css">
+    <style>
+        aside > header .logo {
+            margin-top: 10px;
+            max-height: 30px; }
+
+        aside footer img {
+          height: 16px;
+          position: relative;
+          top: 5px;
+          left: 2px; }
+
+        .thumb {
+            height: 96px;
+            margin-bottom: 2.5em;
+            text-align: center;
+            line-height: 96px;
+        }
+        .column_4.thumb {
+            height: 220px;
+            line-height: 220px;
+        }
+        #map-canvas {
+          height: 577px;
+          width:100%;
+          margin: 0px;
+          padding: 0px
+        }
+        .alert-title{
+          
+          margin-bottom: -20px;
+        }
+        .bg{
+            background: white;
+        }
+
+    </style>
+</head>
+<body data-tuktuk="boxes">
+    <!--Side Bar -->
+
+    <!-- Hidden SideBar -->
+    <aside id="menu" class="absolute bck light column_3">
+        <header class="bck dark">
+            <div class="session on-left">
+                <strong>logged in as <a href="#" class="color default">soyjavi</a></strong>
+            </div>
+            <a href="#" data-box="close" class="on-right text big icon remove color white"></a>
+        </header>
+        <article class="bck light scroll">
+            <img src="http://cdn.tapquo.com/photos/javi_color.jpg" class="responsive padding-left padding-top padding-right"/>
+
+            <div class="margin-left margin-right">
+                <h4 class="text bold color theme inline">Javi Jiménez</h4>
+                <span class="margin-left tag bck color inline text bold">pro</span>
+                <a href="#" class="block"><span class="icon twitter"></span> soyjavi</a>
+            </div>
+
+            <hr/>
+            <div class="margin" data-tuktuk="buttons">
+                <button data-tuktuk-modal="modal" class="theme" data-tip="Click to view a modal window">Modal</button>
+                <button data-tuktuk-modal="modal-right" data-tip="Click to view a side window" class="">Aside Right</button>
+            </div>
+            <hr>
+            <ul class="margin" data-tuktuk="totals">
+                <li><strong>3609</strong><small>followers</small></li>
+                <li><strong>138</strong><small>following</small></li>
+                <li><strong>14</strong><small>lists</small></li>
+            </ul>
+            <hr>
+            <div class="margin">
+                <strong class="text big normal block ">About <a href="#">Orman Clark</a></strong>
+                <div class="display block  text justify small">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</div>
+            </div>
+            <nav data-tuktuk="menu" class="text bold">
+                <a href="#" class="active"><span class="icon user"></span>Shots<small>(100)</small></a>
+                <a href="#"><span class="icon heart"></span>Trending<small>(3)</small></a>
+                <a href="#"><span class="icon group"></span>Following<small>(192)</small></a>
+                <a href="#"><span class="icon star"></span>Debuts<small>(160)</small></a>
+            </nav>
+        </article>
+    </aside>
+
+
+    <!--Shown Side Bar -->
+    <aside class="column_3">
+        <header class="bck color text center ">
+            <h3 class="color white"><strong>Rescue</strong> Makati </h3>
+            <!-- img src="../images/logo-white.png" class="logo on-left"/> -->
+            
+        </header>
+        <header class="bck dark text center ">
+            <button class="normal refreshmap-btn"><span class="icon refresh"></span> Refresh Map</button>
+        </header>
+        <header class="bck dark">
+
+                <h5 class="text normal align center"><span class="icon bell"></span> Incoming Alerts </h5>
+
+                
+        </header>
+        <article class="bck dark scroll" style="height:-30px;">
+            
+            <ul class="margin side-bar-alert" style="list-style:none;">
+                <!-- <li>
+                    <strong class="color theme text bold" style="font-size:25px;"><span class="icon ambulance "></span> Ambulance</strong><br>
+                    <small>Status: <span>New</span></small>
+                    <br>
+                    <small class="color white text normal" style="text-indent:10px;"><span class="icon info-sign"></span> Jethro De Guzman, 21</small><br>
+                    <small class="color white text normal" style="text-indent:10px;"><span class="icon phone"></span> 09228239751</small><br>
+                    <small class="color white text normal" style="text-indent:10px;"><span class="icon home"></span>4408 Old Sta. Mesa, Manila, Philippines</small><br>
+                    <small class="color white text normal" style="text-indent:10px;"><span class="icon calendar"></span> 2013-11-13 / 1:00:00 </small><br>
+                    <div data-tuktuk="buttons">
+                        <button class="alert tiny" style="margin-top:20px;"> Decline</button> 
+                        <button class="tiny success" style="margin-top:20px;"> Respond</button> 
+                        <button class="secondary tiny" style="margin-top:20px;">View</button>
+                    </div>
+                    <hr>
+                </li> -->
+                
+
+                <!-- <li>
+                    <strong class="color theme text bold" style="font-size:25px;"><span class="icon ambulance "></span> Ambulance</strong><br>
+                    <small>Status: <span>On Process</span></small>
+                    <br>
+                    <small class="color white text normal" style="text-indent:10px;"><span class="icon info-sign"></span> Jethro De Guzman, 21</small><br>
+                    <small class="color white text normal" style="text-indent:10px;"><span class="icon phone"></span> 09228239751</small><br>
+                    <small class="color white text normal" style="text-indent:10px;"><span class="icon home"></span>12 A Maligaya St. San Jose Manila Philippines</small><br>
+                    <small class="color white text normal" style="text-indent:10px;"><span class="icon calendar"></span> 2013-11-13 / 1:00:00 </small><br>
+                    <div data-tuktuk="buttons">
+                        <button class="alert tiny" style="margin-top:20px;">Failed</button> 
+                        <button class="tiny success" style="margin-top:20px;">Successful</button> 
+                        <button class="secondary tiny" style="margin-top:20px;">View</button>
+                    </div>
+                    <hr>
+                </li>
+
+                <li>
+                    <strong class="color theme text bold" style="font-size:25px;"><span class="icon fighter-jet"></span> Police</strong><br><br>
+                    <small class="color white text normal" style="text-indent:10px;"><span class="icon info-sign"></span> Jethro De Guzman, 21</small><br>
+                    <small class="color white text normal" style="text-indent:10px;"><span class="icon phone"></span> 09228239751</small><br>
+                    <small class="color white text normal" style="text-indent:10px;"><span class="icon home"></span>12 A Maligaya St. San Jose Manila Philippines</small><br>
+                    <small class="color white text normal" style="text-indent:10px;"><span class="icon calendar"></span> 2013-11-13 / 1:00:00 </small><br>
+                    <div data-tuktuk="buttons">
+                        <button class="alert tiny" style="margin-top:20px;"> Decline</button> 
+                        <button class="tiny success" style="margin-top:20px;"> Respond</button> 
+                        <button class="secondary tiny" style="margin-top:20px;">View</button>
+                    </div>
+                    <hr>
+                </li>
+
+                <li>
+                    <strong class="color theme text bold" style="font-size:25px;"><span class="icon fire"></span> Fire truck</strong><br><br>
+                    <small class="color white text normal" style="text-indent:10px;"><span class="icon info-sign"></span> Jethro De Guzman, 21</small><br>
+                    <small class="color white text normal" style="text-indent:10px;"><span class="icon phone"></span> 09228239751</small><br>
+                    <small class="color white text normal" style="text-indent:10px;"><span class="icon home"></span>12 A Maligaya St. San Jose Manila Philippines</small><br>
+                    <small class="color white text normal" style="text-indent:10px;"><span class="icon calendar"></span> 2013-11-13 / 1:00:00 </small><br>
+                    <div data-tuktuk="buttons">
+                        <button class="alert tiny" style="margin-top:20px;"> Decline</button> 
+                        <button class="tiny success" style="margin-top:20px;"> Respond</button> 
+                        <button class="secondary tiny" style="margin-top:20px;">View</button>
+                    </div>
+                    <hr>
+                </li> -->
+            </ul>
+        </article>
+       
+        
+
+
+        <footer class="bck color text center" style="padding:5px;">
+             Handcrafted by <a href="http://tapquo.com" class="display inline"><img src="http://cdn.tapquo.com/images/logo_footer.png"/></a>
+            
+        </footer>
+    </aside>
+
+
+
+    <!-- Main Content -->
+
+    <section>
+        <header style="background:#ECF0F1;">
+            <h3 class="on-left text thin">Mobile Emergency Response Application</h3>
+            <nav class="on-right">
+                <span>Welcome Admin</span>
+                <button class="tiny secondary"><span class="icon signout"></span> Logout</button>
+            </nav>
+        </header> 
+        <article id="map-wrapper"  class="">
+             <div id="map-canvas"></div>
+        </article>
+
+        <footer class="bck light">
+            <nav class="on-left text bold" data-tuktuk="menu">
+                <a href="#">Emergency Alerts<small>(100)</small></a>
+                <a href="#">Successful<small>(3)</small></a>
+                <a href="#">Failed<small>(192)</small></a>
+                <a href="#">Decline<small>(160)</small></a>
+            </nav>
+
+            
+        </footer>
+    </section>
+
+    <!-- Modal-->
+    <div id="modal" data-tuktuk="modal" class="column_5">
+        <header>
+            <h4 class="text book inline">Normal window</h4>
+            <button data-modal="close" class="transparent small on-right inline icon remove"></button>
+        </header>
+        <article>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum assumenda aperiam nobis quam earum nihil veritatis modi possimus blanditiis perferendis obcaecati voluptatibus fuga eaque ad et atque nostrum porro expedita!
+        </article>
+    </div>
+
+    <!-- Aside Right -->
+    <div id="modal-right" data-tuktuk="modal" class="side column_5">
+        <header>
+            <h4 class="inline text book">Side window.</h4>
+            <button data-modal="close" class="transparent small on-right inline icon remove"></button>
+        </header>
+        <article class="form">
+            <label>example of input</label>
+            <input type="text" value="text" />
+            <input type="text" class="large" value="text" />
+
+            <label>Example of textarea</label>
+            <textarea>textarea</textarea>
+            <textarea class="large">textarea</textarea>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt quos dolorum minus fugiat rem similique velit aperiam est sequi neque nulla tenetur minima autem facilis temporibus quaerat consectetur impedit praesentium.
+        </article>
+        <footer>
+            <button data-modal="close">Save</button>
+        </footer>
+    </div>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script src="/js/jquery-2.0.0.min.js"></script>
+    <script src="/js/tuktuk.js"></script>
+    <script src="/js/jquery.playSound.js"></script>
+     <script src="/js/jquery.pnotify.js"></script>
+    <script>
+        TukTuk.Modal.loading();
+        setTimeout( TukTuk.Modal.hide, 1000);
+    </script>
+    <script>
+
+    var map;
+    //lat, lng points
+    var alertPoints = [];
+    //markers
+    var markers = [];
+
+    var alerts = [];
+        jQuery(function($){
+            //append to sidebar all the request with status new
+            $.ajax({
+                url : "/request?status=pending",
+                type : "GET",
+                dataType: "JSON",
+                success : function(data){
+                    var data = data.data;
+                    // localStorage.alert = JSON.stringify(data);
+
+                    for (var key in data){
+                        alerts.push(data[key]);
+                        // alerts[key] = data; 
+                        // alerts.push(data);
+                       $(".side-bar-alert").append(displayAlert(data[key]));
+                    }
+                    initialize();
+                },
+                error : function(err){
+                    alert(err);
+                }
+            });
+            // resize the map when window resize
+            var mapHeight = $("#map-wrapper").height();
+            $("#map-canvas").css({
+                height : mapHeight
+            });
+            $(window).resize(function(){
+                var mapHeight = $("#map-wrapper").height();
+                $("#map-canvas").css({
+                    height : mapHeight
+                });
+                initialize();
+            });
+
+           
+            //listen to socket, append to sidebar realtime when theres an alert, display notification upper right side, push adata to alerts array
+            socket.on('alert', function(data){
+                var data = data[0];
+                $.playSound('/sound/alert');
+                $.pnotify({
+                    title: data.request,
+                    text: data.address,
+                    addclass: 'bck dark'           
+                });
+
+                $(".side-bar-alert").prepend(displayAlert(data));
+                alerts.push(data);
+                // console.log(data);
+                addMarker(new google.maps.LatLng (data.lat, data.lng), displayInfowindow(data));
+                // addMarker(new google.maps.LatLng (data.lat,data.lng));
+            });
+
+            //update client side when respond and decline button clicked
+            socket.on('update', function(){
+             
+                $(".side-bar-alert li").each(function(){
+                    $(this).remove();
+                });
+                alerts = [];
+                markers = [];
+                $.ajax({
+                    url : "/request?status=pending",
+                    type : "GET",
+                    dataType: "JSON",
+                    success : function(data){
+                        var data = data.data;
+                        // localStorage.alert = JSON.stringify(data);
+
+                        for (var key in data){
+                            alerts.push(data[key]);
+                            // alerts[key] = data; 
+                            // alerts.push(data);
+                           $(".side-bar-alert").append(displayAlert(data[key]));
+                        }
+                         initialize();
+                    },
+                    error : function(err){
+                        alert(err);
+                    }
+                });
+
+            });
+            $(".side-bar-alert").on("click"," li button.view-btn",function(){
+                
+                alertid = $(this).data("id");
+                for (var i in alerts) {
+                    if (alerts[i].id == alertid){
+                        showInfo(markers[i]);
+                    }
+                }
+            });
+
+            $(".refreshmap-btn").click(function(){
+
+                refreshMap();
+            });
+
+            $(".side-bar-alert").on("click"," li button.respond-btn",function(){
+                alertid = $(this).data("id");
+                changeStatus("Responded", alertid);
+                // alert = $(this).parent().parent();
+                // alert.remove();
+               
+            });
+
+            $(".side-bar-alert").on("click"," li button.decline-btn",function(){
+                alertid = $(this).data("id");
+                changeStatus("Declined", alertid);
+            });
+
+            
+        });
+    
+
+    //html format to display to sidebar the alert
+    function displayAlert(data, location){
+        
+        var request;
+
+        switch(data.request){
+            case "Ambulance": 
+               request = '<strong class="color theme text bold" style="font-size:25px;"><span class="icon ambulance "></span> Ambulance</strong>';
+            break;
+
+            case "Police":
+                request = '<strong class="color theme text bold" style="font-size:25px;"><span class="icon fighter-jet"></span> Police</strong>';
+            break;
+
+            case "Fire Truck":
+               request = '<strong class="color theme text bold" style="font-size:25px;"><span class="icon fire"></span> Fire truck</strong>';
+            break;
+
+        }
+        html = '<li>'+request+'<br><small>Status: <span>Pending</span></small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon info-sign"></span>'+ data.name+', '+data.age+'</small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon phone"></span> '+ data.mobile+'</small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon home"></span>'+ data.address+'</small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon calendar"></span> '+data.date+' '+ data.time +' </small><br><div data-tuktuk="buttons"><button data-id="'+data.id+'" class="alert tiny decline-btn" style="margin-top:20px;"> Decline</button><button data-id="'+data.id+'" class="tiny success respond-btn" style="margin-top:20px;"> Respond</button><button data-id="'+data.id+'" class="secondary tiny view-btn" style="margin-top:20px;">View</button></div><hr></li>';
+        return html;
+    }
+    //html format to display to infowindow the alert
+    function displayInfowindow(data){
+        var request;
+
+        switch(data.request){
+            case "Ambulance": 
+               request = '<strong class="color theme text bold" style="font-size:14px;"><span class="icon ambulance "></span> Ambulance</strong>';
+            break;
+
+            case "Police":
+                request = '<strong class="color theme text bold" style="font-size:14px;"><span class="icon fighter-jet"></span> Police</strong>';
+            break;
+
+            case "Fire Truck":
+               request = '<strong class="color theme text bold" style="font-size:14px;"><span class="icon fire"></span> Fire truck</strong>';
+            break;
+
+        }
+        html = request+'<br><small>Status: <span>Pending</span></small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon info-sign"></span>'+ data.name+', '+data.age+'</small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon phone"></span> '+ data.mobile+'</small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon home"></span>'+ data.address+'</small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon calendar"></span> '+data.date+' '+ data.time +' </small><br><div data-tuktuk="buttons" class="" style="margin-top:10px;"><button data-id="'+data.id+'" class="alert tiny decline-btn">Decline</button><button data-id="'+data.id+'" class="tiny success respond-btn">Respond</button></div>';
+        return html;
+    }
+    
+   
+    //map initialization
+    function initialize() {
+      
+      var mapOptions = {
+        zoom: 14,
+        center: new google.maps.LatLng(14.554729,121.024445),
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+
+      map = new google.maps.Map(document.getElementById('map-canvas'),
+          mapOptions);
+      alertPoints = [
+          [14.559327,121.019529],
+          [14.557312,121.029722],
+          [14.542878,121.024379],
+          [14.565848,121.051072]
+      ];
+      markers = [];
+      updateMapPoints();
+      // showMarkers();
+    }
+
+    //push marker to markers array and plot points as marker on map
+    function addMarker(location, html) {
+      // console.log(location);
+      var marker = new google.maps.Marker({
+        position: location,
+        map: map,
+        animation: google.maps.Animation.DROP,
+        html : html
+      });
+      markers.push(marker);
+      google.maps.event.addListener(marker, 'click', function() {
+          showInfo(marker);
+      });
+    }
+
+    //get the points on alerts array, convert to gmaps lat lng
+    function updateMapPoints(){
+
+      for (var i in alerts) {
+             
+         addMarker(new google.maps.LatLng (alerts[i].lat, alerts[i].lng), displayInfowindow(alerts[i]));
+            
+      }
+
+    }
+    //info window initialization
+    var infowindow = new google.maps.InfoWindow({});
+   
+    //show info window when view btn and marker click
+    function showInfo(marker){
+        map.panTo(marker.getPosition());
+        infowindow.setContent(marker.html); 
+        infowindow.open(map,marker);
+        map.setZoom(16);
+    }
+
+    //refresh the map, center map to makati
+    function refreshMap(){
+        map.panTo(new google.maps.LatLng(14.554729,121.024445));
+        map.setZoom(14);
+        for (var i in markers){
+            infowindow.close(map, markers[i]);
+        }
+    }
+
+    function changeStatus(status, alertid){
+        $.ajax({
+            url : '/request/update',
+            type : 'POST',
+            data : {
+                status : status,
+                id     : alertid
+            }
+        });
+    }
+
+    // //show markers on map
+    // function showMarkers() {
+    //   setAllMap(map);
+    // }
+
+    // //set the markers to map
+    // function setAllMap(map) {
+    //   for (var i = 0; i < markers.length; i++) {
+    //     markers[i].setMap(map);
+    //   }
+    // }
+   
+    // google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+</body> 
+</html>
