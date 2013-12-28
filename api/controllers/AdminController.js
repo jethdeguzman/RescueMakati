@@ -6,13 +6,16 @@
  */
 
 module.exports = {
-
+	//incoming alerts
 	index : function(req, res){
-		if (req.session.username){
+		// if (req.session.username){
 			res.view();
-		}else{
-			res.redirect('/admin/login');
-		}
+		// }else{
+		// 	res.redirect('/admin/login');
+		// }
+	},
+	record : function(req, res){
+		res.view();
 	},
 	login : function(req, res){
 		res.view();

@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rescue Makati</title>
+    <!-- Mobile Specific Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+    <link rel="stylesheet" href="/styles/tuktuk.css">
+    <link rel="stylesheet" href="/styles/tuktuk.theme.mock.css">
+    <!-- TUKTUK.WIDGETS -->
+    <link rel="stylesheet" href="/styles/tuktuk.icons.css">
+    <link rel="stylesheet" href="/styles/jquery.pnotify.default.css">
+    <link rel="stylesheet" href="/styles/jquery.pnotify.default.icons.css">
+    <style>
+        aside > header .logo {
+            margin-top: 10px;
+            max-height: 30px; }
+
+        aside footer img {
+          height: 16px;
+          position: relative;
+          top: 5px;
+          left: 2px; }
+
+        .thumb {
+            height: 96px;
+            margin-bottom: 2.5em;
+            text-align: center;
+            line-height: 96px;
+        }
+        .column_4.thumb {
+            height: 220px;
+            line-height: 220px;
+        }
+        #map-canvas {
+          height: 577px;
+          width:100%;
+          margin: 0px;
+          padding: 0px
+        }
+        .alert-title{
+          
+          margin-bottom: -20px;
+        }
+        .bg{
+            background: white;
+        }
+
+    </style>
+</head>
+<body data-tuktuk="boxes">
+    <!--Side Bar -->
+
+    <!-- Hidden SideBar -->
+    <aside id="menu" class="absolute bck light column_3">
+        <header class="bck dark">
+            <div class="session on-left">
+                <strong>logged in as <a href="#" class="color default">soyjavi</a></strong>
+            </div>
+            <a href="#" data-box="close" class="on-right text big icon remove color white"></a>
+        </header>
+        <article class="bck light scroll">
+            <img src="http://cdn.tapquo.com/photos/javi_color.jpg" class="responsive padding-left padding-top padding-right"/>
+
+            <div class="margin-left margin-right">
+                <h4 class="text bold color theme inline">Javi Jiménez</h4>
+                <span class="margin-left tag bck color inline text bold">pro</span>
+                <a href="#" class="block"><span class="icon twitter"></span> soyjavi</a>
+            </div>
+
+            <hr/>
+            <div class="margin" data-tuktuk="buttons">
+                <button data-tuktuk-modal="modal" class="theme" data-tip="Click to view a modal window">Modal</button>
+                <button data-tuktuk-modal="modal-right" data-tip="Click to view a side window" class="">Aside Right</button>
+            </div>
+            <hr>
+            <ul class="margin" data-tuktuk="totals">
+                <li><strong>3609</strong><small>followers</small></li>
+                <li><strong>138</strong><small>following</small></li>
+                <li><strong>14</strong><small>lists</small></li>
+            </ul>
+            <hr>
+            <div class="margin">
+                <strong class="text big normal block ">About <a href="#">Orman Clark</a></strong>
+                <div class="display block  text justify small">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</div>
+            </div>
+            <nav data-tuktuk="menu" class="text bold">
+                <a href="#" class="active"><span class="icon user"></span>Shots<small>(100)</small></a>
+                <a href="#"><span class="icon heart"></span>Trending<small>(3)</small></a>
+                <a href="#"><span class="icon group"></span>Following<small>(192)</small></a>
+                <a href="#"><span class="icon star"></span>Debuts<small>(160)</small></a>
+            </nav>
+        </article>
+    </aside>
+
+
+    <!--Shown Side Bar -->
+    <aside class="column_3">
+        <header class="bck color text center ">
+            <h3 class="color white"><strong>Rescue</strong> Makati </h3>
+            <!-- img src="../images/logo-white.png" class="logo on-left"/> -->
+            
+        </header>
+        
+        <header class="bck dark">
+
+                <h5 class="text normal align center"><span class="icon eye-open"></span> View Records </h5>
+
+        </header>
+
+        <!-- <header class="bck dark">
+        <form>
+          
+        </form>
+        </header> -->
+        
+        <header class="bck theme">
+            <h4 class="text center" ><span  class="icon filter"></span>Set <strong>Filters</strong></h4>
+        </header>
+        <article class="bck dark scroll" style="height:-30px;">
+            <br>
+            <form>
+                 <strong style="margin-left:15px;">View: </strong> 
+                 <br/>
+                 <div class="text center">
+                    <input type="radio" name="map"  /><span>Map</span>
+                    <input type="radio" name="table"  /><span>Table</span>
+                </div>
+                <br/>
+                <strong style="margin-left:15px;">Status:</strong>
+                <br/>
+                <div class="text center">
+                <span class="select margin-left margin-right" style="width:200px;">
+                    <select >
+                        <option value="1">All</option>
+                        <option value="1">Responded</option>
+                        <option value="2">Declined</option>
+                        <option value="3">Pending</option>
+                    </select>
+                </span>
+                </div>
+                <br/>
+                <strong style="margin-left:15px;">Request:</strong>
+                <br/>
+                <div class="text center">
+                <span class="select margin-left margin-right" style="width:200px;">
+                    <select >
+                        <option value="1">All</option>
+                        <option value="1">Ambulance</option>
+                        <option value="2">Police</option>
+                        <option value="3">Fire Truck</option>
+                    </select>
+                </span>
+                </div>
+                <br/>
+                <strong style="margin-left:15px;">To:</strong>
+                <br/>
+                <div class="text center">
+                <input type="date" style="margin-left:-20px; width:200px;">
+                </div>
+                <br/>
+                <strong style="margin-left:15px;">From:</strong>
+                <br/>
+                <div class="text center">
+                <input type="date" style="margin-left:-20px; width:200px;">
+                </div>
+              
+            </form>
+            
+        </article>
+       
+        
+
+
+        <footer class="bck color text center" style="padding:5px;">
+             Handcrafted by <a href="http://tapquo.com" class="display inline"><img src="http://cdn.tapquo.com/images/logo_footer.png"/></a>
+            
+        </footer>
+    </aside>
+
+
+
+    <!-- Main Content -->
+
+    <section>
+        <header style="background:#ECF0F1;">
+            <h3 class="on-left text thin">Mobile Emergency Response Application</h3>
+            <nav class="on-right">
+                <span>Welcome Admin</span>
+                <button class="tiny secondary"><span class="icon signout"></span> Logout</button>
+                
+            </nav>
+        </header> 
+        <article id="map-wrapper"  class="">
+             <div id="map-canvas"></div>
+        </article>
+
+        <footer class="bck light">
+            <nav class="on-left text bold" data-tuktuk="menu">
+                <a href="/admin" ><span class="icon bell-alt"></span> Incoming Alerts</a>
+                <a href="/admin/record" class="active"><span class="icon eye-open"></span> View Records</a>
+                <a href="#"><span class="icon road"></span> Track Units</a>
+                <a href="#"><span class="icon cogs"></span> Settings</a>
+                
+            </nav>
+            <!-- <nav class="on-left" data-tuktuk="menu">
+                <button class="tiny" style="margin-right:10px;"><span class="icon cog"></span>View All Records</button>
+                <button class="tiny alert" style="margin-right:10px;"><span class="icon cog"></span>Track Units</button>
+                <button class="tiny secondary"><span class="icon cog"></span>Settings</button>
+            </nav> -->
+            
+        </footer>
+    </section>
+
+    <!-- Modal-->
+    <div id="modal" data-tuktuk="modal" class="column_5">
+        <header>
+            <h4 class="text book inline">Normal window</h4>
+            <button data-modal="close" class="transparent small on-right inline icon remove"></button>
+        </header>
+        <article>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum assumenda aperiam nobis quam earum nihil veritatis modi possimus blanditiis perferendis obcaecati voluptatibus fuga eaque ad et atque nostrum porro expedita!
+        </article>
+    </div>
+
+    <!-- Aside Right -->
+    <div id="modal-right" data-tuktuk="modal" class="side column_5">
+        <header>
+            <h4 class="inline text book">Side window.</h4>
+            <button data-modal="close" class="transparent small on-right inline icon remove"></button>
+        </header>
+        <article class="form">
+            <label>example of input</label>
+            <input type="text" value="text" />
+            <input type="text" class="large" value="text" />
+
+            <label>Example of textarea</label>
+            <textarea>textarea</textarea>
+            <textarea class="large">textarea</textarea>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt quos dolorum minus fugiat rem similique velit aperiam est sequi neque nulla tenetur minima autem facilis temporibus quaerat consectetur impedit praesentium.
+        </article>
+        <footer>
+            <button data-modal="close">Save</button>
+        </footer>
+    </div>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script src="/js/jquery-2.0.0.min.js"></script>
+    <script src="/js/tuktuk.js"></script>
+    <script src="/js/jquery.playSound.js"></script>
+     <script src="/js/jquery.pnotify.js"></script>
+    <script>
+        TukTuk.Modal.loading();
+        setTimeout( TukTuk.Modal.hide, 1000);
+    </script>
+    <script>
+
+    </script>
+</body> 
+</html>
