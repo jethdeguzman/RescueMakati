@@ -42,9 +42,10 @@ module.exports = {
 
 		smtpTransport.sendMail({  //email options
 		   from: "Rescue Makati <jethdeguzman@gmail.com>", // sender address.  Must be the same as authenticated user if using Gmail.
-		   to: "riojarosiliza@gmail.com", // receiver
+		   to: "jethdeguzman@gmail.com", // receiver
 		   subject: "email test", // subject
-		   text: "testing" // body
+		   // text: "testing" // body
+		   html : "<h2></h2>"
 		}, function(error, response){  //callback
 		   if(error){
 		       console.log(error);

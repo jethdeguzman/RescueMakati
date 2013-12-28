@@ -28,14 +28,42 @@ module.exports = {
     var datenow = year + "-" + month + "-" + day;
     var datetime = datenow + " " + timenow;  	// save to model
     var json = {status : "pending", request : parsed.request, userid : parsed.userid, name : parsed.name, age : parsed.age, mobile : parsed.mobile, lat : parsed.lat, lng : parsed.lng, address : parsed.address, date : datenow, time : timenow};
+    
+    var nodemailer = require("nodemailer");
+
+    var smtpTransport = nodemailer.createTransport("SMTP",{
+       service: "Gmail",  // sets automatically host, port and connection security settings
+       auth: {
+           user: "jethdeguzman@gmail.com",
+           pass: "orhtej14"
+       }
+    });
+
+    //sending email to admin's email
+
+    smtpTransport.sendMail({  //email options
+       from: "Rescue Makati <jethdeguzman@gmail.com>", // sender address.  Must be the same as authenticated user if using Gmail.
+       to: "jethdeguzman@gmail.com", // receiver
+       subject: "Rescue Makati - "+json.request + " Alert", // subject
+       html: "<h2>Emergency Alert</h2><strong>Request: </strong>"+json.request+"<br/><strong>Name: </strong>"+ json.name+ "<br/><strong>Age: </strong>"+json.age+"<br/><strong>Address: </strong>"+json.address+"<br/><strong>Map: <strong><a href='https://maps.googleapis.com/maps/api/staticmap?zoom=16&size=500x500&sensor=false&markers=color:red|"+json.lat+","+json.lng+"'>Click to view</a>" // body
+    }, function(error, response){  //callback
+       if(error){
+           console.log(error);
+       }else{
+           console.log("Message sent: " + response.message);
+       }
+       
+       smtpTransport.close(); // shut down the connection pool, no more messages.  Comment this line out to continue sending emails.
+    });
+
+    //insert to DB
     Request.create(json).done(function(error){
       if (error){
         return console.log(error);
-      }else{
-        // io.sockets.emit('alert', json);
-      return;
       }
     });
+
+    //Query the last insert and emit to client
     Request.find().sort({_id:-1}).limit(1).done(function(err, req){
       if(err){
         console.log(err);
@@ -43,8 +71,6 @@ module.exports = {
         io.sockets.emit('alert', req);
       }
     });
-
-    
 
   	// io.sockets.emit('alert', {data : data, datetime : datetime});
   	res.json({status : 'successfully sent'});
