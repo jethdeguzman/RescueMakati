@@ -7,11 +7,21 @@
 
 module.exports = {
 
-  /* e.g.
-  sayHello: function (req, res) {
-    res.send('hello world!');
-  }
-  */
+    index : function(req, res){
+    var status = req.param('status');
+    if (status == "pending"){
+      Request.find({status : status}).sort('createdAt DESC').done(function(err, req){
+        if (err){
+          return console.log(err);
+        } else { 
+          res.json({'data' : req});
+        }
+      });
+    }else{
+
+    }
+   
+  },
   add : function(req, res){
   	var socket = req.socket;
   	var io = sails.io;
@@ -26,8 +36,10 @@ module.exports = {
     var month = date.getMonth()+1;
     var day = date.getDate();
     var datenow = year + "-" + month + "-" + day;
-    var datetime = datenow + " " + timenow;  	// save to model
-    var json = {status : "pending", request : parsed.request, userid : parsed.userid, name : parsed.name, age : parsed.age, mobile : parsed.mobile, lat : parsed.lat, lng : parsed.lng, address : parsed.address, date : datenow, time : timenow};
+    var datetime = datenow + " " + timenow;
+    var datefinal = new Date(datenow).getTime();  	
+    // save to model
+    var json = {status : "Pending", request : parsed.request, userid : parsed.userid, name : parsed.name, age : parsed.age, mobile : parsed.mobile, lat : parsed.lat, lng : parsed.lng, address : parsed.address, date : datefinal};
     
     var nodemailer = require("nodemailer");
 
@@ -77,47 +89,68 @@ module.exports = {
   	// res.send('request');
   },
 
-  index : function(req, res){
-    var status = req.param('status');
-    if (status == "pending"){
-      Request.find({status : status}).sort('createdAt DESC').done(function(err, req){
-        if (err){
-          return console.log(err);
-        } else { 
+  sort : function(req, res){
+    
+    var status = req.param("stat");
+    var request = req.param("req");
+    var from = req.param("from");
+    var to = req.param("to");
+
+    if (request == "All"){
+      Request.find().where({status : status, date : {$gte : new Date(from).getTime(), $lte : new Date(to).getTime()}}).done(function(err, req){
+        if(err){
+          console.log(err);
+        }else{
           res.json({'data' : req});
         }
       });
     }else{
-
+      Request.find().where({status : status, request : request, date : {$gte : new Date(from).getTime(), $lte : new Date(to).getTime()}}).done(function(err, req){
+        if(err){
+          console.log(err);
+        }else{
+          res.json({'data' : req});
+        }
+      });
     }
-   
+    // res.view('request/sort-map');
   },
-
   addmark : function(req, res){
       var socket = req.socket;
       var io = sails.io;
       var num = req.param("num");
-     
+      
+      var date = new Date();
+      var hour = date.getHours();
+      var min = date.getMinutes();
+      var sec = date.getSeconds();
+      var timenow = hour + ":" + min + ":" + sec;
+      var year = date.getFullYear();
+      var month = date.getMonth()+1;
+      var day = date.getDate();
+      var datenow = year + "-" + month + "-" + day;
+      var datetime = datenow + " " + timenow;
+      var datefinal = new Date(datenow).getTime(); 
       
       switch(num){
         case "1":
         console.log(num);
-        var json = {status : "pending", request : "Ambulance", userid : "0001", name : "Mark Anthony Muya", age : 21, mobile : "09228345029", lat : 14.559327, lng : 121.019529, address : "Makati City", date : "2013-12-21", time : "7:17:00"};
+        var json = {status : "Pending", request : "Ambulance", userid : "0001", name : "Mark Anthony Muya", age : 21, mobile : "09228345029", lat : 14.559327, lng : 121.019529, address : "Makati City", date : datefinal};
           create(json);
         break;
 
         case "2":
-          var json = {status : "pending", request : "Police", userid : "0001", name : "Kim Lleno", age : 21, mobile : "09228345029", lat : 14.557312, lng : 121.029722, address : "Makati City", date : "2013-12-21", time : "7:17:00"};
+          var json = {status : "Pending", request : "Police", userid : "0001", name : "Kim Lleno", age : 21, mobile : "09228345029", lat : 14.557312, lng : 121.029722, address : "Makati City", date : datefinal};
           create(json);
         break;
 
         case "3":
-         var json = {status : "pending", request : "Fire Truck", userid : "0001", name : "Mark Penaranda", age : 21, mobile : "09228345029", lat : 14.542878, lng : 121.024379, address : "Makati City", date : "2013-12-21", time : "7:17:00"};
+         var json = {status : "Pending", request : "Fire Truck", userid : "0001", name : "Mark Penaranda", age : 21, mobile : "09228345029", lat : 14.542878, lng : 121.024379, address : "Makati City", date : datefinal};
          create(json);
         break;
 
         case "4":
-        var json = {status : "pending", request : "Ambulance", userid : "0001", name : "Naila Obnial", age : 21, mobile : "09228345029", lat : 14.565848, lng : 121.051072, address : "Makati City", date : "2013-12-21", time : "7:17:00"};
+        var json = {status : "Pending", request : "Ambulance", userid : "0001", name : "Naila Obnial", age : 21, mobile : "09228345029", lat : 14.565848, lng : 121.051072, address : "Makati City", date : datefinal};
         create(json);
         break;
       }

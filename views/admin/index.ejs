@@ -44,7 +44,7 @@
           margin-bottom: -20px;
         }
         .bg{
-            background: white;
+            background-color: white;
         }
 
     </style>
@@ -193,7 +193,7 @@
     <!-- Main Content -->
 
     <section>
-        <header style="background:#ECF0F1;">
+        <header style="background-color:#ECF0F1;">
             <h3 class="on-left text thin">Mobile Emergency Response Application</h3>
             <nav class="on-right">
                 <span>Welcome Admin</span>
@@ -257,7 +257,10 @@
     <script src="/js/jquery-2.0.0.min.js"></script>
     <script src="/js/tuktuk.js"></script>
     <script src="/js/jquery.playSound.js"></script>
-     <script src="/js/jquery.pnotify.js"></script>
+    <script src="/js/jquery.pnotify.js"></script>
+<!--     // <script src="/js/easing.js"></script>
+    // <script src="/js/jquery.smooth-scroll.js"></script> -->
+
     <script>
         TukTuk.Modal.loading();
         setTimeout( TukTuk.Modal.hide, 1000);
@@ -382,6 +385,7 @@
                 changeStatus("Declined", alertid);
             });
 
+
             
         });
     
@@ -405,7 +409,17 @@
             break;
 
         }
-        html = '<li>'+request+'<br><small>Status: <span>Pending</span></small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon info-sign"></span>'+ data.name+', '+data.age+'</small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon phone"></span> '+ data.mobile+'</small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon home"></span>'+ data.address+'</small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon calendar"></span> '+data.date+' '+ data.time +' </small><br><div data-tuktuk="buttons"><button data-id="'+data.id+'" class="alert tiny decline-btn" style="margin-top:20px;"> Decline</button><button data-id="'+data.id+'" class="tiny success respond-btn" style="margin-top:20px;"> Respond</button><button data-id="'+data.id+'" class="secondary tiny view-btn" style="margin-top:20px;">View</button></div><hr></li>';
+        var date = new Date(data.createdAt);
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        var sec = date.getSeconds();
+        var timenow = hour + ":" + min + ":" + sec;
+        var year = date.getFullYear();
+        var month = date.getMonth()+1;
+        var day = date.getDate();
+        var datenow = year + "-" + month + "-" + day;
+        var datetime = datenow + " " + timenow;
+        html = '<li id='+data.id+'>'+request+'<br><small>Status: <span>Pending</span></small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon info-sign"></span>'+ data.name+', '+data.age+'</small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon phone"></span> '+ data.mobile+'</small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon home"></span>'+ data.address+'</small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon calendar"></span> '+datetime+' </small><br><div data-tuktuk="buttons"><button data-id="'+data.id+'" class="alert tiny decline-btn" style="margin-top:20px;"> Decline</button><button data-id="'+data.id+'" class="tiny success respond-btn" style="margin-top:20px;"> Respond</button><button data-id="'+data.id+'" class="secondary tiny view-btn" style="margin-top:20px;">View</button></div><hr></li>';
         return html;
     }
     //html format to display to infowindow the alert
@@ -426,7 +440,17 @@
             break;
 
         }
-        html = request+'<br><small>Status: <span>Pending</span></small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon info-sign"></span>'+ data.name+', '+data.age+'</small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon phone"></span> '+ data.mobile+'</small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon home"></span>'+ data.address+'</small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon calendar"></span> '+data.date+' '+ data.time +' </small><br><div data-tuktuk="buttons" class="" style="margin-top:10px;"><button data-id="'+data.id+'" class="alert tiny decline-btn">Decline</button><button data-id="'+data.id+'" class="tiny success respond-btn">Respond</button></div>';
+        var date = new Date(data.createdAt);
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        var sec = date.getSeconds();
+        var timenow = hour + ":" + min + ":" + sec;
+        var year = date.getFullYear();
+        var month = date.getMonth()+1;
+        var day = date.getDate();
+        var datenow = year + "-" + month + "-" + day;
+        var datetime = datenow + " " + timenow;
+        html = request+'<br><small>Status: <span>Pending</span></small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon info-sign"></span>'+ data.name+', '+data.age+'</small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon phone"></span> '+ data.mobile+'</small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon home"></span>'+ data.address+'</small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon calendar"></span> '+datetime+' </small><br>';
         return html;
     }
     
@@ -467,6 +491,8 @@
           showInfo(marker);
       });
     }
+
+
 
     //get the points on alerts array, convert to gmaps lat lng
     function updateMapPoints(){

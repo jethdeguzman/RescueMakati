@@ -19,9 +19,8 @@ module.exports = {
   	mobie : 'STRING',
   	lat : 'FLOAT',
   	lng : 'FLOAT',
-  	date : 'STRING',
-  	time : 'STRING'
-  	
+    address : 'STRING',
+    date : "INTEGER"
   }
 
 };

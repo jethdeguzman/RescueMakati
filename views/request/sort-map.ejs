@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+<style>
+    #map-canvas {
+      height: 577px;
+      width:100%;
+      margin: 0px;
+      padding: 0px
+    }
+</style>
+
+</head>
+<body>
+    <div id="map-canvas"></div>
+     <!-- <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script> -->
+    <script src="/js/jquery-2.0.0.min.js"></script>
+    <script type="text/javascript">
+
+        var map;
+        //lat, lng points
+        var alertPoints = [];
+        //markers
+        var markers = [];
+
+        var alerts = [];
+            jQuery(function($){
+                //append to sidebar all the request with status new
+                $.ajax({
+                    url : "/request?status=pending",
+                    type : "GET",
+                    dataType: "JSON",
+                    success : function(data){
+                        var data = data.data;
+
+                        for (var key in data){
+                            alerts.push(data[key]);
+                        }
+                        initialize();
+                    },
+                    error : function(err){
+                        alert(err);
+                    }
+                });
+                // resize the map when window resize
+                var mapHeight = $("#map-wrapper").height();
+                $("#map-canvas").css({
+                    height : mapHeight
+                });
+                $(window).resize(function(){
+                    var mapHeight = $("#map-wrapper").height();
+                    $("#map-canvas").css({
+                        height : mapHeight
+                    });
+                    initialize();
+                });
+
+               
+                
+               
+                
+
+             
+
+
+                
+            });
+        
+
+ 
+        //html format to display to infowindow the alert
+        function displayInfowindow(data){
+            var request;
+
+            switch(data.request){
+                case "Ambulance": 
+                   request = '<strong class="color theme text bold" style="font-size:14px;"><span class="icon ambulance "></span> Ambulance</strong>';
+                break;
+
+                case "Police":
+                    request = '<strong class="color theme text bold" style="font-size:14px;"><span class="icon fighter-jet"></span> Police</strong>';
+                break;
+
+                case "Fire Truck":
+                   request = '<strong class="color theme text bold" style="font-size:14px;"><span class="icon fire"></span> Fire truck</strong>';
+                break;
+
+            }
+            var date = new Date(data.createdAt);
+            var hour = date.getHours();
+            var min = date.getMinutes();
+            var sec = date.getSeconds();
+            var timenow = hour + ":" + min + ":" + sec;
+            var year = date.getFullYear();
+            var month = date.getMonth()+1;
+            var day = date.getDate();
+            var datenow = year + "-" + month + "-" + day;
+            var datetime = datenow + " " + timenow;
+            html = request+'<br><small>Status: <span>Pending</span></small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon info-sign"></span>'+ data.name+', '+data.age+'</small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon phone"></span> '+ data.mobile+'</small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon home"></span>'+ data.address+'</small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon calendar"></span> '+datetime+' </small><br>';
+            return html;
+        }
+        
+        
+        //map initialization
+        function initialize() {
+          
+          var mapOptions = {
+            zoom: 14,
+            center: new google.maps.LatLng(14.554729,121.024445),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+          };
+
+          map = new google.maps.Map(document.getElementById('map-canvas'),
+              mapOptions);
+          alertPoints = [
+              [14.559327,121.019529],
+              [14.557312,121.029722],
+              [14.542878,121.024379],
+              [14.565848,121.051072]
+          ];
+          markers = [];
+          updateMapPoints();
+          // showMarkers();
+        }
+
+        //push marker to markers array and plot points as marker on map
+        function addMarker(location, html) {
+          // console.log(location);
+          var marker = new google.maps.Marker({
+            position: location,
+            map: map,
+            animation: google.maps.Animation.DROP,
+            html : html
+          });
+          markers.push(marker);
+          google.maps.event.addListener(marker, 'click', function() {
+              showInfo(marker);
+          });
+        }
+
+
+        //get the points on alerts array, convert to gmaps lat lng
+        function updateMapPoints(){
+
+          for (var i in alerts) {
+                 
+             addMarker(new google.maps.LatLng (alerts[i].lat, alerts[i].lng), displayInfowindow(alerts[i]));
+                
+          }
+
+        }
+        //info window initialization
+        var infowindow = new google.maps.InfoWindow({});
+        
+        //show info window when view btn and marker click
+        function showInfo(marker){
+            map.panTo(marker.getPosition());
+            infowindow.setContent(marker.html); 
+            infowindow.open(map,marker);
+            map.setZoom(16);
+        }
+
+        //refresh the map, center map to makati
+        function refreshMap(){
+            map.panTo(new google.maps.LatLng(14.554729,121.024445));
+            map.setZoom(14);
+            for (var i in markers){
+                infowindow.close(map, markers[i]);
+            }
+        }
+
+   
+
+    </script>
+
+</body>
+</html>
+
