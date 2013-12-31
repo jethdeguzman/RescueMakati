@@ -52,49 +52,6 @@
 <body data-tuktuk="boxes">
     <!--Side Bar -->
 
-    <!-- Hidden SideBar -->
-    <aside id="menu" class="absolute bck light column_3">
-        <header class="bck dark">
-            <div class="session on-left">
-                <strong>logged in as <a href="#" class="color default">soyjavi</a></strong>
-            </div>
-            <a href="#" data-box="close" class="on-right text big icon remove color white"></a>
-        </header>
-        <article class="bck light scroll">
-            <img src="http://cdn.tapquo.com/photos/javi_color.jpg" class="responsive padding-left padding-top padding-right"/>
-
-            <div class="margin-left margin-right">
-                <h4 class="text bold color theme inline">Javi Jiménez</h4>
-                <span class="margin-left tag bck color inline text bold">pro</span>
-                <a href="#" class="block"><span class="icon twitter"></span> soyjavi</a>
-            </div>
-
-            <hr/>
-            <div class="margin" data-tuktuk="buttons">
-                <button data-tuktuk-modal="modal" class="theme" data-tip="Click to view a modal window">Modal</button>
-                <button data-tuktuk-modal="modal-right" data-tip="Click to view a side window" class="">Aside Right</button>
-            </div>
-            <hr>
-            <ul class="margin" data-tuktuk="totals">
-                <li><strong>3609</strong><small>followers</small></li>
-                <li><strong>138</strong><small>following</small></li>
-                <li><strong>14</strong><small>lists</small></li>
-            </ul>
-            <hr>
-            <div class="margin">
-                <strong class="text big normal block ">About <a href="#">Orman Clark</a></strong>
-                <div class="display block  text justify small">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</div>
-            </div>
-            <nav data-tuktuk="menu" class="text bold">
-                <a href="#" class="active"><span class="icon user"></span>Shots<small>(100)</small></a>
-                <a href="#"><span class="icon heart"></span>Trending<small>(3)</small></a>
-                <a href="#"><span class="icon group"></span>Following<small>(192)</small></a>
-                <a href="#"><span class="icon star"></span>Debuts<small>(160)</small></a>
-            </nav>
-        </article>
-    </aside>
-
-
     <!--Shown Side Bar -->
     <aside class="column_3">
         <header class="bck color text center ">
@@ -199,6 +156,7 @@
             <nav class="on-right">
                 <span>Welcome Admin</span>
                 <button class="tiny secondary"><span class="icon signout"></span> Logout</button>
+                <button class="tiny secondary" data-tuktuk-modal="settings"><span class="icon cog"></span></button>
                 
             </nav>
         </header> 
@@ -214,6 +172,7 @@
                             <th>Age</th>
                             <th>Mobile</th>
                             <th>Address</th>
+                            <th>Request</th>
                         </tr>
                     </thead>
                     <tbody class="record-tbody">
@@ -228,7 +187,7 @@
                 <a href="/admin" ><span class="icon bell-alt"></span> Incoming Alerts</a>
                 <a href="/admin/record" class="active"><span class="icon eye-open"></span> View Records</a>
                 <a href="#"><span class="icon road"></span> Track Units</a>
-                <a href="#"><span class="icon cogs"></span> Settings</a>
+                
                 
             </nav>
           
@@ -248,23 +207,34 @@
     </div>
 
     <!-- Aside Right -->
-    <div id="modal-right" data-tuktuk="modal" class="side column_5">
+    <div id="settings" data-tuktuk="modal" class="side column_5">
         <header>
-            <h4 class="inline text book">Side window.</h4>
-            <button data-modal="close" class="transparent small on-right inline icon remove"></button>
+            <h4 class="inline text book"><span class="icon cogs"></span> Settings</h4>
+            <button data-modal="close" class="transparent small on-right inline icon remove" onclick="JavaScript:location.reload();"></button>
         </header>
-        <article class="form">
-            <label>example of input</label>
-            <input type="text" value="text" />
-            <input type="text" class="large" value="text" />
-
-            <label>Example of textarea</label>
-            <textarea>textarea</textarea>
-            <textarea class="large">textarea</textarea>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt quos dolorum minus fugiat rem similique velit aperiam est sequi neque nulla tenetur minima autem facilis temporibus quaerat consectetur impedit praesentium.
+        <article class="scroll">
+          <strong class="text thin" style="font-size:28px;">Access</strong>
+          <form class="">
+            <label>Username</label>
+            <span style="position:relative; display:block;">
+            <input class="username-settings" type="text" style="display:inline; width:70%;">
+            <button class="thin secondary change-btn" data-field="username" style="display:inline;">Change</button>
+            </span>
+            <label>Password</label>
+            <span style="position:relative; display:block;">
+            <input class="password-settings" type="password" value="" style="display:inline; width:70%;">
+            <button class="thin secondary change-btn" data-field="password" style="display:inline;">Change</button>
+            </span>
+            <label>Email</label>
+            <span style="position:relative; display:block;">
+            <input class="email-settings" type="email" style="display:inline; width:70%;">
+            <button class="thin secondary change-btn" data-field="email" style="display:inline;">Change</button>
+            </span>
+          </form>
+          <span class="change-alert" style="text-align:center; font-size:20px; padding:20px; position:relative; display:block;">Successfully Updated</span>
         </article>
-        <footer>
-            <button data-modal="close">Save</button>
+        <footer class="bck light">
+            &nbsp;
         </footer>
     </div>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
@@ -303,7 +273,8 @@
                  var day = date.getDate();
                  var datenow = year + "-" + month + "-" + day;
                  var datetime = datenow + " | " + timenow;     
-
+                 //hide change alert on settings
+                 $(".change-alert").hide();
                  //setting NOW to date fields
                  $(".from-date").val(datenow);
                  $(".to-date").val(datenow);
@@ -354,7 +325,7 @@
                             var day = date.getDate();
                             var datenow = year + "-" + month + "-" + day;
                             var datetime = datenow + " | " + timenow;
-                             $(".record-tbody").append("<tr class='record-item'><td>"+datenow+"</td><td>"+timenow+"</td><td>"+data[key].name+"</td><td>"+data[key].age+"</td><td>"+data[key].mobile+"</td><td>"+data[key].address+"</td></tr>");
+                             $(".record-tbody").prepend("<tr class='record-item'><td>"+datenow+"</td><td>"+timenow+"</td><td>"+data[key].name+"</td><td>"+data[key].age+"</td><td>"+data[key].mobile+"</td><td>"+data[key].address+"</td><td>"+data[key].request+"</td></tr>");
                         }
                         initialize();
                     },
@@ -409,7 +380,7 @@
                                     var day = date.getDate();
                                     var datenow = year + "-" + month + "-" + day;
                                     var datetime = datenow + " " + timenow;
-                                    $(".record-tbody").append("<tr class='record-item'><td>"+datenow+"</td><td>"+timenow+"</td><td>"+data[key].name+"</td><td>"+data[key].age+"</td><td>"+data[key].mobile+"</td><td>"+data[key].address+"</td></tr>");
+                                    $(".record-tbody").prepend("<tr class='record-item'><td>"+datenow+"</td><td>"+timenow+"</td><td>"+data[key].name+"</td><td>"+data[key].age+"</td><td>"+data[key].mobile+"</td><td>"+data[key].address+"</td><td>"+data[key].request+"</td></tr>");
                                 }
                                 initialize();
                             },
@@ -423,6 +394,46 @@
                 $(".refreshmap-btn").click(function(e){
                     e.preventDefault();
                     refreshMap();
+
+                });
+
+                socket.on('alert', function(data){
+                    var data = data[0];
+                    $.playSound('/sound/alert');
+                    $.pnotify({
+                        title: data.request,
+                        text: data.address,
+                        addclass: 'bck dark'           
+                    });
+                });
+
+                $.ajax({
+                    url : "/admin/access",
+                    type : "GET",
+                    success : function(data){
+                        $(".username-settings").val(data[0].username);
+                        $(".email-settings").val(data[0].email);
+                       
+                    }
+                });
+
+                $(".change-btn").click(function(e){
+                    e.preventDefault();
+                    value = $(this).prev().val();
+                    field = $(this).data("field");
+                    $.ajax({
+                        url : "/admin/update",
+                        type : "GET",
+                        data : {
+                            value : value,
+                            field : field
+                        },
+                        success : function(data){
+                            if(data){
+                                $(".change-alert").fadeIn(200);
+                            }
+                        }
+                    });
                 });
 
 

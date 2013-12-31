@@ -10,10 +10,19 @@ module.exports = {
 
   attributes: {
   	
-  	/* e.g.
-  	nickname: 'string'
-  	*/
+  	username: "STRING",
+  	password : "STRING",
+  	email : "STRING"
     
+  },
+
+  beforeCreate: function(values, next) {
+  	var bcrypt = require('bcrypt');
+    bcrypt.hash(values.password, 10, function(err, hash) {
+      if(err) return next(err);
+      values.password = hash;
+      next();
+    });
   }
 
 };

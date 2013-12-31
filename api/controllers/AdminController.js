@@ -8,11 +8,11 @@
 module.exports = {
 	//incoming alerts
 	index : function(req, res){
-		// if (req.session.username){
+		if (req.session.username){
 			res.view();
-		// }else{
-		// 	res.redirect('/admin/login');
-		// }
+		}else{
+			res.redirect('/admin/login');
+		}
 	},
 	record : function(req, res){
 		res.view();
@@ -24,6 +24,35 @@ module.exports = {
 		req.session.username = "jethro";
 		res.send("ok");
 	},
+	access : function(req, res){
+		var bcrypt = require('bcrypt');
+		Admin.find().limit(1).done(function(err, admin){
+			if(err){
+
+			}else{
+				res.json(admin);
+			}
+		});
+	},
+	update : function(req, res){
+		var bcrypt = require('bcrypt');
+		var value = req.param("value");
+		var field = req.param("field");
+		var salt = bcrypt.genSaltSync(10);
+		if(field == "password"){
+			value = bcrypt.hashSync(value, salt);
+		}
+		var obj = {};
+		obj[field] = value;
+		Admin.update({_id : "52c21893189607ab1cdb7173"}, obj, function(err, admin){
+			if(err){
+				console.log(err);
+			}else{
+				return true;
+			}
+		});
+		res.send(true);	
+	},
 	flush : function(req, res){
 		req.session.destroy(function(err){
 			if(err){
@@ -31,6 +60,25 @@ module.exports = {
 			}
 		});
 		res.send('ok');
+	},
+	insert : function(req, res){
+		Admin.create({username:"admin",password: "123456", email:"jethdeguzman@gmail.com" }).done(function(err, admin){
+			if(err){
+				console.log(err);
+			}
+		});
+		res.send('ok');
+	},
+	find : function(req, res){
+		var bcrypt = require('bcrypt');
+		Admin.findOne({username : "@dMiN"}).done(function(err, admin){
+			if(err){
+
+			}else{
+				console.log(bcrypt.compareSync("1234s6",admin.password));
+			}
+		});
+
 	},
 	mail : function(req, res){
 		var nodemailer = require("nodemailer");

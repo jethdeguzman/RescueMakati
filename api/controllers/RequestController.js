@@ -52,21 +52,29 @@ module.exports = {
     });
 
     //sending email to admin's email
+    var email;
+    Admin.find().limit(1).done(function(err, admin){
 
-    smtpTransport.sendMail({  //email options
-       from: "Rescue Makati <jethdeguzman@gmail.com>", // sender address.  Must be the same as authenticated user if using Gmail.
-       to: "jethdeguzman@gmail.com", // receiver
-       subject: "Rescue Makati - "+json.request + " Alert", // subject
-       html: "<h2>Emergency Alert</h2><strong>Request: </strong>"+json.request+"<br/><strong>Name: </strong>"+ json.name+ "<br/><strong>Age: </strong>"+json.age+"<br/><strong>Address: </strong>"+json.address+"<br/><strong>Map: <strong><a href='https://maps.googleapis.com/maps/api/staticmap?zoom=16&size=500x500&sensor=false&markers=color:red|"+json.lat+","+json.lng+"'>Click to view</a>" // body
-    }, function(error, response){  //callback
-       if(error){
-           console.log(error);
-       }else{
-           console.log("Message sent: " + response.message);
-       }
-       
-       smtpTransport.close(); // shut down the connection pool, no more messages.  Comment this line out to continue sending emails.
+       email = admin[0].email;
+
+       smtpTransport.sendMail({  //email options
+          from: "Rescue Makati <jethdeguzman@gmail.com>", // sender address.  Must be the same as authenticated user if using Gmail.
+          to: email, // receiver
+          subject: "Rescue Makati - "+json.request + " Alert", // subject
+          html: "<h2>Emergency Alert</h2><strong>Request: </strong>"+json.request+"<br/><strong>Name: </strong>"+ json.name+ "<br/><strong>Age: </strong>"+json.age+"<br/><strong>Address: </strong>"+json.address+"<br/><strong>Map: <strong><a href='https://maps.googleapis.com/maps/api/staticmap?zoom=16&size=500x500&sensor=false&markers=color:red|"+json.lat+","+json.lng+"'>Click to view</a>" // body
+       }, function(error, response){  //callback
+          if(error){
+              console.log(error);
+          }else{
+              console.log("Message sent: " + response.message);
+          }
+          
+          smtpTransport.close(); // shut down the connection pool, no more messages.  Comment this line out to continue sending emails.
+       });
+      return;
     });
+    
+   
 
     //insert to DB
     Request.create(json).done(function(error){
