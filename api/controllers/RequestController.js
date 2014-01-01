@@ -63,7 +63,7 @@ module.exports = {
           service: "Gmail",  // sets automatically host, port and connection security settings
           auth: {
               user: "jethdeguzman@gmail.com",
-              pass: "orhtej14"
+              pass: "jgnmltbkxryetsed"
           }
        });
 
