@@ -52,47 +52,6 @@
 <body data-tuktuk="boxes">
     <!--Side Bar -->
 
-    <!-- Hidden SideBar -->
-    <aside id="menu" class="absolute bck light column_3">
-        <header class="bck dark">
-            <div class="session on-left">
-                <strong>logged in as <a href="#" class="color default">soyjavi</a></strong>
-            </div>
-            <a href="#" data-box="close" class="on-right text big icon remove color white"></a>
-        </header>
-        <article class="bck light scroll">
-            <img src="http://cdn.tapquo.com/photos/javi_color.jpg" class="responsive padding-left padding-top padding-right"/>
-
-            <div class="margin-left margin-right">
-                <h4 class="text bold color theme inline">Javi Jiménez</h4>
-                <span class="margin-left tag bck color inline text bold">pro</span>
-                <a href="#" class="block"><span class="icon twitter"></span> soyjavi</a>
-            </div>
-
-            <hr/>
-            <div class="margin" data-tuktuk="buttons">
-                <button data-tuktuk-modal="modal" class="theme" data-tip="Click to view a modal window">Modal</button>
-                <button data-tuktuk-modal="modal-right" data-tip="Click to view a side window" class="">Aside Right</button>
-            </div>
-            <hr>
-            <ul class="margin" data-tuktuk="totals">
-                <li><strong>3609</strong><small>followers</small></li>
-                <li><strong>138</strong><small>following</small></li>
-                <li><strong>14</strong><small>lists</small></li>
-            </ul>
-            <hr>
-            <div class="margin">
-                <strong class="text big normal block ">About <a href="#">Orman Clark</a></strong>
-                <div class="display block  text justify small">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</div>
-            </div>
-            <nav data-tuktuk="menu" class="text bold">
-                <a href="#" class="active"><span class="icon user"></span>Shots<small>(100)</small></a>
-                <a href="#"><span class="icon heart"></span>Trending<small>(3)</small></a>
-                <a href="#"><span class="icon group"></span>Following<small>(192)</small></a>
-                <a href="#"><span class="icon star"></span>Debuts<small>(160)</small></a>
-            </nav>
-        </article>
-    </aside>
 
 
     <!--Shown Side Bar -->
@@ -131,57 +90,9 @@
                     </div>
                     <hr>
                 </li> -->
-                
-
-                <!-- <li>
-                    <strong class="color theme text bold" style="font-size:25px;"><span class="icon ambulance "></span> Ambulance</strong><br>
-                    <small>Status: <span>On Process</span></small>
-                    <br>
-                    <small class="color white text normal" style="text-indent:10px;"><span class="icon info-sign"></span> Jethro De Guzman, 21</small><br>
-                    <small class="color white text normal" style="text-indent:10px;"><span class="icon phone"></span> 09228239751</small><br>
-                    <small class="color white text normal" style="text-indent:10px;"><span class="icon home"></span>12 A Maligaya St. San Jose Manila Philippines</small><br>
-                    <small class="color white text normal" style="text-indent:10px;"><span class="icon calendar"></span> 2013-11-13 / 1:00:00 </small><br>
-                    <div data-tuktuk="buttons">
-                        <button class="alert tiny" style="margin-top:20px;">Failed</button> 
-                        <button class="tiny success" style="margin-top:20px;">Successful</button> 
-                        <button class="secondary tiny" style="margin-top:20px;">View</button>
-                    </div>
-                    <hr>
-                </li>
-
-                <li>
-                    <strong class="color theme text bold" style="font-size:25px;"><span class="icon fighter-jet"></span> Police</strong><br><br>
-                    <small class="color white text normal" style="text-indent:10px;"><span class="icon info-sign"></span> Jethro De Guzman, 21</small><br>
-                    <small class="color white text normal" style="text-indent:10px;"><span class="icon phone"></span> 09228239751</small><br>
-                    <small class="color white text normal" style="text-indent:10px;"><span class="icon home"></span>12 A Maligaya St. San Jose Manila Philippines</small><br>
-                    <small class="color white text normal" style="text-indent:10px;"><span class="icon calendar"></span> 2013-11-13 / 1:00:00 </small><br>
-                    <div data-tuktuk="buttons">
-                        <button class="alert tiny" style="margin-top:20px;"> Decline</button> 
-                        <button class="tiny success" style="margin-top:20px;"> Respond</button> 
-                        <button class="secondary tiny" style="margin-top:20px;">View</button>
-                    </div>
-                    <hr>
-                </li>
-
-                <li>
-                    <strong class="color theme text bold" style="font-size:25px;"><span class="icon fire"></span> Fire truck</strong><br><br>
-                    <small class="color white text normal" style="text-indent:10px;"><span class="icon info-sign"></span> Jethro De Guzman, 21</small><br>
-                    <small class="color white text normal" style="text-indent:10px;"><span class="icon phone"></span> 09228239751</small><br>
-                    <small class="color white text normal" style="text-indent:10px;"><span class="icon home"></span>12 A Maligaya St. San Jose Manila Philippines</small><br>
-                    <small class="color white text normal" style="text-indent:10px;"><span class="icon calendar"></span> 2013-11-13 / 1:00:00 </small><br>
-                    <div data-tuktuk="buttons">
-                        <button class="alert tiny" style="margin-top:20px;"> Decline</button> 
-                        <button class="tiny success" style="margin-top:20px;"> Respond</button> 
-                        <button class="secondary tiny" style="margin-top:20px;">View</button>
-                    </div>
-                    <hr>
-                </li> -->
             </ul>
         </article>
        
-        
-
-
         <footer class="bck color text center" style="padding:5px;">
              Handcrafted by <a href="http://tapquo.com" class="display inline"><img src="http://cdn.tapquo.com/images/logo_footer.png"/></a>
             
@@ -202,7 +113,7 @@
                 
             </nav>
         </header> 
-        <article id="map-wrapper"  class="">
+        <article id="map-wrapper"  class="scroll">
              <div id="map-canvas"></div>
         </article>
 
@@ -411,15 +322,24 @@
 
         }
         var date = new Date(data.createdAt);
-        var hour = date.getHours();
-        var min = date.getMinutes();
-        var sec = date.getSeconds();
-        var timenow = hour + ":" + min + ":" + sec;
-        var year = date.getFullYear();
-        var month = date.getMonth()+1;
-        var day = date.getDate();
+         var hour = date.getHours();
+         var min = date.getMinutes();
+         var sec = date.getSeconds();
+         if((min<10)||(sec<10)){
+            min = '0'+min;
+            sec = '0'+sec;
+         }
+         var timenow = hour + ":" + min + ":" + sec;
+         var year = date.getFullYear();
+         var month = date.getMonth()+1;
+
+         var day = date.getDate();
+         if((month < 10 )||(day < 10)){
+            day = '0'+day;
+            month = '0'+month;
+         }
         var datenow = year + "-" + month + "-" + day;
-        var datetime = datenow + " " + timenow;
+        var datetime = datenow + " | " + timenow;
         html = '<li id='+data.id+'>'+request+'<br><small>Status: <span>Pending</span></small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon info-sign"></span>'+ data.name+', '+data.age+'</small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon phone"></span> '+ data.mobile+'</small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon home"></span>'+ data.address+'</small><br><small class="color white text normal" style="text-indent:10px;"><span class="icon calendar"></span> '+datetime+' </small><br><div data-tuktuk="buttons"><button data-id="'+data.id+'" class="alert tiny decline-btn" style="margin-top:20px;"> Decline</button><button data-id="'+data.id+'" class="tiny success respond-btn" style="margin-top:20px;"> Respond</button><button data-id="'+data.id+'" class="secondary tiny view-btn" style="margin-top:20px;">View</button></div><hr></li>';
         return html;
     }
@@ -442,15 +362,24 @@
 
         }
         var date = new Date(data.createdAt);
-        var hour = date.getHours();
-        var min = date.getMinutes();
-        var sec = date.getSeconds();
-        var timenow = hour + ":" + min + ":" + sec;
-        var year = date.getFullYear();
-        var month = date.getMonth()+1;
-        var day = date.getDate();
+         var hour = date.getHours();
+         var min = date.getMinutes();
+         var sec = date.getSeconds();
+         if((min<10)||(sec<10)){
+            min = '0'+min;
+            sec = '0'+sec;
+         }
+         var timenow = hour + ":" + min + ":" + sec;
+         var year = date.getFullYear();
+         var month = date.getMonth()+1;
+
+         var day = date.getDate();
+         if((month < 10 )||(day < 10)){
+            day = '0'+day;
+            month = '0'+month;
+         }
         var datenow = year + "-" + month + "-" + day;
-        var datetime = datenow + " " + timenow;
+        var datetime = datenow + " | " + timenow;
         html = request+'<br><small>Status: <span>Pending</span></small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon info-sign"></span>'+ data.name+', '+data.age+'</small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon phone"></span> '+ data.mobile+'</small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon home"></span>'+ data.address+'</small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon calendar"></span> '+datetime+' </small><br>';
         return html;
     }

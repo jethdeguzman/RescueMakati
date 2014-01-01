@@ -13,5 +13,7 @@ module.exports = {
   }
   */
   
-
+  firefox : function(req, res){
+  	res.view();
+  }
 };
