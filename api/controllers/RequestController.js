@@ -23,6 +23,7 @@ module.exports = {
    
   },
   add : function(req, res){
+    res.header("Access-Control-Allow-Origin", "*");
   	var socket = req.socket;
   	var io = sails.io;
   	var data = req.param('data');
