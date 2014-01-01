@@ -50,21 +50,22 @@ module.exports = {
     // save to model
     var json = {status : "Pending", request : parsed.request, userid : parsed.userid, name : parsed.name, age : parsed.age, mobile : parsed.mobile, lat : parsed.lat, lng : parsed.lng, address : parsed.address, date : datefinal};
     
-    var nodemailer = require("nodemailer");
-
-    var smtpTransport = nodemailer.createTransport("SMTP",{
-       service: "Gmail",  // sets automatically host, port and connection security settings
-       auth: {
-           user: "jethdeguzman@gmail.com",
-           pass: "orhtej14"
-       }
-    });
-
+    
     //sending email to admin's email
     var email;
     Admin.find().limit(1).done(function(err, admin){
 
        email = admin[0].email;
+
+       var nodemailer = require("nodemailer");
+
+       var smtpTransport = nodemailer.createTransport("SMTP",{
+          service: "Gmail",  // sets automatically host, port and connection security settings
+          auth: {
+              user: "jethdeguzman@gmail.com",
+              pass: "orhtej14"
+          }
+       });
 
        smtpTransport.sendMail({  //email options
           from: "Rescue Makati <jethdeguzman@gmail.com>", // sender address.  Must be the same as authenticated user if using Gmail.
