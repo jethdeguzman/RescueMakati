@@ -51,6 +51,25 @@ module.exports = {
     var json = {status : "Pending", request : parsed.request, userid : parsed.userid, name : parsed.name, age : parsed.age, mobile : parsed.mobile, lat : parsed.lat, lng : parsed.lng, address : parsed.address, date : datefinal};
     
     
+
+    //insert to DB
+    Request.create(json).done(function(error){
+      if (error){
+        return console.log(error);
+      }
+    });
+
+    //Query the last insert and emit to client
+    Request.find().sort({_id:-1}).limit(1).done(function(err, req){
+      if(err){
+        console.log(err);
+      }else{
+        io.sockets.emit('alert', req);
+      }
+    });
+
+
+    
     //sending email to admin's email
     var email;
     Admin.find().limit(1).done(function(err, admin){
@@ -86,21 +105,7 @@ module.exports = {
     
    
 
-    //insert to DB
-    Request.create(json).done(function(error){
-      if (error){
-        return console.log(error);
-      }
-    });
-
-    //Query the last insert and emit to client
-    Request.find().sort({_id:-1}).limit(1).done(function(err, req){
-      if(err){
-        console.log(err);
-      }else{
-        io.sockets.emit('alert', req);
-      }
-    });
+   
 
   	// io.sockets.emit('alert', {data : data, datetime : datetime});
   	res.json({status : 'successfully sent'});
