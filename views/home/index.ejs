@@ -62,33 +62,26 @@
             <div   class="column_6 padding" style="; text-align:left;">
                 <h1  style="margin-top:60px; font-size:60px;"><strong><span class="icon sign"></span> Rescue Makati</strong></h1>
                 <h2 class="text thin" style="margin-bottom:20px;">Be rescued in just a few clicks.</h2>
-                <form>
+                <form class="register-form">
+                    <span class="register-alert empty-field" style="display:block; color:#E74C3C; font-size:28px;">Please fill out all fields</span>
+                    <span class="register-alert invalid-email" style="display:block; color:#E74C3C; font-size:28px;">Invalid Email</span>           
+                    <span class="register-alert resend-link" style="display:block; color:#2ABB67; font-size:20px;">To complete your registration, we have sent you a verification link. Check your email. No email from us?</span>
+                    <span class="register-alert resend-link"><input type="text" style="width:80%;" placeholder="Input again your email"> <button class="normal secondary">Resend</button></span> 
                     <label>Email</label><br>
-                    <input type="text" style="width:80%;" placeholder="Email Address"/><br>
+                    <input class="register-input" name="email" type="email" style="width:80%;" placeholder="Email Address" /><br>
                     <label>Name</label><br>
-                    <input type="text" style="width:40%;" placeholder="Firstname"/> <input type="text" style="width:40%;" placeholder="Lastname"/><br>
+                    <input class="register-input"  type="text" style="width:40%;" name="firstname" placeholder="Firstname" /> <input class="register-input" type="text" style="width:40%;" name="lastname" placeholder="Lastname" /><br>
                     <label>Birthdate (YYYY-MM-DD)</label><br>
-                    <input type="date" style="width:40%;" placeholder="YYYY-MM-DD"><br>
+                    <input class="register-input" type="date" style="width:40%;" name="birthdate" placeholder="YYYY-MM-DD" ><br>
                     <label>Mobile</label><br>
-                    <input type="text" style="width:40%;" placeholder="Mobile Number"><br><br>
-                    <button class="anchor large ">Register</button>
+                    <input class="register-input" class="margin-bottom" type="text" style="width:40%;" name="mobile" placeholder="Mobile Number" >
+                                  
+                    <button class="anchor large margin-top register-btn">Register</button>
                 </form>
                 <h5 class="text thin italic" style="margin-bottom:60px;">*Note: All details must be true and correct. This will be used by the command center to verify its users.</h5>
             </div>
         </div> 
-        <!-- <div class="row">
-            <div class="column_10 offset_1">
-                <h1><strong>Rescue</strong>Makati</h1>
-                <h2 class="margin-bottom">Country's first mobile app to get you rescued in just few clicks</h2>
-            </div>
-        </div>
-        <div class="row">
-            <div class="column_6 offset_3 form subscribe">
-                <input type="email" id="mail" class="large" placeholder="Your email address">
-                <button class="button large icon envelope"></button>
-            </div>
-        </div>
-        <h5 class="text book">Register. We'll email you the registration link.</h5> -->
+      
     </section>
 
     <section class="bck theme padding text center ">
@@ -168,7 +161,53 @@
     <script src="/js/tuktuk.js"></script>
     <script type="text/javascript">
     jQuery(function($){
-        // alert($('.galaxy-img').width());
+        //hide all alert at body onload
+        $(".register-alert").hide();
+        //when register button is click
+        $(".register-btn").click(function(e){
+            e.preventDefault();
+            var empty = false;
+            var email = true;
+            //validations
+            $(".register-input").each(function(){
+                //if fields are empty
+                if (($(this).val() == "") || ($(this).val() == null)){
+                    empty = true;
+                }else{
+                    //email validation
+                    if ($(this).attr('name') == "email"){
+                        var x = $(this).val();
+                        var atpos=x.indexOf("@");
+                        var dotpos=x.lastIndexOf(".");
+                        if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length)
+                          {
+                            email = false;
+                          }
+                    }
+                }
+            });
+            if(empty){
+                $(".empty-field").slideDown();
+            }else if(!email){
+                $(".invalid-email").slideDown();
+            }else{
+                $.ajax({
+                    url : "/temp/save",
+                    type : "POST",
+                    data : $(".register-form").serialize(),
+                    success : function(data){
+                        if(data){
+                            $('.resend-link').slideDown();
+                        }
+                    }
+
+                });
+            }
+            // alert($(".register-form").serialize());
+        });
+        $(".register-input").keyup(function(){
+            $(".register-alert").slideUp();
+        });
     });
     </script>
 </body>
