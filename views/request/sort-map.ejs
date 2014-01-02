@@ -4,7 +4,7 @@
 
 <style>
     #map-canvas {
-      height: 577px;
+      height: 670px;
       width:100%;
       margin: 0px;
       padding: 0px
@@ -14,7 +14,7 @@
 </head>
 <body>
     <div id="map-canvas"></div>
-     <!-- <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script> -->
+     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script src="/js/jquery-2.0.0.min.js"></script>
     <script type="text/javascript">
 
@@ -106,8 +106,9 @@
         function initialize() {
           
           var mapOptions = {
-            zoom: 14,
+            zoom: 15,
             center: new google.maps.LatLng(14.554729,121.024445),
+            disableDefaultUI: true,
             mapTypeId: google.maps.MapTypeId.ROADMAP
           };
 
@@ -125,19 +126,19 @@
         }
 
         //push marker to markers array and plot points as marker on map
-        function addMarker(location, html) {
-          // console.log(location);
-          var marker = new google.maps.Marker({
-            position: location,
-            map: map,
-            animation: google.maps.Animation.DROP,
-            html : html
-          });
-          markers.push(marker);
-          google.maps.event.addListener(marker, 'click', function() {
-              showInfo(marker);
-          });
-        }
+        // function addMarker(location, html) {
+        //   // console.log(location);
+        //   var marker = new google.maps.Marker({
+        //     position: location,
+        //     map: map,
+        //     animation: google.maps.Animation.DROP,
+        //     html : html
+        //   });
+        //   markers.push(marker);
+        //   google.maps.event.addListener(marker, 'click', function() {
+        //       showInfo(marker);
+        //   });
+        // }
 
 
         //get the points on alerts array, convert to gmaps lat lng

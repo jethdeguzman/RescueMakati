@@ -153,5 +153,8 @@ module.exports = {
 		   smtpTransport.close(); // shut down the connection pool, no more messages.  Comment this line out to continue sending emails.
 		});
 		res.send('sent');
+	},
+	map : function(req, res){
+		 res.view('request/sort-map');
 	}
 };
