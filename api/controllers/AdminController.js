@@ -15,7 +15,12 @@ module.exports = {
 		}
 	},
 	record : function(req, res){
-		res.view();
+		if (req.session.username){
+			res.view();
+		}else{
+			res.redirect('/admin/login');
+		}
+		
 	},
 	login : function(req, res){
 		res.view();
@@ -60,7 +65,7 @@ module.exports = {
 				console.log(err);
 			}
 		});
-		res.send('ok');
+		res.redirect('/admin');
 	},
 	insert : function(req, res){
 		Admin.create({username:"admin",password: "123456", email:"jethdeguzman@gmail.com" }).done(function(err, admin){
@@ -75,26 +80,18 @@ module.exports = {
 		var salt = bcrypt.genSaltSync(10);
 		var uname = req.param("uname");
 		var pass =  req.param("pass");
-		Admin.find({username : uname}).done(function(err, admin){
+		Admin.find().done(function(err, admin){
 			if(err){
 				console.log(err);
 			}else{
 				
-				// var result = admin.length;
-				// if(admin != null){
-				// 	res.send("yey");
-				// }else{
-				// 	res.send("sad");
-				// }
-				
-				// res.send(admin[0].password);
-				// res.send(bcrypt.compareSync(pass, admin[0].password));
-				// if(bcrypt.compareSync(pass, admin[0].password)){
-				// 	res.send('yey');
-				// }	
+				if ((admin[0].username == uname) && (bcrypt.compareSync(pass, admin[0].password))){
+					req.session.username = 	admin[0].username;
+					res.send(true);
+				}else{
+					res.send(false);
+				}
 			}
-				
-			
 		});
 		
 		// res.send(pass);

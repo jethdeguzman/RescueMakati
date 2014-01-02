@@ -37,15 +37,43 @@
            <article>
               <form >
                   <label>Username</label>
-                  <input type="text" placeholder="Username">
+                  <input type="text" class="uname-input" placeholder="Username">
                   <label>Password</label>
-                  <input type="password" placeholder="Password">
+                  <input type="password" class="pass-input" placeholder="Password">
               </form>
            </article>
            <br/>
            <footer>
-               <button class="anchor"><span class="icon signin"></span>Login</button>
+               <button class="anchor login-btn"><span class="icon signin"></span>Login</button><br/><br/>
+               <span class="alert-span bck alert text thin align center" style=" display:block; font-size:20px; padding:5px;">Invalid Username and Password</span>
            </footer>
        </div>
+<script src="/js/jquery-2.0.0.min.js"></script>
+<script type="text/javascript">
+jQuery(function($){
+  $(".alert-span").hide();
+
+  $(".login-btn").click(function(){    
+    $.ajax({
+      url : "/admin/check",
+      type : "GET",
+      data : {
+        uname : $(".uname-input").val(),
+        pass : $(".pass-input").val()
+      },
+      success : function(data){
+        if(data){
+          location.href = "/admin";
+        }else{
+          $(".alert-span").fadeIn();
+        }
+      }
+    });
+  });
+  $("input").keyup(function(){
+    $(".alert-span").fadeOut();
+  });
+});
+</script>
 </body>
 </html>
