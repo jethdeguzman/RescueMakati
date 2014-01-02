@@ -64,9 +64,15 @@
                 <h2 class="text thin" style="margin-bottom:20px;">Be rescued in just a few clicks.</h2>
                 <form class="register-form">
                     <span class="register-alert empty-field" style="display:block; color:#E74C3C; font-size:28px;">Please fill out all fields</span>
-                    <span class="register-alert invalid-email" style="display:block; color:#E74C3C; font-size:28px;">Invalid Email</span>           
-                    <span class="register-alert resend-link" style="display:block; color:#2ABB67; font-size:20px;">To complete your registration, we have sent you a verification link. Check your email. No email from us?</span>
-                    <span class="register-alert resend-link"><input type="text" style="width:80%;" placeholder="Input again your email"> <button class="normal secondary">Resend</button></span> 
+                    <span class="register-alert invalid-email" style="display:block; color:#E74C3C; font-size:28px;">Invalid Email</span>
+
+                    <span class="register-alert registered-email" style="display:block; color:#E74C3C; font-size:28px;">Email is already registered.</span>             
+                    
+                    <span class="register-alert success-link" style="display:block; color:#2ABB67; font-size:20px;">To complete your registration, we have sent you a verification link. Check your email.</span>
+                    
+                    <span class="register-alert resend-link" style="color:#E74C3C;">Please check your email. We have already sent you an email. Resend again?<input read-only type="text" name="email2" style="width:80%;" placeholder="Input again your email"> <button class="resend-btn normal secondary">Resend</button></span> 
+                    
+
                     <label>Email</label><br>
                     <input class="register-input" name="email" type="email" style="width:80%;" placeholder="Email Address" /><br>
                     <label>Name</label><br>
@@ -192,21 +198,69 @@
                 $(".invalid-email").slideDown();
             }else{
                 $.ajax({
-                    url : "/temp/save",
-                    type : "POST",
-                    data : $(".register-form").serialize(),
+                    url : "/temp/check",
+                    type : "GET",
+                    dataType:"JSON",
+                    data : {
+                        email : $("input[name='email']").val()
+                    },
                     success : function(data){
-                        if(data){
-                            $('.resend-link').slideDown();
+                        
+                        if(data.status == "user"){
+                            $(".registered-email").slideDown('fast');
+                        }else if(data.status == "temp"){
+                            $("input[name='email2']").val($("input[name='email']").val());
+                            $(".resend-link").slideDown('fast');
+                        }else{
+                            $.ajax({
+                                url : "/temp/save",
+                                type : "POST",
+                                data : $(".register-form").serialize(),
+                                success : function(data){
+                                    if(data){
+                                        
+                                        $('.success-link').slideDown();
+                                        $("input").val("");
+                                    }
+                                }
+
+                            });
                         }
                     }
-
                 });
+               
+                
             }
             // alert($(".register-form").serialize());
         });
+
+        $(".resend-btn").click(function(e){
+            e.preventDefault();
+            $.ajax({
+                url : "/temp/resend",
+                type : "POST",
+                data : {
+                    email : $("input[name='email2']").val()
+                },
+                success : function(data){
+                    if(data){
+                        $('.resend-link').slideUp();
+                        $('.success-link').slideDown();
+                        $("input").val("");
+                    }
+                }
+
+            });
+        });
         $(".register-input").keyup(function(){
+
             $(".register-alert").slideUp();
+
+        });
+
+        $("input[name='email']").keyup(function(){
+           
+            
         });
     });
     </script>
