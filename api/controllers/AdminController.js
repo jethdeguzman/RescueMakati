@@ -44,7 +44,8 @@ module.exports = {
 		}
 		var obj = {};
 		obj[field] = value;
-		Admin.update({_id : "52c21893189607ab1cdb7173"}, obj, function(err, admin){
+		//52c21893189607ab1cdb7173
+		Admin.update({_id : "52c3e90d88b41bf3116c5d22"}, obj, function(err, admin){
 			if(err){
 				console.log(err);
 			}else{
@@ -69,15 +70,63 @@ module.exports = {
 		});
 		res.send('ok');
 	},
-	find : function(req, res){
+	check : function(req, res){
 		var bcrypt = require('bcrypt');
-		Admin.findOne({username : "@dMiN"}).done(function(err, admin){
+		var salt = bcrypt.genSaltSync(10);
+		var uname = req.param("uname");
+		var pass =  req.param("pass");
+		Admin.find({username : uname}).done(function(err, admin){
+			if(err){
+				console.log(err);
+			}else{
+				
+				// var result = admin.length;
+				// if(admin != null){
+				// 	res.send("yey");
+				// }else{
+				// 	res.send("sad");
+				// }
+				
+				// res.send(admin[0].password);
+				// res.send(bcrypt.compareSync(pass, admin[0].password));
+				// if(bcrypt.compareSync(pass, admin[0].password)){
+				// 	res.send('yey');
+				// }	
+			}
+				
+			
+		});
+		
+		// res.send(pass);
+
+		// admin =  $2a$10$MT8t0fFFInaTHVHHHBCn8u5lsJYfDI0ERrAm95m7.m.XhDh4Oqy3W
+		// Admin.find({username : uname, password : pass}).done(function(err, admin){
+		// 	if(err){
+		// 		console.log(err);
+		// 	}else{
+		// 		if(admin){
+		// 			res.send(admin);
+		// 		}
+				
+		// 	}
+		// });
+	},
+	find : function(req, res){
+		Request.find().done(function(err, request){
 			if(err){
 
 			}else{
-				console.log(bcrypt.compareSync("1234s6",admin.password));
+				res.json(request);
 			}
 		});
+		// var bcrypt = require('bcrypt');
+		// Admin.findOne({username : "@dMiN"}).done(function(err, admin){
+		// 	if(err){
+
+		// 	}else{
+		// 		console.log(bcrypt.compareSync("1234s6",admin.password));
+		// 	}
+		// });
 
 	},
 	mail : function(req, res){
