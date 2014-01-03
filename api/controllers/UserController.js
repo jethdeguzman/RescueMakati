@@ -39,7 +39,12 @@ module.exports = {
   					if (err){
   						console.log(err);
   					}else{
-  						res.json({status : "verify"});
+  						if(temp){
+  							res.json({status : "verify"});
+  						}else{
+  							res.json({status : "register"});
+  						}	
+  						
   					}
   				});
 
