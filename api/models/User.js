@@ -13,7 +13,13 @@ module.exports = {
   	/* e.g.
   	nickname: 'string'
   	*/
-    
+    status : "STRING",
+    email  : "STRING",
+    password : "STRING",
+    firstname : "STRING",
+    lastname : "STRING",
+    birthdate : "DATE",
+    mobile : "STRING"
   }
 
 };
