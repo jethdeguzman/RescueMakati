@@ -56,27 +56,34 @@
     <section id="map" class="bck color text center">
         <div class="row" style=" overflow:hidden;">
             <div class="column_6" style="">
-                <img class="galaxy-img" src="/images/galaxy-screen.png" style="margin-top:60px;" />
+                <img class="galaxy-img" src="/images/galaxy-screen.png" style="margin-top:40px;" />
                 <!-- <img src="images/screen.png" height="388px;" width="217px" style="position:absolute; left:271px; top:213px;"> -->
             </div>
             <div   class="column_6 padding" style="; text-align:left;">
-                <h1  style="margin-top:60px; font-size:60px;"><strong><span class="icon sign"></span> Rescue Makati</strong></h1>
+                <h1  style="margin-top:40px; font-size:60px;"><strong><span class="icon sign"></span> Rescue Makati</strong></h1>
                 <h2 class="text thin" style="margin-bottom:20px;">Be rescued in just a few clicks.</h2>
-                <form class="register-form">
-                    <span class="register-alert empty-field" style="display:block; color:#E74C3C; font-size:28px;">Please fill out all fields</span>
-                    <span class="register-alert invalid-email" style="display:block; color:#E74C3C; font-size:28px;">Invalid Email</span>
+                <span class="register-alert empty-field" style="display:none; color:#E74C3C; font-size:28px;">Please fill out all fields<br/></span>
 
-                    <span class="register-alert registered-email" style="display:block; color:#E74C3C; font-size:28px;">Email is already registered.</span>             
-                    
-                    <span class="register-alert success-link" style="display:block; color:#2ABB67; font-size:20px;">To complete your registration, we have sent you a verification link. Check your email.</span>
-                    
-                    <span class="register-alert resend-link" style="color:#E74C3C;">Please check your email. We have already sent you an email. Resend again?<input read-only type="text" name="email2" style="width:80%;" placeholder="Input again your email"> <button class="resend-btn normal secondary">Resend</button></span> 
-                    
+                <span class="register-alert invalid-email" style="display:none; color:#E74C3C; font-size:28px;">Invalid Email<br/></span>
+
+                <span class="register-alert invalid-password" style="display:none; color:#E74C3C; font-size:28px;">Invalid Password<br/></span>
+
+                <span class="register-alert registered-email" style="display:none; color:#E74C3C; font-size:28px;">Email is already registered.<br/></span>             
+                
+                <span class="register-alert success-link" style="display:none; color:#2ABB67; font-size:20px;">To complete your registration, we have sent you a verification link. Check your email.<br/></span>
+                
+                <span class="register-alert resend-link" style="display:none; color:#E74C3C;">Please verify your email. We have already sent you an email. Resend again?<form><input readonly type="text" name="email2" style="width:80%;" placeholder="Input again your email"> </form><button class="resend-btn normal secondary">Resend</button><br/></span> 
+
+                 <span class="register-alert please-wait" style="display:none; color:white; font-size:28px;">Please Wait...<br/></span>
+
+                <form class="register-form">   
 
                     <label>Email</label><br>
                     <input class="register-input" name="email" type="email" style="width:80%;" placeholder="Email Address" /><br>
                     <label>Name</label><br>
                     <input class="register-input"  type="text" style="width:40%;" name="firstname" placeholder="Firstname" /> <input class="register-input" type="text" style="width:40%;" name="lastname" placeholder="Lastname" /><br>
+                    <label>Password (Atleast 6 Characters)</label><br>
+                    <input class="register-input"  type="password" style="width:40%;" name="password" placeholder="Password" /> <input class="register-input" type="password" style="width:40%;" name="password2" placeholder="Re-Type Password" /><br>
                     <label>Birthdate (YYYY-MM-DD)</label><br>
                     <input class="register-input" type="date" style="width:40%;" name="birthdate" placeholder="YYYY-MM-DD" ><br>
                     <label>Mobile</label><br>
@@ -84,7 +91,7 @@
                                   
                     <button class="anchor large margin-top register-btn">Register</button>
                 </form>
-                <h5 class="text thin italic" style="margin-bottom:60px;">*Note: All details must be true and correct. This will be used by the command center to verify its users.</h5>
+                <h5 class="text thin italic" style="margin-bottom:40px;">*Note: All details must be true and correct. This will be used by the command center to verify its users.</h5>
             </div>
         </div> 
       
@@ -168,17 +175,29 @@
     <script type="text/javascript">
     jQuery(function($){
         //hide all alert at body onload
-        $(".register-alert").hide();
+        // $(".register-alert").hide();
         //when register button is click
         $(".register-btn").click(function(e){
             e.preventDefault();
             var empty = false;
             var email = true;
+            var password = true;
             //validations
             $(".register-input").each(function(){
                 //if fields are empty
                 if (($(this).val() == "") || ($(this).val() == null)){
                     empty = true;
+                }else if ($(this).attr("name") == "password"){
+                   
+                    if($(this).val() != $("input[name='password2']").val()){
+                        password = false;    
+                        
+                    }else{
+                        if($(this).val().length < 6){
+                             password = false;
+                        }
+                    }
+
                 }else{
                     //email validation
                     if ($(this).attr('name') == "email"){
@@ -193,10 +212,14 @@
                 }
             });
             if(empty){
-                $(".empty-field").slideDown();
-            }else if(!email){
-                $(".invalid-email").slideDown();
+                $(".empty-field").fadeIn();
+            }else if(!password){
+                $(".invalid-password").fadeIn();
+            }
+            else if(!email){
+                $(".invalid-email").fadeIn();
             }else{
+               
                 $.ajax({
                     url : "/temp/check",
                     type : "GET",
@@ -205,21 +228,22 @@
                         email : $("input[name='email']").val()
                     },
                     success : function(data){
-                        
+                       
                         if(data.status == "user"){
-                            $(".registered-email").slideDown('fast');
+                            $(".registered-email").fadeIn();
                         }else if(data.status == "temp"){
                             $("input[name='email2']").val($("input[name='email']").val());
-                            $(".resend-link").slideDown('fast');
+                            $(".resend-link").fadeIn();
                         }else{
+                            $('.please-wait').fadeIn();
                             $.ajax({
                                 url : "/temp/save",
                                 type : "POST",
                                 data : $(".register-form").serialize(),
                                 success : function(data){
                                     if(data){
-                                        
-                                        $('.success-link').slideDown();
+                                        $('.please-wait').hide();
+                                        $('.success-link').fadeIn();
                                         $("input").val("");
                                     }
                                 }
@@ -236,6 +260,8 @@
 
         $(".resend-btn").click(function(e){
             e.preventDefault();
+            $('.resend-link').hide();
+            $('.please-wait').fadeIn();
             $.ajax({
                 url : "/temp/resend",
                 type : "POST",
@@ -244,17 +270,17 @@
                 },
                 success : function(data){
                     if(data){
-                        $('.resend-link').slideUp();
-                        $('.success-link').slideDown();
+                        $('.please-wait').hide();
+                        $('.success-link').fadeIn();
                         $("input").val("");
                     }
                 }
 
             });
         });
-        $(".register-input").keyup(function(){
+        $(".register-input").focus(function(){
 
-            $(".register-alert").slideUp();
+            $(".register-alert").fadeOut();
 
         });
 

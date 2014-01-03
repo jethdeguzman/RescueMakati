@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rescue Makati</title>
+    <!-- Mobile Specific Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+    <link rel="stylesheet" href="/styles/tuktuk.css">
+    <link rel="stylesheet" href="/styles/tuktuk.theme.mock.css">
+    <!-- TUKTUK.WIDGETS -->
+    <link rel="stylesheet" href="/styles/tuktuk.icons.css">
+    <link rel="stylesheet" href="/styles/jquery.pnotify.default.css">
+    <link rel="stylesheet" href="/styles/jquery.pnotify.default.icons.css">
+    <style>
+        body > header .logo {
+            margin-top: 8px;
+            margin-right: 8px;
+            max-height: 30px; }
+
+        body > footer img {
+            height: 18px;
+            position: relative;
+            top: 5px;
+            left: 2px; }
+
+        section.landing input {
+            border-radius: 1px 0px 0px 1px !important;
+            height: 48px;}
+
+        section.landing button {
+            border-radius: 0px 1px 1px 0px !important;
+            height: 48px;}
+
+        .button.large, button.large {
+            font-size: 1.3em;}
+       /* #map {
+            background: url('/images/makati-map.png');
+        }*/
+    </style>
+</head>
+<body>
+    <!-- ========================== HEADER ========================== -->
+    <header class="bck alert padding">
+        <div class="row">
+            <div class="column_8">
+                <!-- <img src="../images/logo-green.png" class="logo on-left"/> -->
+                <h2 class="text thin">Mobile Emergency Response Application</h2>
+            </div>
+            <nav class="column_4 text right">
+                
+            </nav>
+        </div>
+    </header>
+
+    <section id="map" class="bck light">
+        <div class="row" style=" ">
+            <div class="column_12" style="padding:30px;">
+                <h1  style=" font-size:60px;"><strong><span class="icon sign"></span> Rescue Makati</strong></h1>
+                <%
+                 if (status) { %>
+                <h5 class="text normal">Your registration is successful. You can now login in Rescue Makati mobile app using your email and password.</h5>
+                <%}else{%>
+                
+                <h5 class="text normal">This verification link already expired. Click the button to 
+                    <a class="button tiny" href="/">Register</a></h5>
+                <%}%>
+            </div>
+        </div> 
+      
+    </section>
+
+
+   
+
+
+
+    <script src="/js/jquery-2.0.0.min.js"></script>
+    <script src="/js/tuktuk.js"></script>
+    <script type="text/javascript">
+    jQuery(function($){
+;
+    </script>
+</body>
+</html>

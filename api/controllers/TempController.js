@@ -15,13 +15,17 @@ module.exports = {
   save : function(req, res){
   	var bcrypt = require('bcrypt');
   	var salt = bcrypt.genSaltSync(10);
-  	var key = bcrypt.hashSync("B4c0/\/", salt);
+  	
   	var email = req.param("email");
   	var firstname = req.param("firstname"); 
   	var lastname = req.param("lastname");
+  	var password = bcrypt.hashSync(req.param("password"), salt);
+  	var password2 = req.param("password2");
   	var birthdate = req.param("birthdate");
   	var mobile = req.param("mobile");
-  	Temp.create({email : email, firstname : firstname, lastname:lastname, birthdate:birthdate, mobile:mobile, key:key}).done(function(err, temp){
+  	var key = bcrypt.hashSync(email, salt);
+  	
+  	Temp.create({email : email, password : password, firstname : firstname, lastname:lastname, birthdate:birthdate, mobile:mobile, key:key}).done(function(err, temp){
   		if(err){
   			console.log(err);
   		}else{
@@ -69,15 +73,31 @@ module.exports = {
   			console.log(err);
   		}else{
   			if(temp){
-  				res.json(temp);
-  				// if(bcrypt.compareSync(key, temp.key)){
-  				// 	res.json(temp);
-  				// 	// User.create({status : "active", email : temp.email, firstname : temp.firstname, lastname : temp.lastname, })
-  				// }else{
-  				// 	res.send(false);
-  				// }
+
+  				// res.send({key : key, tempkey : temp.key});
+  				if(key == temp.key){
+  				
+  					User.create({status : "active", email : temp.email, password : temp.password, firstname : temp.firstname, lastname : temp.lastname, birthdate : temp.birthdate, mobile : temp.mobile}).done(function(err, user){
+  						if(err){
+  							console.log(err);
+  						}
+	  						return;	
+	  					});
+  					
+					temp.destroy(function(err){
+						if(err){
+							console.log(err);
+						}
+						return;
+					});
+  				res.view({status:true});
+  				}else{
+  					res.view({status:false});
+  				}	
+  					
+  			
   			}else{
-  				res.send(false);
+  				res.view({status:false});
   			}
   		}
   	});
