@@ -126,19 +126,20 @@
         }
 
         //push marker to markers array and plot points as marker on map
-        // function addMarker(location, html) {
-        //   // console.log(location);
-        //   var marker = new google.maps.Marker({
-        //     position: location,
-        //     map: map,
-        //     animation: google.maps.Animation.DROP,
-        //     html : html
-        //   });
-        //   markers.push(marker);
-        //   google.maps.event.addListener(marker, 'click', function() {
-        //       showInfo(marker);
-        //   });
-        // }
+        function addMarker(location, html) {
+          // console.log(location);
+          var marker = new google.maps.Marker({
+            position: location,
+            map: map,
+            animation: google.maps.Animation.DROP,
+            html : html,
+            icon : 'http://gpstrackit.com/wp-content/uploads/2011/12/gpstrackit-map-marker-400.png'
+          });
+          markers.push(marker);
+          google.maps.event.addListener(marker, 'click', function() {
+              showInfo(marker);
+          });
+        }
 
 
         //get the points on alerts array, convert to gmaps lat lng

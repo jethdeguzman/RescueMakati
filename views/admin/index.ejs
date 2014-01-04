@@ -246,7 +246,7 @@
                 $(".side-bar-alert").prepend(displayAlert(data));
                 alerts.push(data);
                 // console.log(data);
-                addMarker(new google.maps.LatLng (data.lat, data.lng), displayInfowindow(data));
+                addMarker(new google.maps.LatLng (data.lat, data.lng), displayInfowindow(data), data.request);
                 // addMarker(new google.maps.LatLng (data.lat,data.lng));
             });
 
@@ -451,13 +451,26 @@
     }
 
     //push marker to markers array and plot points as marker on map
-    function addMarker(location, html) {
+    function addMarker(location, html, icon) {
       // console.log(location);
+      var icontype;
+      switch(icon){
+        case "Ambulance" : 
+            icontype = "/images/ambulance.png";
+            break;
+        case "Police" : 
+            icontype = "/images/police.png";
+            break;
+        case "Fire Truck" : 
+            icontype = "/images/firetruck.png";
+            break;
+      }
       var marker = new google.maps.Marker({
         position: location,
         map: map,
         animation: google.maps.Animation.DROP,
-        html : html
+        html : html,
+        icon : icontype
       });
       markers.push(marker);
       google.maps.event.addListener(marker, 'click', function() {
@@ -472,7 +485,7 @@
 
       for (var i in alerts) {
              
-         addMarker(new google.maps.LatLng (alerts[i].lat, alerts[i].lng), displayInfowindow(alerts[i]));
+         addMarker(new google.maps.LatLng (alerts[i].lat, alerts[i].lng), displayInfowindow(alerts[i]), alerts[i].request);
             
       }
 
