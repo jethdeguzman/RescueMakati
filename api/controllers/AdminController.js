@@ -22,6 +22,9 @@ module.exports = {
 		}
 		
 	},
+	user : function(req, res){
+		res.view();
+	},
 	login : function(req, res){
 		res.view();
 	},
@@ -50,7 +53,7 @@ module.exports = {
 		var obj = {};
 		obj[field] = value;
 		//52c21893189607ab1cdb7173
-		Admin.update({_id : "52c3e90d88b41bf3116c5d22"}, obj, function(err, admin){
+		Admin.update({}, obj, function(err, admin){
 			if(err){
 				console.log(err);
 			}else{

@@ -62,7 +62,7 @@
         
         <header class="bck dark">
 
-                <h5 class="text normal align center"><span class="icon eye-open"></span> View Records </h5>
+                <h5 class="text normal align center"><span class="icon group"></span> Mobile App Users</h5>
 
         </header>
 
@@ -161,21 +161,21 @@
             </nav>
         </header> 
         <article id="content-wrapper"  class="scroll">
-             <div id="map-canvas"></div>
+        
              <div id="table-canvas"  style="padding:20px;">
-                 <table class="record-table">
+                 <table class="user-table">
                     <thead>
                         <tr>
                             <th>Date</th>
-                            <th>Time</th>
                             <th>Name</th>
                             <th>Age</th>
                             <th>Mobile</th>
                             <th>Address</th>
+                            <th>Status</th>
                             <th>Request</th>
                         </tr>
                     </thead>
-                    <tbody class="record-tbody">
+                    <tbody class="user-tbody">
                        
                     </tbody>
                  </table>
@@ -185,9 +185,9 @@
         <footer class="bck light">
             <nav class="on-left text bold" data-tuktuk="menu">
                 <a href="/admin" ><span class="icon bell-alt"></span> Incoming Alerts</a>
-                <a href="/admin/record" class="active"><span class="icon eye-open"></span> View Records</a>
+                <a href="/admin/record" ><span class="icon eye-open"></span> View Records</a>
                 <a href="#"><span class="icon road"></span> Track Units</a>
-                <a href="/admin/user"><span class="icon group"></span> Mobile App Users</a>
+                <a href="/admin/user" class="active"><span class="icon group"></span> Mobile App Users</a>
                 
             </nav>
           
@@ -237,7 +237,6 @@
             &nbsp;
         </footer>
     </div>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script src="/js/jquery-2.0.0.min.js"></script>
     <script src="/js/tuktuk.js"></script>
     <script src="/js/jquery.playSound.js"></script>
@@ -246,20 +245,8 @@
         TukTuk.Modal.loading();
         setTimeout( TukTuk.Modal.hide, 1000);
     </script>
-    <script>
-        jQuery(function($){
-           
-        });
-    </script>
     <script type="text/javascript">
 
-        var map;
-        //lat, lng points
-        var alertPoints = [];
-        //markers
-        var markers = [];
-
-        var alerts = [];
             jQuery(function($){
 
                 //date initialization
@@ -285,89 +272,6 @@
                  //hide change alert on settings
                  $(".change-alert").hide();
 
-                
-                 //setting NOW to date fields
-                 $(".from-date").val(datenow);
-                 $(".to-date").val(datenow);
-                
-                 //map is the default view
-                 $("input[name='Map']").attr("checked",true);
-                 $("#table-canvas").hide();
-                 //toggle view radio button
-                 $(".view-radio").click(function(){
-                     name = $(this).attr("name");
-                     if(name == "Map"){
-
-                         $("input[name='Map']").attr("checked",true);
-                         $("input[name='Table']").attr("checked",false);
-                         $(".refreshmap-btn").fadeIn();
-                         $("#table-canvas").hide();
-                         $("#map-canvas").show();
-                         initialize();
-                         
-                     }else{
-                         $("input[name='Map']").attr("checked",false);
-                         $("input[name='Table']").attr("checked",true);
-                         $(".refreshmap-btn").fadeOut();
-                         $("#map-canvas").hide();
-                         $("#table-canvas").show();
-                     }
-                     // return;
-                 });
-
-               
-                // append to sidebar all the request with status new
-                $.ajax({
-                    url : "/request/sort?stat=Responded&req=All&from="+datenow+"&to="+datenow,
-                    type : "GET",
-                    dataType: "JSON",
-                    success : function(data){
-                        var data = data.data;
-
-                        for (var key in data){
-                            alerts.push(data[key]);
-                             var date = new Date(data[key].createdAt);
-                             var hour = date.getHours();
-                             var min = date.getMinutes();
-                             var sec = date.getSeconds();
-                             if((min<10)||(sec<10)){
-                                min = '0'+min;
-                                sec = '0'+sec;
-                             }
-                             var timenow = hour + ":" + min + ":" + sec;
-                             var year = date.getFullYear();
-                             var month = date.getMonth()+1;
-
-                             var day = date.getDate();
-                             if((month < 10 )||(day < 10)){
-                                day = '0'+day;
-                                month = '0'+month;
-                             }
-                            var datenow = year + "-" + month + "-" + day;
-                            var datetime = datenow + " | " + timenow;
-                             $(".record-tbody").prepend("<tr class='record-item'><td>"+datenow+"</td><td>"+timenow+"</td><td>"+data[key].name+"</td><td>"+data[key].age+"</td><td>"+data[key].mobile+"</td><td>"+data[key].address+"</td><td>"+data[key].request+"</td></tr>");
-                        }
-                        initialize();
-                    },
-                    error : function(err){
-                        alert(err);
-                    }
-                });
-
-
-                // resize the map when window resize
-                var mapHeight = $("#content-wrapper").height();
-                $("#map-canvas").css({
-                    height : mapHeight
-                });
-                $(window).resize(function(){
-                    var mapHeight = $("#content-wrapper").height();
-                    $("#map-canvas").css({
-                        height : mapHeight
-                    });
-                    initialize();
-                });
-                
 
                 $(".viewrecord-btn").click(function(e){
                     e.preventDefault();
@@ -420,11 +324,6 @@
                     
                 });
 
-                $(".refreshmap-btn").click(function(e){
-                    e.preventDefault();
-                    refreshMap();
-
-                });
 
                 socket.on('alert', function(data){
                     var data = data[0];
@@ -467,136 +366,6 @@
 
 
             });
-        
-
-    
-        //html format to display to infowindow the alert
-        function displayInfowindow(data){
-            var request;
-
-            switch(data.request){
-                case "Ambulance": 
-                   request = '<strong class="color theme text bold" style="font-size:14px;"><span class="icon ambulance "></span> Ambulance</strong>';
-                break;
-
-                case "Police":
-                    request = '<strong class="color theme text bold" style="font-size:14px;"><span class="icon fighter-jet"></span> Police</strong>';
-                break;
-
-                case "Fire Truck":
-                   request = '<strong class="color theme text bold" style="font-size:14px;"><span class="icon fire"></span> Fire truck</strong>';
-                break;
-
-            }
-              var date = new Date(data.createdAt);
-              var hour = date.getHours();
-              var min = date.getMinutes();
-              var sec = date.getSeconds();
-              if((min<10)||(sec<10)){
-                 min = '0'+min;
-                 sec = '0'+sec;
-              }
-              var timenow = hour + ":" + min + ":" + sec;
-              var year = date.getFullYear();
-              var month = date.getMonth()+1;
-
-              var day = date.getDate();
-              if((month < 10 )||(day < 10)){
-                 day = '0'+day;
-                 month = '0'+month;
-              }
-             var datenow = year + "-" + month + "-" + day;
-             var datetime = datenow + " | " + timenow;
-            html = request+'<br><small>Status: <span>'+data.status+'</span></small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon info-sign"></span>'+ data.name+', '+data.age+'</small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon phone"></span> '+ data.mobile+'</small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon home"></span>'+ data.address+'</small><br><small class="color text normal" style="text-indent:10px; font-size:10px;"><span class="icon calendar"></span> '+datetime+' </small><br>';
-            return html;
-        }
-        
-        
-        //map initialization
-        function initialize() {
-          
-        
-            var mapOptions = {
-              zoom: 14,
-              center: new google.maps.LatLng(14.554729,121.024445),
-              mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
-
-            map = new google.maps.Map(document.getElementById('map-canvas'),
-                mapOptions);
-            alertPoints = [
-                [14.559327,121.019529],
-                [14.557312,121.029722],
-                [14.542878,121.024379],
-                [14.565848,121.051072]
-            ];
-            markers = [];
-            updateMapPoints();
-
-          
-          // showMarkers();
-        }
-
-        //push marker to markers array and plot points as marker on map
-        function addMarker(location, html, icon) {
-          // console.log(location);
-          var icontype;
-          switch(icon){
-            case "Ambulance" : 
-                icontype = "/images/ambulance.png";
-                break;
-            case "Police" : 
-                icontype = "/images/police.png";
-                break;
-            case "Fire Truck" : 
-                icontype = "/images/firetruck.png";
-                break;
-          }
-          var marker = new google.maps.Marker({
-            position: location,
-            map: map,
-            animation: google.maps.Animation.DROP,
-            html : html,
-            icon : icontype
-          });
-          markers.push(marker);
-          google.maps.event.addListener(marker, 'click', function() {
-              showInfo(marker);
-          });
-        }
-
-
-        //get the points on alerts array, convert to gmaps lat lng
-        function updateMapPoints(){
-
-          for (var i in alerts) {
-                 
-             addMarker(new google.maps.LatLng (alerts[i].lat, alerts[i].lng), displayInfowindow(alerts[i]), alerts[i].request);
-                
-          }
-
-        }
-        //info window initialization
-        var infowindow = new google.maps.InfoWindow({});
-        
-        //show info window when view btn and marker click
-        function showInfo(marker){
-            map.panTo(marker.getPosition());
-            infowindow.setContent(marker.html); 
-            infowindow.open(map,marker);
-            // map.setZoom(16);
-        }
-
-        //refresh the map, center map to makati
-        function refreshMap(){
-            map.panTo(new google.maps.LatLng(14.554729,121.024445));
-            map.setZoom(14);
-            for (var i in markers){
-                infowindow.close(map, markers[i]);
-            }
-        }
-
-    
 
     </script>
 

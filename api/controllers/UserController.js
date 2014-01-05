@@ -22,7 +22,7 @@ module.exports = {
   				if(bcrypt.compareSync(password, user.password)){
   					if(user.status == "active"){
   						//acount is active
-  						res.json({status : user.status, email : user.email, firstname : user.firstname, lastname : user.lastname, birthdate : user.birthdate, mobile : user.mobile});
+  						res.json({userid : user.id, status : user.status, email : user.email, firstname : user.firstname, lastname : user.lastname, birthdate : user.birthdate, mobile : user.mobile});
   					}else{
   						//account is block
   						res.json({status : "block"});
