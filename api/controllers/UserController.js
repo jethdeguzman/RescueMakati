@@ -52,6 +52,49 @@ module.exports = {
 
   	});
   	
+  },
+  view : function(req, res){
+    
+    var status = req.param("status");
+
+    if(status == "all"){
+      User.find().done(function(err, user){
+        if(err){
+          console.log(err);
+        }else{
+          res.json({users:user});
+        }
+      });
+    }else{
+      User.find({status : status}).done(function(err, user){
+        if(err){
+          console.log(err);
+        }else{
+          res.json({users:user});
+        }
+      });
+    }  
+  },
+  check : function(req, res){
+    var userid = req.param("userid");
+    User.findOne({_id:userid}).done(function(err, user){
+      if(err){
+        console.log();
+      }else{
+        res.json({status : user.status});
+      }
+    });
+  },
+  changestatus : function(req, res){
+    var userid = req.param("userid");
+    var status = req.param("status");
+    User.update({_id : userid}, {status : status}, function(err, user){
+      if(err){
+        console.log(err);
+      }else{
+        res.send(true);
+      }
+    });
   } 
   
 

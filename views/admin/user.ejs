@@ -78,59 +78,22 @@
         <article class="bck dark scroll" style="height:-30px;">
             <br>
             <form id="filter-form">
-                 <strong style="margin-left:15px;">View: </strong> 
-                 <br/>
-                 <div class="text center">
-                    <input class="view-radio" type="radio" name="Map"  /><span>Map</span>
-                    <input class="view-radio" type="radio" name="Table"  /><span>Table</span>
-                    <button class="tiny secondary refreshmap-btn" style="">Refresh Map</button>
-                </div>
-                <br/>
                 <strong style="margin-left:15px;">Status:</strong>
                 <br/>
                 <div class="text center">
                 <span class="select margin-left margin-right" >
                     <select class="status-select" style="">
                        
-                        <option value="Responded">Responded</option>
-                        <option value="Declined">Declined</option>
-                        <option value="Pending">Pending</option>
+                        <option value="all">All</option>
+                        <option value="active">Active</option>
+                        <option value="blocked">Blocked</option>
                     </select>
-                </span>
-                </div>
-                <br/>
-                <strong style="margin-left:15px;">Request:</strong>
-                <br/>
-                <div class="text center">
-                <span class="select margin-left margin-right" >
-                    <select class="request-select" style="">
-                        <option value="All">All</option>
-                        <option value="Ambulance">Ambulance</option>
-                        <option value="Police">Police</option>
-                        <option value="Fire Truck">Fire Truck</option>
-                    </select>
-                </span>
-                </div>
-                <br/>
-                <strong style="margin-left:15px;">From:</strong>
-                <br/>
-                <div class="text center">
-                <span class=" margin-left margin-right" style="position:relative;display:block">
-                <input class="from-date" type="date" />
-                </span>
-                </div>
-                <br/>
-                <strong style="margin-left:15px;">To:</strong>
-                <br/>
-                <div class="text center">
-                <span class=" margin-left margin-right" style="position:relative;display:block">
-                <input class="to-date" type="date" style="">
                 </span>
                 </div>
                 <br/>
                 <div class="text center">
                 <span class="margin-left margin-right" style="">
-                <button class="button anchor alert viewrecord-btn" style="margin-bottom:20px; width:200px;">View</button>
+                <button class="button anchor alert viewuser-btn" style="margin-bottom:20px; width:200px;">View</button>
                 </span>
                 </div>
             </form>
@@ -163,22 +126,21 @@
         <article id="content-wrapper"  class="scroll">
         
              <div id="table-canvas"  style="padding:20px;">
-                 <table class="user-table">
+                  <table class="user-table" style="text-align:center;">
                     <thead>
                         <tr>
-                            <th>Date</th>
                             <th>Name</th>
-                            <th>Age</th>
+                            <th>Email</th>
                             <th>Mobile</th>
-                            <th>Address</th>
                             <th>Status</th>
                             <th>Request</th>
                         </tr>
                     </thead>
                     <tbody class="user-tbody">
-                       
+                            
                     </tbody>
-                 </table>
+                 </table> 
+                 <div id="paging"></div>
              </div>
         </article>
 
@@ -240,134 +202,211 @@
     <script src="/js/jquery-2.0.0.min.js"></script>
     <script src="/js/tuktuk.js"></script>
     <script src="/js/jquery.playSound.js"></script>
-     <script src="/js/jquery.pnotify.js"></script>
+    <script src="/js/jquery.pnotify.js"></script>
+    <script src="/js/pagination.js"></script>
     <script>
         TukTuk.Modal.loading();
         setTimeout( TukTuk.Modal.hide, 1000);
     </script>
+
     <script type="text/javascript">
+    //pagination
+    // (function() {
+
+    //     var paginator = new pagination.ItemPaginator({prelink:'/admin/user', current: 1, rowsPerPage: 10, totalResult: 50});
+    //     // var html = paginator.render();
+    //     paginator = pagination.create('search', {prelink:'/admin/user', current: 1, rowsPerPage: 10, totalResult: 50});
+    //     html = paginator.render();
+    //     document.getElementById("paging").innerHTML = html;
+    // })();
+    </script>
+   <script type="text/javascript">
 
             jQuery(function($){
-
-                //date initialization
-                 var date = new Date();
-                 var hour = date.getHours();
-                 var min = date.getMinutes();
-                 var sec = date.getSeconds();
-                 if((min<10)||(sec<10)){
-                    min = '0'+min;
-                    sec = '0'+sec;
-                 }
-                 var timenow = hour + ":" + min + ":" + sec;
-                 var year = date.getFullYear();
-                 var month = date.getMonth()+1;
-
-                 var day = date.getDate();
-                 if((month < 10 )||(day < 10)){
-                    day = '0'+day;
-                    month = '0'+month;
-                 }
-                 var datenow = year + "-" + month + "-" + day;
-                 var datetime = datenow + " | " + timenow;     
-                 //hide change alert on settings
-                 $(".change-alert").hide();
-
-
-                $(".viewrecord-btn").click(function(e){
-                    e.preventDefault();
-                    view = $(".view-radio:checked").attr("name");
-                    status = $(".status-select").val();
-                    request = $(".request-select").val();
-                    from = $(".from-date").val();
-                    to = $(".to-date").val();
-                    
-                        alerts = [];
-                        markers = [];
-
-                        $.ajax({
-                            url : "/request/sort?stat="+status+"&req="+request+"&from="+from+"&to="+to,
-                            type : "GET",
-                            dataType: "JSON",
-                            success : function(data){
-                                $(".record-tbody").html("");
-                                var data = data.data;
-
-                                for (var key in data){
-                                    alerts.push(data[key]);
-                                     var date = new Date(data[key].createdAt);
-                                     var hour = date.getHours();
-                                     var min = date.getMinutes();
-                                     var sec = date.getSeconds();
-                                     if((min<10)||(sec<10)){
-                                        min = '0'+min;
-                                        sec = '0'+sec;
-                                     }
-                                     var timenow = hour + ":" + min + ":" + sec;
-                                     var year = date.getFullYear();
-                                     var month = date.getMonth()+1;
-
-                                     var day = date.getDate();
-                                     if((month < 10 )||(day < 10)){
-                                        day = '0'+day;
-                                        month = '0'+month;
-                                     }
-                                    var datenow = year + "-" + month + "-" + day;
-                                    var datetime = datenow + " | " + timenow;
-                                    $(".record-tbody").prepend("<tr class='record-item'><td>"+datenow+"</td><td>"+timenow+"</td><td>"+data[key].name+"</td><td>"+data[key].age+"</td><td>"+data[key].mobile+"</td><td>"+data[key].address+"</td><td>"+data[key].request+"</td></tr>");
-                                }
-                                initialize();
-                            },
-                            error : function(err){
-                                alert(err);
-                            }
-                        });
-                    
-                });
-
-
-                socket.on('alert', function(data){
-                    var data = data[0];
-                    $.playSound('/sound/alert');
-                    $.pnotify({
-                        title: data.request,
-                        text: data.address,
-                        addclass: 'bck dark'           
-                    });
-                });
-
+                
                 $.ajax({
-                    url : "/admin/access",
-                    type : "GET",
-                    success : function(data){
-                        $(".username-settings").val(data[0].username);
-                        $(".email-settings").val(data[0].email);
+                    url      :   "/user/view",
+                    type     :   "GET",
+                    dataType :   "JSON",
+                    data     :   {status : "all"},
+                    success  :   function(data){
+                        users = data.users;
+                        console.log(users);
+                        for (var i in users){
+                            $(".user-tbody").append("<tr class='user-row' data-id='"+users[i].id+"'>" +
+                                                    "<td>"+users[i].firstname+" "+users[i].lastname+"</td>" +
+                                                    "<td>"+users[i].email+"</td>"  +
+                                                    "<td>"+users[i].mobile+"</td>" +
+                                                    "<td>"+users[i].status+"<button data-status ='"+users[i].status+"' class='change-btn btn tiny secondary'>"+(users[i].status == 'blocked' ? '<span class=\'icon ok-sign\'></span>' : '<span class=\'icon remove-sign\'></span>')+"</button></td>"+
+                                                    "<td><button class='btn tiny' data-id='"+users[i].id+"'>View</button></td>");
+                        }
                        
                     }
                 });
 
-                $(".change-btn").click(function(e){
+                $(".user-tbody").on("click", "tr td .change-btn", function(e){
                     e.preventDefault();
-                    value = $(this).prev().val();
-                    field = $(this).data("field");
+                    status = $(this).data('status');
+                    if(status == "active"){
+                        status = "blocked";
+                    }else{
+                         status = "active";
+                    }
+                    userid = $(this).parent().parent().data('id');
+                    
                     $.ajax({
-                        url : "/admin/update",
-                        type : "GET",
-                        data : {
-                            value : value,
-                            field : field
-                        },
+                        url  :   "/user/changestatus",
+                        type :   "GET",
+                        data :   {status : status, userid : userid},
                         success : function(data){
-                            if(data){
-                                $(".change-alert").fadeIn(200);
-                            }
+                           if(data){
+                            location.reload();   
+                           }
                         }
                     });
                 });
+                $(".viewuser-btn").click(function(e){
+                    e.preventDefault();
+                    $(".user-tbody .user-row").remove();
+                    $.ajax({
+                        url      :   "/user/view",
+                        type     :   "GET",
+                        dataType :   "JSON",
+                        data     :   {status : $(".status-select").val()},
+                        success  :   function(data){
+                            users = data.users;
+                            console.log(users);
+                            for (var i in users){
+                                $(".user-tbody").append("<tr class='user-row' data-id='"+users[i].id+"'>" +
+                                                        "<td>"+users[i].firstname+" "+users[i].lastname+"</td>" +
+                                                        "<td>"+users[i].email+"</td>"  +
+                                                        "<td>"+users[i].mobile+"</td>" +
+                                                        "<td>"+users[i].status+"<button data-status ='"+users[i].status+"' class='change-btn btn tiny secondary'>"+(users[i].status == 'blocked' ? '<span class=\'icon ok-sign\'></span>' : '<span class=\'icon remove-sign\'></span>')+"</button></td>"+
+                                                        "<td><button class='btn tiny' data-id='"+users[i].id+"'>View</button></td>");
+                            }
+                           
+                        }
+                    });
+                });
+    //             //date initialization
+    //              var date = new Date();
+    //              var hour = date.getHours();
+    //              var min = date.getMinutes();
+    //              var sec = date.getSeconds();
+    //              if((min<10)||(sec<10)){
+    //                 min = '0'+min;
+    //                 sec = '0'+sec;
+    //              }
+    //              var timenow = hour + ":" + min + ":" + sec;
+    //              var year = date.getFullYear();
+    //              var month = date.getMonth()+1;
+
+    //              var day = date.getDate();
+    //              if((month < 10 )||(day < 10)){
+    //                 day = '0'+day;
+    //                 month = '0'+month;
+    //              }
+    //              var datenow = year + "-" + month + "-" + day;
+    //              var datetime = datenow + " | " + timenow;     
+    //              //hide change alert on settings
+    //              $(".change-alert").hide();
+
+
+    //             $(".viewrecord-btn").click(function(e){
+    //                 e.preventDefault();
+    //                 view = $(".view-radio:checked").attr("name");
+    //                 status = $(".status-select").val();
+    //                 request = $(".request-select").val();
+    //                 from = $(".from-date").val();
+    //                 to = $(".to-date").val();
+                    
+    //                     alerts = [];
+    //                     markers = [];
+
+    //                     $.ajax({
+    //                         url : "/request/sort?stat="+status+"&req="+request+"&from="+from+"&to="+to,
+    //                         type : "GET",
+    //                         dataType: "JSON",
+    //                         success : function(data){
+    //                             $(".record-tbody").html("");
+    //                             var data = data.data;
+
+    //                             for (var key in data){
+    //                                 alerts.push(data[key]);
+    //                                  var date = new Date(data[key].createdAt);
+    //                                  var hour = date.getHours();
+    //                                  var min = date.getMinutes();
+    //                                  var sec = date.getSeconds();
+    //                                  if((min<10)||(sec<10)){
+    //                                     min = '0'+min;
+    //                                     sec = '0'+sec;
+    //                                  }
+    //                                  var timenow = hour + ":" + min + ":" + sec;
+    //                                  var year = date.getFullYear();
+    //                                  var month = date.getMonth()+1;
+
+    //                                  var day = date.getDate();
+    //                                  if((month < 10 )||(day < 10)){
+    //                                     day = '0'+day;
+    //                                     month = '0'+month;
+    //                                  }
+    //                                 var datenow = year + "-" + month + "-" + day;
+    //                                 var datetime = datenow + " | " + timenow;
+    //                                 $(".record-tbody").prepend("<tr class='record-item'><td>"+datenow+"</td><td>"+timenow+"</td><td>"+data[key].name+"</td><td>"+data[key].age+"</td><td>"+data[key].mobile+"</td><td>"+data[key].address+"</td><td>"+data[key].request+"</td></tr>");
+    //                             }
+    //                             initialize();
+    //                         },
+    //                         error : function(err){
+    //                             alert(err);
+    //                         }
+    //                     });
+                    
+    //             });
+
+
+    //             socket.on('alert', function(data){
+    //                 var data = data[0];
+    //                 $.playSound('/sound/alert');
+    //                 $.pnotify({
+    //                     title: data.request,
+    //                     text: data.address,
+    //                     addclass: 'bck dark'           
+    //                 });
+    //             });
+
+    //             $.ajax({
+    //                 url : "/admin/access",
+    //                 type : "GET",
+    //                 success : function(data){
+    //                     $(".username-settings").val(data[0].username);
+    //                     $(".email-settings").val(data[0].email);
+                       
+    //                 }
+    //             });
+
+    //             $(".change-btn").click(function(e){
+    //                 e.preventDefault();
+    //                 value = $(this).prev().val();
+    //                 field = $(this).data("field");
+    //                 $.ajax({
+    //                     url : "/admin/update",
+    //                     type : "GET",
+    //                     data : {
+    //                         value : value,
+    //                         field : field
+    //                     },
+    //                     success : function(data){
+    //                         if(data){
+    //                             $(".change-alert").fadeIn(200);
+    //                         }
+    //                     }
+    //                 });
+    //             });
 
 
             });
 
-    </script>
+     </script>
 
 
 </body> 
