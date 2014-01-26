@@ -141,6 +141,7 @@ Copyright (c) 2011-2013 Tapquo S.L. - Licensed GPLv3, Commercial
     */
 
     show = function(modal_id) {
+       alert('this');
       lock.addClass("active").show();
       this._hideAnyModal();
       modal = tk.dom("[data-tuktuk=modal]#" + modal_id).addClass("active");

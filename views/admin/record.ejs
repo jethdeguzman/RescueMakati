@@ -276,16 +276,19 @@
                  var month = date.getMonth()+1;
 
                  var day = date.getDate();
-                 if((month < 10 )||(day < 10)){
-                    day = '0'+day;
+                 if(month < 10 ){
+                  
                     month = '0'+month;
+                 }
+                 if (day < 10){
+                    day = '0'+day;
                  }
                  var datenow = year + "-" + month + "-" + day;
                  var datetime = datenow + " | " + timenow;     
                  //hide change alert on settings
                  $(".change-alert").hide();
 
-                
+              
                  //setting NOW to date fields
                  $(".from-date").val(datenow);
                  $(".to-date").val(datenow);

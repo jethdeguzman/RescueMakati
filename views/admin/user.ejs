@@ -124,7 +124,8 @@
             </nav>
         </header> 
         <article id="content-wrapper"  class="scroll">
-        
+             <button data-tuktuk-modal="modal">modal</button>
+
              <div id="table-canvas"  style="padding:20px;">
                   <table class="user-table" style="text-align:center;">
                     <thead>
@@ -137,7 +138,15 @@
                         </tr>
                     </thead>
                     <tbody class="user-tbody">
-                            
+                        <% for(var i in users ){ %>
+                          <tr class="user-row" data-id="<%= users[i].id %>">
+                            <td><%= users[i].firstname+" "+users[i].lastname %></td>
+                            <td><%= users[i].email %></td>
+                            <td><%= users[i].mobile %></td>
+                            <td><%= users[i].status %></td>
+                            <td><button  data-tuktuk-modal="modal" class='btn tiny' data-id='"+users[i].id+"'>View</button></td>
+                          </tr>
+                        <% }%>
                     </tbody>
                  </table> 
                  <div id="paging"></div>
@@ -223,26 +232,44 @@
    <script type="text/javascript">
 
             jQuery(function($){
-                
-                $.ajax({
-                    url      :   "/user/view",
-                    type     :   "GET",
-                    dataType :   "JSON",
-                    data     :   {status : "all"},
-                    success  :   function(data){
-                        users = data.users;
-                        console.log(users);
-                        for (var i in users){
-                            $(".user-tbody").append("<tr class='user-row' data-id='"+users[i].id+"'>" +
-                                                    "<td>"+users[i].firstname+" "+users[i].lastname+"</td>" +
-                                                    "<td>"+users[i].email+"</td>"  +
-                                                    "<td>"+users[i].mobile+"</td>" +
-                                                    "<td>"+users[i].status+"<button data-status ='"+users[i].status+"' class='change-btn btn tiny secondary'>"+(users[i].status == 'blocked' ? '<span class=\'icon ok-sign\'></span>' : '<span class=\'icon remove-sign\'></span>')+"</button></td>"+
-                                                    "<td><button class='btn tiny' data-id='"+users[i].id+"'>View</button></td>");
-                        }
+
+                // window.TukTuk.Modal = (function(tk) {
+                //   var hide, loading, lock, modal, show;
+                //   alert('asd');
+                //   lock = void 0;
+                //   modal = void 0;
+                //   /*
+                //       @todo: Describe method
+                //   */
+
+                //   show = function(modal_id) {
+                //      alert('this');
+                //     lock.addClass("active").show();
+                //     this._hideAnyModal();
+                //     modal = tk.dom("[data-tuktuk=modal]#" + modal_id).addClass("active");
+                //     return this;
+                //   };
+                //   })(TukTuk);
+
+                // $.ajax({
+                //     url      :   "/user/view",
+                //     type     :   "GET",
+                //     dataType :   "JSON",
+                //     data     :   {status : "all"},
+                //     success  :   function(data){
+                //         users = data.users;
+                //         console.log(users);
+                //         for (var i in users){
+                //             $(".user-tbody").append("<tr class='user-row' data-id='"+users[i].id+"'>" +
+                //                                     "<td>"+users[i].firstname+" "+users[i].lastname+"</td>" +
+                //                                     "<td>"+users[i].email+"</td>"  +
+                //                                     "<td>"+users[i].mobile+"</td>" +
+                //                                     "<td>"+users[i].status+(users[i].status == 'blocked' ? '&nbsp;': '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' )+"<button data-status ='"+users[i].status+"' class='change-btn btn tiny alert'>"+(users[i].status == 'blocked' ? '<span class=\'icon ok-sign\'></span>' : '<span class=\'icon remove-sign\'></span>')+"</button></td>"+
+                //                                     "<td><button  data-tuktuk-modal=\"modal\" class='btn tiny' data-id='"+users[i].id+"'>View</button></td>");
+                //         }
                        
-                    }
-                });
+                //     }
+                // });
 
                 $(".user-tbody").on("click", "tr td .change-btn", function(e){
                     e.preventDefault();
@@ -265,28 +292,32 @@
                         }
                     });
                 });
-                $(".viewuser-btn").click(function(e){
-                    e.preventDefault();
-                    $(".user-tbody .user-row").remove();
-                    $.ajax({
-                        url      :   "/user/view",
-                        type     :   "GET",
-                        dataType :   "JSON",
-                        data     :   {status : $(".status-select").val()},
-                        success  :   function(data){
-                            users = data.users;
-                            console.log(users);
-                            for (var i in users){
-                                $(".user-tbody").append("<tr class='user-row' data-id='"+users[i].id+"'>" +
-                                                        "<td>"+users[i].firstname+" "+users[i].lastname+"</td>" +
-                                                        "<td>"+users[i].email+"</td>"  +
-                                                        "<td>"+users[i].mobile+"</td>" +
-                                                        "<td>"+users[i].status+"<button data-status ='"+users[i].status+"' class='change-btn btn tiny secondary'>"+(users[i].status == 'blocked' ? '<span class=\'icon ok-sign\'></span>' : '<span class=\'icon remove-sign\'></span>')+"</button></td>"+
-                                                        "<td><button class='btn tiny' data-id='"+users[i].id+"'>View</button></td>");
-                            }
+                
+                // $(".viewuser-btn").click(function(e){
+                //     e.preventDefault();
+                //     $(".user-tbody .user-row").remove();
+                //     $.ajax({
+                //         url      :   "/user/view",
+                //         type     :   "GET",
+                //         dataType :   "JSON",
+                //         data     :   {status : $(".status-select").val()},
+                //         success  :   function(data){
+                //             users = data.users;
+                //             console.log(users);
+                //             for (var i in users){
+                //                 $(".user-tbody").append("<tr class='user-row' data-id='"+users[i].id+"'>" +
+                //                                         "<td>"+users[i].firstname+" "+users[i].lastname+"</td>" +
+                //                                         "<td>"+users[i].email+"</td>"  +
+                //                                         "<td>"+users[i].mobile+"</td>" +
+                //                                         "<td>"+users[i].status+"<button data-status ='"+users[i].status+"' class='change-btn btn tiny alert'>"+(users[i].status == 'blocked' ? '<span class=\'icon ok-sign\'></span>' : '<span class=\'icon remove-sign\'></span>')+"</button></td>"+
+                //                                         "<td><button class='btn tiny' data-id='"+users[i].id+"'>View</button></td>");
+                //             }
                            
-                        }
-                    });
+                //         }
+                //     });
+                // });
+                $(".user-tbody").on("click", "tr td .viewuser-btn", function(e){
+                    $(this).addClass("active");
                 });
     //             //date initialization
     //              var date = new Date();

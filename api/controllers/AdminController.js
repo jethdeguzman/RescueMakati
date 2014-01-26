@@ -23,7 +23,29 @@ module.exports = {
 		
 	},
 	user : function(req, res){
-		res.view();
+		var status = req.param("status");
+
+		if((status == "all")||(status == undefined)){
+		
+		  User.find().done(function(err, user){
+		    if(err){
+		      console.log(err);
+		    }else{
+		      // res.json({users:user});
+		      res.view({users:user});
+		    }
+		  });
+		}else{
+		  User.find({status : status}).done(function(err, user){
+		    if(err){
+		      console.log(err);
+		    }else{
+		      // res.json({users:user});
+		      res.view({users:user});
+		    }
+		  });
+		}  
+		
 	},
 	login : function(req, res){
 		res.view();
