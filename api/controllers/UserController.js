@@ -95,6 +95,18 @@ module.exports = {
         res.send(true);
       }
     });
+  },
+  status : function(req, res){
+    res.header("Access-Control-Allow-Origin", "*");
+    var userid = req.param('userid');
+    User.findOne({_id : userid}).done(function(err, user){
+      if(err){
+        console.log(err);
+      }else{
+        res.json({status : user.status});
+      }
+    });
+
   } 
   
 
