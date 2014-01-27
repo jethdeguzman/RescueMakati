@@ -229,7 +229,7 @@ module.exports = {
   user : function(req, res){
     var userid = req.param('userid');
 
-    Request.find().where({userid  :userid}).done(function(err, request){
+    Request.find().where({userid  :userid}).sort({_id:-1}).done(function(err, request){
       if(err){
         console.log(err);
       }else{
