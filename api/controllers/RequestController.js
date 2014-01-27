@@ -60,14 +60,7 @@ module.exports = {
       }
     });
 
-    //Query the last insert and emit to client
-    Request.find().sort({_id:-1}).limit(1).done(function(err, req){
-      if(err){
-        console.log(err);
-      }else{
-        io.sockets.emit('alert', req);
-      }
-    });
+
 
 
     
@@ -105,11 +98,19 @@ module.exports = {
     });
     
    
-
+    //Query the last insert and emit to client
+    Request.find().sort({_id:-1}).limit(1).done(function(err, req){
+      if(err){
+        console.log(err);
+      }else{
+        io.sockets.emit('alert', req);
+        res.json({status : 'successfully sent'});
+      }
+    });
    
 
   	// io.sockets.emit('alert', {data : data, datetime : datetime});
-  	res.json({status : 'successfully sent'});
+  
   	// res.send('request');
   },
 
