@@ -326,6 +326,16 @@
                     });
                 });
 
+                    socket.on('alert', function(data){
+                        var data = data[0];
+                        $.playSound('/sound/alert');
+                        $.pnotify({
+                            title: data.request,
+                            text: data.address,
+                            addclass: 'bck dark'           
+                        });
+                    });
+
 
             });
 
