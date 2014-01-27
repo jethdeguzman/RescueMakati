@@ -222,6 +222,17 @@ module.exports = {
         io.sockets.emit('update');
       }
     });
+  },
+  user : function(req, res){
+    var userid = req.param('userid');
+
+    Request.find().where({userid  :userid}).done(function(err, request){
+      if(err){
+        console.log(err);
+      }else{
+        res.json({request : request});
+      }
+    });
   }
   
 

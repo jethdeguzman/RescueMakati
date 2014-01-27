@@ -124,8 +124,7 @@
             </nav>
         </header> 
         <article id="content-wrapper"  class="scroll">
-             <button data-tuktuk-modal="modal">modal</button>
-
+           
              <div id="table-canvas"  style="padding:20px;">
                   <table class="user-table" style="text-align:center;">
                     <thead>
@@ -143,8 +142,17 @@
                             <td><%= users[i].firstname+" "+users[i].lastname %></td>
                             <td><%= users[i].email %></td>
                             <td><%= users[i].mobile %></td>
-                            <td><%= users[i].status %></td>
-                            <td><button  data-tuktuk-modal="modal" class='btn tiny' data-id='"+users[i].id+"'>View</button></td>
+                            <td><select class="status-change" value="<%= users[i].status %>">
+                                <% if (users[i].status == "active"){ %>
+                                    <option value="active">Active</option>
+                                    <option value="blocked">Blocked</option>
+                                <%}else{%>
+                                    <option value="blocked">Blocked</option>
+                                    <option value="active">Active</option>
+                                   
+                                <%}%>
+                            </select></td>
+                            <td><button  data-tuktuk-modal="modal" class='btn tiny view-record-btn' data-id='<%= users[i].id %>'>View Records</button></td>
                           </tr>
                         <% }%>
                     </tbody>
@@ -167,13 +175,26 @@
     </section>
 
     <!-- Modal-->
-    <div id="modal" data-tuktuk="modal" class="column_5">
+    <div id="modal" data-tuktuk="modal" class="column_8">
         <header>
-            <h4 class="text book inline">Normal window</h4>
+            <h4 class="text book inline">User Request Log</h4>
             <button data-modal="close" class="transparent small on-right inline icon remove"></button>
         </header>
         <article>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum assumenda aperiam nobis quam earum nihil veritatis modi possimus blanditiis perferendis obcaecati voluptatibus fuga eaque ad et atque nostrum porro expedita!
+           <table style="text-align:center;" id="request-log-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Address</th>
+                        <th>Request</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+           </table>
         </article>
     </div>
 
@@ -233,54 +254,9 @@
 
             jQuery(function($){
 
-                // window.TukTuk.Modal = (function(tk) {
-                //   var hide, loading, lock, modal, show;
-                //   alert('asd');
-                //   lock = void 0;
-                //   modal = void 0;
-                //   /*
-                //       @todo: Describe method
-                //   */
-
-                //   show = function(modal_id) {
-                //      alert('this');
-                //     lock.addClass("active").show();
-                //     this._hideAnyModal();
-                //     modal = tk.dom("[data-tuktuk=modal]#" + modal_id).addClass("active");
-                //     return this;
-                //   };
-                //   })(TukTuk);
-
-                // $.ajax({
-                //     url      :   "/user/view",
-                //     type     :   "GET",
-                //     dataType :   "JSON",
-                //     data     :   {status : "all"},
-                //     success  :   function(data){
-                //         users = data.users;
-                //         console.log(users);
-                //         for (var i in users){
-                //             $(".user-tbody").append("<tr class='user-row' data-id='"+users[i].id+"'>" +
-                //                                     "<td>"+users[i].firstname+" "+users[i].lastname+"</td>" +
-                //                                     "<td>"+users[i].email+"</td>"  +
-                //                                     "<td>"+users[i].mobile+"</td>" +
-                //                                     "<td>"+users[i].status+(users[i].status == 'blocked' ? '&nbsp;': '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' )+"<button data-status ='"+users[i].status+"' class='change-btn btn tiny alert'>"+(users[i].status == 'blocked' ? '<span class=\'icon ok-sign\'></span>' : '<span class=\'icon remove-sign\'></span>')+"</button></td>"+
-                //                                     "<td><button  data-tuktuk-modal=\"modal\" class='btn tiny' data-id='"+users[i].id+"'>View</button></td>");
-                //         }
-                       
-                //     }
-                // });
-
-                $(".user-tbody").on("click", "tr td .change-btn", function(e){
-                    e.preventDefault();
-                    status = $(this).data('status');
-                    if(status == "active"){
-                        status = "blocked";
-                    }else{
-                         status = "active";
-                    }
+                $(".status-change").change(function(){
+                    status = $(this).val();
                     userid = $(this).parent().parent().data('id');
-                    
                     $.ajax({
                         url  :   "/user/changestatus",
                         type :   "GET",
@@ -292,147 +268,63 @@
                         }
                     });
                 });
+               
                 
-                // $(".viewuser-btn").click(function(e){
-                //     e.preventDefault();
-                //     $(".user-tbody .user-row").remove();
-                //     $.ajax({
-                //         url      :   "/user/view",
-                //         type     :   "GET",
-                //         dataType :   "JSON",
-                //         data     :   {status : $(".status-select").val()},
-                //         success  :   function(data){
-                //             users = data.users;
-                //             console.log(users);
-                //             for (var i in users){
-                //                 $(".user-tbody").append("<tr class='user-row' data-id='"+users[i].id+"'>" +
-                //                                         "<td>"+users[i].firstname+" "+users[i].lastname+"</td>" +
-                //                                         "<td>"+users[i].email+"</td>"  +
-                //                                         "<td>"+users[i].mobile+"</td>" +
-                //                                         "<td>"+users[i].status+"<button data-status ='"+users[i].status+"' class='change-btn btn tiny alert'>"+(users[i].status == 'blocked' ? '<span class=\'icon ok-sign\'></span>' : '<span class=\'icon remove-sign\'></span>')+"</button></td>"+
-                //                                         "<td><button class='btn tiny' data-id='"+users[i].id+"'>View</button></td>");
-                //             }
-                           
-                //         }
-                //     });
-                // });
-                $(".user-tbody").on("click", "tr td .viewuser-btn", function(e){
-                    $(this).addClass("active");
+                $(".viewuser-btn").click(function(e){
+                    e.preventDefault();
+                    status = $(".status-select").val();
+                    location.href = "/admin/user?status="+status;
                 });
-    //             //date initialization
-    //              var date = new Date();
-    //              var hour = date.getHours();
-    //              var min = date.getMinutes();
-    //              var sec = date.getSeconds();
-    //              if((min<10)||(sec<10)){
-    //                 min = '0'+min;
-    //                 sec = '0'+sec;
-    //              }
-    //              var timenow = hour + ":" + min + ":" + sec;
-    //              var year = date.getFullYear();
-    //              var month = date.getMonth()+1;
+                
+                $(".view-record-btn").click(function(e){
+                    e.preventDefault();
+                    $("#request-log-table tbody tr").remove();
+                    userid = $(this).data('id');
+                    $.ajax({
+                        url : "/request/user",
+                        type : "GET",
+                        data : {userid : '0001'},
+                        success : function(data){
+                            console.log(data.request);
+                            request = data.request;
+                            for(var i in request){
+                                 var date = new Date(request[i].createdAt);
+                                 var hour = date.getHours();
+                                 var min = date.getMinutes();
+                                 var sec = date.getSeconds();
+                                 if(min<10){
+                                    min = '0'+min;
+                                    
+                                 }
+                                 if(sec<10){
+                                    sec = '0'+sec;
+                                 }
+                                 var timenow = hour + ":" + min + ":" + sec;
+                                 var year = date.getFullYear();
+                                 var month = date.getMonth()+1;
 
-    //              var day = date.getDate();
-    //              if((month < 10 )||(day < 10)){
-    //                 day = '0'+day;
-    //                 month = '0'+month;
-    //              }
-    //              var datenow = year + "-" + month + "-" + day;
-    //              var datetime = datenow + " | " + timenow;     
-    //              //hide change alert on settings
-    //              $(".change-alert").hide();
-
-
-    //             $(".viewrecord-btn").click(function(e){
-    //                 e.preventDefault();
-    //                 view = $(".view-radio:checked").attr("name");
-    //                 status = $(".status-select").val();
-    //                 request = $(".request-select").val();
-    //                 from = $(".from-date").val();
-    //                 to = $(".to-date").val();
-                    
-    //                     alerts = [];
-    //                     markers = [];
-
-    //                     $.ajax({
-    //                         url : "/request/sort?stat="+status+"&req="+request+"&from="+from+"&to="+to,
-    //                         type : "GET",
-    //                         dataType: "JSON",
-    //                         success : function(data){
-    //                             $(".record-tbody").html("");
-    //                             var data = data.data;
-
-    //                             for (var key in data){
-    //                                 alerts.push(data[key]);
-    //                                  var date = new Date(data[key].createdAt);
-    //                                  var hour = date.getHours();
-    //                                  var min = date.getMinutes();
-    //                                  var sec = date.getSeconds();
-    //                                  if((min<10)||(sec<10)){
-    //                                     min = '0'+min;
-    //                                     sec = '0'+sec;
-    //                                  }
-    //                                  var timenow = hour + ":" + min + ":" + sec;
-    //                                  var year = date.getFullYear();
-    //                                  var month = date.getMonth()+1;
-
-    //                                  var day = date.getDate();
-    //                                  if((month < 10 )||(day < 10)){
-    //                                     day = '0'+day;
-    //                                     month = '0'+month;
-    //                                  }
-    //                                 var datenow = year + "-" + month + "-" + day;
-    //                                 var datetime = datenow + " | " + timenow;
-    //                                 $(".record-tbody").prepend("<tr class='record-item'><td>"+datenow+"</td><td>"+timenow+"</td><td>"+data[key].name+"</td><td>"+data[key].age+"</td><td>"+data[key].mobile+"</td><td>"+data[key].address+"</td><td>"+data[key].request+"</td></tr>");
-    //                             }
-    //                             initialize();
-    //                         },
-    //                         error : function(err){
-    //                             alert(err);
-    //                         }
-    //                     });
-                    
-    //             });
-
-
-    //             socket.on('alert', function(data){
-    //                 var data = data[0];
-    //                 $.playSound('/sound/alert');
-    //                 $.pnotify({
-    //                     title: data.request,
-    //                     text: data.address,
-    //                     addclass: 'bck dark'           
-    //                 });
-    //             });
-
-    //             $.ajax({
-    //                 url : "/admin/access",
-    //                 type : "GET",
-    //                 success : function(data){
-    //                     $(".username-settings").val(data[0].username);
-    //                     $(".email-settings").val(data[0].email);
-                       
-    //                 }
-    //             });
-
-    //             $(".change-btn").click(function(e){
-    //                 e.preventDefault();
-    //                 value = $(this).prev().val();
-    //                 field = $(this).data("field");
-    //                 $.ajax({
-    //                     url : "/admin/update",
-    //                     type : "GET",
-    //                     data : {
-    //                         value : value,
-    //                         field : field
-    //                     },
-    //                     success : function(data){
-    //                         if(data){
-    //                             $(".change-alert").fadeIn(200);
-    //                         }
-    //                     }
-    //                 });
-    //             });
+                                 var day = date.getDate();
+                                 if(month < 10 ){
+                                   
+                                    month = '0'+month;
+                                 }
+                                 if(day < 10){
+                                    day = '0'+day;
+                                 }
+                                var datenow = year + "-" + month + "-" + day;
+                                var datetime = datenow + " | " + timenow;
+                                $("#request-log-table tbody").append("<tr>"+
+                                                                     "<td>"+datenow+"</td>"+
+                                                                     "<td>"+timenow+"</td>"+  
+                                                                     "<td>"+request[i].address+"</td>"+
+                                                                     "<td>"+request[i].request+"</td>"+
+                                                                     "<td>"+request[i].status+"</td>"+ 
+                                                                     "</tr>");
+                            }
+                            
+                        }
+                    });
+                });
 
 
             });
