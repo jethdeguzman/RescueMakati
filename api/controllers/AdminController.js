@@ -23,28 +23,33 @@ module.exports = {
 		
 	},
 	user : function(req, res){
-		var status = req.param("status");
+		if (req.session.username){
+			var status = req.param("status");
 
-		if((status == "all")||(status == undefined)){
-		
-		  User.find().done(function(err, user){
-		    if(err){
-		      console.log(err);
-		    }else{
-		      // res.json({users:user});
-		      res.view({users:user});
-		    }
-		  });
+			if((status == "all")||(status == undefined)){
+			
+			  User.find().done(function(err, user){
+			    if(err){
+			      console.log(err);
+			    }else{
+			      // res.json({users:user});
+			      res.view({users:user});
+			    }
+			  });
+			}else{
+			  User.find({status : status}).done(function(err, user){
+			    if(err){
+			      console.log(err);
+			    }else{
+			      // res.json({users:user});
+			      res.view({users:user});
+			    }
+			  });
+			}  
 		}else{
-		  User.find({status : status}).done(function(err, user){
-		    if(err){
-		      console.log(err);
-		    }else{
-		      // res.json({users:user});
-		      res.view({users:user});
-		    }
-		  });
-		}  
+			res.redirect('/admin/login');
+		}
+		
 		
 	},
 	login : function(req, res){
