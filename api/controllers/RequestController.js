@@ -26,6 +26,7 @@ module.exports = {
     
   	var socket = req.socket;
   	var io = sails.io;
+    io.set('transports', ['xhr-polling']);
   	var data = req.param('data');
     res.header("Access-Control-Allow-Origin", "*");
     var parsed = JSON.parse(data);
