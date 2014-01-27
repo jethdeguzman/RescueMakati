@@ -23,10 +23,11 @@ module.exports = {
    
   },
   add : function(req, res){
-    res.header("Access-Control-Allow-Origin", "*");
+    
   	var socket = req.socket;
   	var io = sails.io;
   	var data = req.param('data');
+    res.header("Access-Control-Allow-Origin", "*");
     var parsed = JSON.parse(data);
     var date = new Date();
     var hour = date.getHours();
