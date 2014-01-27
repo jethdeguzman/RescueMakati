@@ -192,7 +192,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
+
                 </tbody>
            </table>
         </article>
@@ -283,7 +283,7 @@
                     $.ajax({
                         url : "/request/user",
                         type : "GET",
-                        data : {userid : '0001'},
+                        data : {userid : userid},
                         success : function(data){
                             console.log(data.request);
                             request = data.request;
