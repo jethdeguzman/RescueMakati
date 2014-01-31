@@ -50,7 +50,8 @@ module.exports = {
   	});
   },
   photo : function(req, res){
-  	var file = req.param('file');
+  	res.header("Access-Control-Allow-Origin", "*");
+  	var file = req.files.file;
   	Gallery.create({photo : file}).done(function(err, gallery){
 
   	});
