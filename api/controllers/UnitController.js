@@ -50,6 +50,7 @@ module.exports = {
   	});
   },
   photo : function(req, res){
+  	var fs = require('node-fs');
   	res.header("Access-Control-Allow-Origin", "*");
   	var file = req.files.file;
   	
