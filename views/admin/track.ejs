@@ -62,7 +62,7 @@
         
         <header class="bck dark">
 
-                <h5 class="text normal align center"><span class="icon group"></span> Mobile App Users</h5>
+                <h5 class="text normal align center"><span class="icon road"></span> Track Units</h5>
 
         </header>
 
@@ -78,29 +78,71 @@
         <article class="bck dark scroll" style="height:-30px;">
             <br>
             <form id="filter-form">
-                <strong style="margin-left:15px;">Status:</strong>
+                <strong style="margin-left:15px;">Unit Tpye:</strong>
                 <br/>
                 <div class="text center">
                 <span class="select margin-left margin-right" >
-                    <select class="status-select" style="">
+                    <select class="unit-type-sort" style="">
                        
-                        <option value="all">All</option>
-                        <option value="active">Active</option>
-                        <option value="blocked">Blocked</option>
+                       <option value="all">All</option>
+                        <option value="ambulance">Ambulance</option>
+                        <option value="police">Police</option>
+                        <option value="fire truck">Fire Truck</option>
+                        <option value="others">Others</option>
                     </select>
                 </span>
                 </div>
                 <br/>
                 <div class="text center">
                 <span class="margin-left margin-right" style="">
-                <button class="button anchor alert viewuser-btn" style="margin-bottom:20px; width:200px;">View</button>
+                <button class="button anchor alert viewunit-btn" style="margin-bottom:20px; width:200px;">View</button>
                 </span>
                 </div>
             </form>
             
         </article>
        
-        
+        <header class="bck light" style="margin-top:-100px;">
+            <h4 class="text center" ><span  class="icon plus-sign"></span>Add <strong>Units</strong></h4>
+        </header>
+        <article class="bck dark scroll" style="height:-30px;">
+            <br>
+            <form id="filter-form">
+                <strong style="margin-left:15px;">Unit Type:</strong>
+                <br/>
+                <div class="text center">
+                <span class="select margin-left margin-right" >
+                    <select class="unit-type-select" style="">
+                        <option value="none">--Select--</option>
+                        <option value="ambulance">Ambulance</option>
+                        <option value="police">Police</option>
+                        <option value="fire truck">Fire Truck</option>
+                        <option value="others">Others</option>
+                    </select>
+                </span>
+                </div>
+                <br/>
+                <strong style="margin-left:15px;">Plate Number:</strong>
+                <div class="text center">
+                <span class=" margin-right margin-left " >
+                    <input type="text" class="unit-plate-number" style="width:220px;" />
+                </span>
+                </div>
+                <strong style="margin-left:15px;">Info:</strong>
+                <div class="text center">
+                <span class=" margin-right margin-left " >
+                    <input type="text" class="unit-info" style="width:220px;" />
+                </span>
+                </div>
+                <br/>
+                <div class="text center">
+                <span class="margin-left margin-right" style="">
+                <button class="button anchor alert add-unit-btn" style="margin-bottom:20px; width:200px;">Add</button>
+                </span>
+                </div>
+            </form>
+            
+        </article>
 
 
         <footer class="bck color text center" style="padding:5px;">
@@ -126,40 +168,27 @@
         <article id="content-wrapper"  class="scroll">
            
              <div id="table-canvas"  style="padding:20px;">
-                  <table class="user-table" style="text-align:center;">
+                  <table class="unit-table" style="text-align:center;">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Mobile</th>
-                            <th>Status</th>
-                            <th>Request</th>
+                            <th>Unit Type</th>
+                            <th>Plate Number</th>
+                            <th>Info</th>
+                            <th>Option</th>
                         </tr>
                     </thead>
-                    <tbody class="user-tbody">
-                        <% for(var i in users ){ %>
-                          <tr class="user-row" data-id="<%= users[i].id %>">
-                            <td><%= users[i].firstname+" "+users[i].lastname %></td>
-                            <td><%= users[i].email %></td>
-                            <td><%= users[i].mobile %></td>
-                            <td><select class="status-change" value="<%= users[i].status %>">
-                                <% if (users[i].status == "active"){ %>
-                                    <option value="active">Active</option>
-                                    <option value="blocked">Blocked</option>
-                                <%}else{%>
-                                    <option value="blocked">Blocked</option>
-                                    <option value="active">Active</option>
-                                   
-                                <%}%>
-                            </select></td>
-                            <td><button  data-tuktuk-modal="modal" class='btn tiny view-record-btn' data-id='<%= users[i].id %>'>View Records</button></td>
-                          </tr>
-                        <% }%>
+                    <tbody class="unit-tbody">
+                       <% for(var i in units ){ %>
+                         <tr class="unit-row" data-id="<%= units[i].id %>">
+                           <td><%= units[i].type %></td>
+                           <td><%= units[i].platenum %></td>
+                           <td><%= units[i].info %></td> 
+                           <td><button  data-tuktuk-modal="modal" class='btn tiny monitor-btn' data-id='<%= units[i].id %>'>Monitor</button> <button class="btn tiny alert delete-btn" data-id='<%= units[i].id %>'>Delete</button></td>
+                         </tr>
+                       <% }%>
                     </tbody>
                  </table> 
-                 <div id="paging">
-                     
-                 </div>
+                 <div id="paging"></div>
              </div>
         </article>
 
@@ -167,8 +196,8 @@
             <nav class="on-left text bold" data-tuktuk="menu">
                 <a href="/admin" ><span class="icon bell-alt"></span> Incoming Alerts</a>
                 <a href="/admin/record" ><span class="icon eye-open"></span> View Records</a>
-                <a href="/admin/track"><span class="icon road"></span> Track Units</a>
-                <a href="/admin/user" class="active"><span class="icon group"></span> Mobile App Users</a>
+                <a href="/admin/track" class="active"><span class="icon road"></span> Track Units</a>
+                <a href="/admin/user" ><span class="icon group"></span> Mobile App Users</a>
                 
             </nav>
           
@@ -242,7 +271,15 @@
     </script>
 
     <script type="text/javascript">
-  
+    //pagination
+    // (function() {
+
+    //     var paginator = new pagination.ItemPaginator({prelink:'/admin/user', current: 1, rowsPerPage: 10, totalResult: 50});
+    //     // var html = paginator.render();
+    //     paginator = pagination.create('search', {prelink:'/admin/user', current: 1, rowsPerPage: 10, totalResult: 50});
+    //     html = paginator.render();
+    //     document.getElementById("paging").innerHTML = html;
+    // })();
     </script>
    <script type="text/javascript">
 
@@ -257,79 +294,7 @@
                         addclass: 'bck dark'           
                     });
                 });
-
-                $(".status-change").change(function(){
-                    status = $(this).val();
-                    userid = $(this).parent().parent().data('id');
-                    $.ajax({
-                        url  :   "/user/changestatus",
-                        type :   "GET",
-                        data :   {status : status, userid : userid},
-                        success : function(data){
-                           if(data){
-                            location.reload();   
-                           }
-                        }
-                    });
-                });
-               
-                
-                $(".viewuser-btn").click(function(e){
-                    e.preventDefault();
-                    status = $(".status-select").val();
-                    location.href = "/admin/user?status="+status;
-                });
-                
-                $(".view-record-btn").click(function(e){
-                    e.preventDefault();
-                    $("#request-log-table tbody tr").remove();
-                    userid = $(this).data('id');
-                    $.ajax({
-                        url : "/request/user",
-                        type : "GET",
-                        data : {userid : userid},
-                        success : function(data){
-                            console.log(data.request);
-                            request = data.request;
-                            for(var i in request){
-                                 var date = new Date(request[i].createdAt);
-                                 var hour = date.getHours();
-                                 var min = date.getMinutes();
-                                 var sec = date.getSeconds();
-                                 if(min<10){
-                                    min = '0'+min;
-                                    
-                                 }
-                                 if(sec<10){
-                                    sec = '0'+sec;
-                                 }
-                                 var timenow = hour + ":" + min + ":" + sec;
-                                 var year = date.getFullYear();
-                                 var month = date.getMonth()+1;
-
-                                 var day = date.getDate();
-                                 if(month < 10 ){
-                                   
-                                    month = '0'+month;
-                                 }
-                                 if(day < 10){
-                                    day = '0'+day;
-                                 }
-                                var datenow = year + "-" + month + "-" + day;
-                                var datetime = datenow + " | " + timenow;
-                                $("#request-log-table tbody").append("<tr>"+
-                                                                     "<td>"+datenow+"</td>"+
-                                                                     "<td>"+timenow+"</td>"+  
-                                                                     "<td>"+request[i].address+"</td>"+
-                                                                     "<td>"+request[i].request+"</td>"+
-                                                                     "<td>"+request[i].status+"</td>"+ 
-                                                                     "</tr>");
-                            }
-                            
-                        }
-                    });
-                });
-
+ 
                 $.ajax({
                     url : "/admin/access",
                     type : "GET",
@@ -358,6 +323,40 @@
                         }
                     });
                 });
+
+                $(".add-unit-btn").click(function(e){
+                    e.preventDefault();
+                    $.ajax({
+                        url : '/unit/add',
+                        type : 'get',
+                        data : {
+                            type : $(".unit-type-select").val(),
+                            platenum : $(".unit-plate-number").val(),
+                            info    : $(".unit-info").val()
+                        },
+                        success : function(data){
+                            location.reload();
+                        }
+                    });
+                });
+                $(".delete-btn").click(function(e){
+                    e.preventDefault();
+                    $.ajax({
+                        url : '/unit/delete',
+                        type:'get',
+                        data : {unit : $(this).data('id')},
+                        success:function(){
+                            location.reload();
+                        }
+                    });
+                });
+
+                $(".viewunit-btn").click(function(e){
+                    e.preventDefault();
+                    type = $(".unit-type-sort").val();
+                    location.href = "/admin/track?type="+type;
+                });
+                    
 
 
             });

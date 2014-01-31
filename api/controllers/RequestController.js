@@ -34,17 +34,23 @@ module.exports = {
     var hour = date.getHours();
     var min = date.getMinutes();
     var sec = date.getSeconds();
-    if((min<10)||(sec<10)){
+    if(min<10){
        min = '0'+min;
+      
+    }
+    if(sec<10){
        sec = '0'+sec;
     }
     var timenow = hour + ":" + min + ":" + sec;
     var year = date.getFullYear();
     var month = date.getMonth()+1;
     var day = date.getDate();
-    if((month < 10 )||(day < 10)){
-       day = '0'+day;
+    if(month < 10 ){
+      
        month = '0'+month;
+    }
+    if(day < 10){
+       day = '0'+day;
     }
     var datenow = year + "-" + month + "-" + day;
     var datetime = datenow + " " + timenow;
@@ -150,17 +156,23 @@ module.exports = {
       var hour = date.getHours();
       var min = date.getMinutes();
       var sec = date.getSeconds();
-      if((min<10)||(sec<10)){
+      if(min<10){
          min = '0'+min;
+        
+      }
+      if(sec<10){
          sec = '0'+sec;
       }
       var timenow = hour + ":" + min + ":" + sec;
       var year = date.getFullYear();
       var month = date.getMonth()+1;
       var day = date.getDate();
-      if((month < 10 )||(day < 10)){
-         day = '0'+day;
+      if(month < 10 ){
+        
          month = '0'+month;
+      }
+      if(day < 10){
+         day = '0'+day;
       }
       var datenow = year + "-" + month + "-" + day;
       var datetime = datenow + " " + timenow;

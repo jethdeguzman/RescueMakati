@@ -22,6 +22,32 @@ module.exports = {
 		}
 		
 	},
+	track : function(req, res){
+		if (req.session.username){
+			var type= req.param('type');
+			
+			if((type == "all")||(type == undefined)){
+				Unit.find().done(function(err, unit){
+					if(err){
+						console.log(err);
+					}else{
+						res.view({units:unit});
+					}
+				});
+			}else{
+				Unit.find({type:type}).done(function(err, unit){
+					if(err){
+						console.log(err);
+					}else{
+						res.view({units:unit});
+					}
+				});
+			}
+			
+		}else{
+			res.redirect('/admin/login');
+		}
+	},
 	user : function(req, res){
 		if (req.session.username){
 			var status = req.param("status");
@@ -41,8 +67,10 @@ module.exports = {
 			    if(err){
 			      console.log(err);
 			    }else{
-			      // res.json({users:user});
+			     
 			      res.view({users:user});
+
+			      
 			    }
 			  });
 			}  
@@ -186,5 +214,16 @@ module.exports = {
 	},
 	map : function(req, res){
 		 res.view('request/sort-map');
+	},
+	count : function(req, res){
+		User.native(function(err, coll){
+			if(err){
+				console.log(err);
+			}else{
+				coll.each(function(err, each){
+					console.log(each);
+				});
+			}
+		});
 	}
 };
