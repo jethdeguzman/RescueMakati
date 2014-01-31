@@ -5,6 +5,34 @@
  * @description	:: Contains logic for handling requests.
  */
 
+ var sid = require('shortid');
+ var fs = require('node-fs');
+ var mkdirp = require('mkdirp');
+ //var io = require('socket.io');
+  
+ var UPLOAD_PATH = 'assets/images/gallery';
+  
+ // Setup id generator
+ sid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$@');
+ sid.seed(42);
+  
+ function safeFilename(name) {
+   name = name.replace(/ /g, '-');
+   name = name.replace(/[^A-Za-z0-9-_\.]/g, '');
+   name = name.replace(/\.+/g, '.');
+   name = name.replace(/-+/g, '-');
+   name = name.replace(/_+/g, '_');
+   return name;
+ }
+  
+ function fileMinusExt(fileName) {
+   return fileName.split('.').slice(0, -1).join('.');
+ }
+  
+ function fileExtension(fileName) {
+   return fileName.split('.').slice(-1);
+ }
+
 module.exports = {
   login : function(req, res){
   	res.header("Access-Control-Allow-Origin", "*");
@@ -52,9 +80,43 @@ module.exports = {
   photo : function(req, res){
   	res.header("Access-Control-Allow-Origin", "*");
   	var file = req.files.file;
-  	Gallery.create({photo : file}).done(function(err, gallery){
+  	
 
-  	});
+  	id = sid.generate(),
+  	     fileName = id + "." + fileExtension(safeFilename(file.name)),
+  	     dirPath = UPLOAD_PATH + '/' + id,
+  	     filePath = dirPath + '/' + fileName;
+  	
+  	   try {
+  	     mkdirp.sync(dirPath, 0755);
+  	   } catch (e) {
+  	     console.log(e);
+  	   }
+  	
+  	   fs.readFile(file.path, function (err, data) {
+  	     if (err) {
+  	       res.json({'error': 'could not read file'});
+  	     } else {
+  	       fs.writeFile(filePath, data, function (err) {
+  	         if (err) {
+  	           res.json({'error': 'could not write file to storage'});
+  	         } else {
+  	           processImage(id, fileName, filePath, function (err, data) {
+  	             if (err) {
+  	               res.json(err);
+  	             } else {
+  	               Gallery.create({photo : data}).done(function(err, gallery){
+  	               	if(err){
+  	               		console.log(err);
+  	               	}
+  	               });	
+  	               // res.json(data);
+  	             }
+  	           });
+  	         }
+  	       })
+  	     }
+  	   });
   }	
   
 
