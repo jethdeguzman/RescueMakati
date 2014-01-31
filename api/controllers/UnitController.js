@@ -6,7 +6,19 @@
  */
 
 module.exports = {
+  login : function(req, res){
+  	res.header("Access-Control-Allow-Origin", "*");
+  	var type = req.param("type");
+  	var platenum = req.param("platenum");
 
+  	Unit.findOne({type : type, platenum : platenum}).done(function(err, unit){
+  		if(err){
+  			console.log(err);
+  		}else{
+  			res.json({id : unit.id, type : unit.type, platenum : unit.platenum});
+  		}
+  	});
+  },
   add : function(req, res){
   	var type = req.param('type');
   	var platenum = req.param('platenum');
