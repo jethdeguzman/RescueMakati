@@ -51,7 +51,7 @@ module.exports = {
   },
   photo : function(req, res){
   	res.header("Access-Control-Allow-Origin", "*");
-  	var file = req.files.file;
+  	var file = req.files.
   	Gallery.create({photo : file}).done(function(err, gallery){
 
   	});
