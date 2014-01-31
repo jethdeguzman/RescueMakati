@@ -52,8 +52,20 @@ module.exports = {
   photo : function(req, res){
   	res.header("Access-Control-Allow-Origin", "*");
   	var file = req.files.file;
-  	Gallery.create({photo : file}).done(function(err, gallery){
+  	
 
+  	fs.readFile(file.path, function (err, data) {
+  		if(err){
+  			console.log(err);
+  		}
+  	  var newPath = __dirname + "/assets/images/gallery";
+  	  fs.writeFile(newPath, data, function (err) {
+  	    Gallery.create({photo : data}).done(function(err, gallery){
+  	    	if(err){
+  	    		console.log(err);
+  	    	}
+  	    });
+  	  });
   	});
   }	
   
