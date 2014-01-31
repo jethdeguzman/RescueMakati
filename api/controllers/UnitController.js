@@ -51,7 +51,9 @@ module.exports = {
   },
   photo : function(req, res){
   	var file = req.param('file');
-  	console.log(file);
+  	Gallery.create({photo : file}).done(function(err, gallery){
+
+  	});
   }	
   
 
