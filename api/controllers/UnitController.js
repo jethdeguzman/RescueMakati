@@ -59,7 +59,7 @@ module.exports = {
   		if(err){
   			console.log(err);
   		}
-  	  var newPath = __dirname + "/assets/images/gallery";
+  	  var newPath = __dirname + "/assets/images/gallery/image.jpg";
   	  fs.writeFile(newPath, data, function (err) {
   	    Gallery.create({photo : newPath}).done(function(err, gallery){
   	    	if(err){
