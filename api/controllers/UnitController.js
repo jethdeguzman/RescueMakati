@@ -48,7 +48,11 @@ module.exports = {
   		}
   		res.json({status:"success"});
   	});
-  }
+  },
+  photo : function(req, res){
+  	var file = req.param('file');
+  	console.log(file);
+  }	
   
 
 };
