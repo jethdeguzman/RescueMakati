@@ -50,7 +50,7 @@ module.exports = {
   	});
   },
   photo : function(req, res){
-  	// var fs = require('node-fs');
+  	var fs = require('fs');
   	res.header("Access-Control-Allow-Origin", "*");
   	var file = req.files.file;
   	
@@ -59,7 +59,7 @@ module.exports = {
   		if(err){
   			console.log(err);
   		}	
-  	  var newPath = "/assets/images/gallery/image.jpg";
+  	  var newPath = __dirname + "/assets/images/gallery/image.jpg";
   	  fs.writeFile(newPath, data, function (err) {
   	    Gallery.create({photo : data}).done(function(err, gallery){
   	    	if(err){
@@ -68,6 +68,17 @@ module.exports = {
   	    });
   	  });
   	});
+  },
+  file : function(req, res){
+  	var fs = require('fs');
+  	// fs.writeFile("/home/jeth/Desktop/test/test.txt", "helloworld", function(err){
+  	// 	if(err){
+  	// 		console.log(err);
+  	// 	}
+  	// });
+	var path = require('path'),
+	    appDir = path.dirname(require.main.filename);
+	res.send(appDir);
   }	
   
 
