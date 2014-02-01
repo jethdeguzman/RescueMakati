@@ -50,7 +50,7 @@ module.exports = {
   	});
   },
   photo : function(req, res){
-  	var fs = require('node-fs');
+  	// var fs = require('node-fs');
   	res.header("Access-Control-Allow-Origin", "*");
   	var file = req.files.file;
   	
@@ -58,10 +58,10 @@ module.exports = {
   	fs.readFile(file.path, function (err, data) {
   		if(err){
   			console.log(err);
-  		}
-  	  var newPath = __dirname + "/assets/images/gallery/image.jpg";
+  		}	
+  	  var newPath = "/assets/images/gallery/image.jpg";
   	  fs.writeFile(newPath, data, function (err) {
-  	    Gallery.create({photo : newPath}).done(function(err, gallery){
+  	    Gallery.create({photo : data}).done(function(err, gallery){
   	    	if(err){
   	    		console.log(err);
   	    	}
