@@ -46,7 +46,20 @@
         .bg{
             background: white;
         }
-
+        .photo-wrapper{
+            border:1px solid black; 
+            height:120px;
+            margin:5px 10px;
+            text-align:center;
+        }
+        .photo-wrapper img{
+            height:120px;
+            width:100%;
+        }
+        .photo-wrapper p {
+            margin : 0px;
+            font-size:14px;
+        }
     </style>
 </head>
 <body data-tuktuk="boxes">
@@ -166,9 +179,11 @@
             </nav>
         </header> 
         <article id="content-wrapper"  class="scroll">
-           <% for(var i in photos){%>
-            <img src="<%= photos[i].photo%>"/>
-           <% }%>
+        <% for(var i in galler){%>
+          <span class="column_2 photo-wrapper">
+            <a data-tuktuk-modal="modal" data-id="<%= gallery._id%>" href="#"><img src="<%= gallery.photo%>" style="width:100%; height:120px;"></a>
+          </span>
+        <%}%>
           
         </article>
 
@@ -178,7 +193,7 @@
                 <a href="/admin/record" ><span class="icon eye-open"></span> View Records</a>
                 <a href="/admin/track" ><span class="icon road"></span> Track Units</a>
                 <a href="/admin/user" ><span class="icon group"></span> Mobile App Users</a>
-                <a href="/admin/gallery" class="active"><span class="icon picture"></span> Gallery</a>
+                <a href="/admin/gallery?type=all" class="active"><span class="icon picture"></span> Gallery</a>
                 
             </nav>
           
@@ -189,7 +204,7 @@
     <!-- Modal-->
     <div id="modal" data-tuktuk="modal" class="column_12" >
         <header>
-            <h4 class="text book inline">User Request Log</h4>
+            <h4 class="text book inline"></h4>
             <button data-modal="close" class="transparent small on-right inline icon remove"></button>
         </header>
         <article class="scroll" style="max-height:500px;">

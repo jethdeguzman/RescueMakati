@@ -82,13 +82,25 @@ module.exports = {
 	},
 	gallery : function(req, res){
 		if (req.session.username){
-			Gallery.find().done(function(err, gallery){
-				if(err){
-					console.log(err);
-				}else{
-					res.view({photos : gallery});
+			
+			var type = req.param('type');
+			var to = req.param('to');
+			var from = req.param('from');
+
+			if(type == "all"){
+				if((to == undefined) || (from == undefined)){
+					Gallery.find().sort({_id:-1}).done(function(err, gallery){
+						if(err){
+						 console.log(err);
+						}else{
+							res.view({gallery : gallery});
+						}
+					});
 				}
-			});
+				else{
+					res.send("not this");
+				}
+			}
 		}else{
 			res.redirect('/admin/login');
 		}
