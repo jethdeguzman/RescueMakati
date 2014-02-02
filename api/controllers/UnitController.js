@@ -59,12 +59,15 @@ module.exports = {
   	var path = require('path');
   	var bcrypt = require('bcrypt');
   	var salt = bcrypt.genSaltSync(10);
-
   	res.header("Access-Control-Allow-Origin", "*");
   	var file = req.files.file;
-  	console.log(file);
-	appDir = path.dirname(require.main.filename);
-
+    var id = req.param('id');
+    var type = req.param('type');
+    var platenum = req.param('platenum');
+    var lat = req.param ('lat');
+    var lng = req.param('lng');
+    var address = req.param('address');
+	  appDir = path.dirname(require.main.filename);
   	fs.readFile(file.path, function (err, data) {
   		if(err){
   			console.log(err);
@@ -73,7 +76,7 @@ module.exports = {
   	  var newPath = appDir + "/assets/images/gallery/"+filename;
   	  fs.writeFile(newPath, data, function (err) {
   	  	newPath = "/images/gallery/"+filename;
-  	    Gallery.create({photo : newPath}).done(function(err, gallery){
+  	    Gallery.create({unitid : id, type : type, platenum : platenum, lat : lat, lng : lng, address : address, photo : newPath}).done(function(err, gallery){
   	    	if(err){
   	    		console.log(err);
   	    	}
