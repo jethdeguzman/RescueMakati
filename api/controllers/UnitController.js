@@ -15,7 +15,12 @@ module.exports = {
   		if(err){
   			console.log(err);
   		}else{
-  			res.json({id : unit.id, type : unit.type, platenum : unit.platenum});
+        if(unit){
+          res.json({status : "ok", id : unit.id, type : unit.type, platenum : unit.platenum});
+        }else{
+          res.json({status : "none"});
+        }
+
   		}
   	});
   },
