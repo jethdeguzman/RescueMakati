@@ -93,7 +93,7 @@ module.exports = {
 						if(err){
 						 console.log(err);
 						}else{
-							res.json({gallery : gallery});
+							res.view({gallery : gallery});
 						}
 					});
 				}
