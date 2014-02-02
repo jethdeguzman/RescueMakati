@@ -53,13 +53,14 @@ module.exports = {
   	var fs = require('fs');
   	res.header("Access-Control-Allow-Origin", "*");
   	var file = req.files.file;
-  	
+  	var path = require('path'),
+	appDir = path.dirname(require.main.filename);
 
   	fs.readFile(file.path, function (err, data) {
   		if(err){
   			console.log(err);
   		}	
-  	  var newPath = __dirname + "/assets/images/gallery/image.jpg";
+  	  var newPath = appDir + "/assets/images/gallery/image.jpg";
   	  fs.writeFile(newPath, data, function (err) {
   	    Gallery.create({photo : data}).done(function(err, gallery){
   	    	if(err){
