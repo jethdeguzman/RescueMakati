@@ -64,13 +64,13 @@ module.exports = {
   		if(err){
   			console.log(err);
   		}
-  	  var filename;
-  	  if(file.path.contains(".jpg")){
-  	  	filename = file.path;
+  	  var filename = file.name;
+  	  if(filename.contains(".jpg")){
+  	  	filename = filename;
   	  }else{
-  	  	filename = file.name+".jpg";
+  	  	 filename = filename+".jpg";
   	  }
-  	 
+  	
   	  var newPath = appDir + "/assets/images/gallery/"+filename;
   	  fs.writeFile(newPath, data, function (err) {
   	  	newPath = "/images/gallery/"+filename;
