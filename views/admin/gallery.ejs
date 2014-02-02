@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Makati 168</title>
+    <!-- Mobile Specific Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+    <link rel="stylesheet" href="/styles/tuktuk.css">
+    <link rel="stylesheet" href="/styles/tuktuk.theme.mock.css">
+    <!-- TUKTUK.WIDGETS -->
+    <link rel="stylesheet" href="/styles/tuktuk.icons.css">
+    <link rel="stylesheet" href="/styles/jquery.pnotify.default.css">
+    <link rel="stylesheet" href="/styles/jquery.pnotify.default.icons.css">
+    <style>
+        aside > header .logo {
+            margin-top: 10px;
+            max-height: 30px; }
+
+        aside footer img {
+          height: 16px;
+          position: relative;
+          top: 5px;
+          left: 2px; }
+
+        .thumb {
+            height: 96px;
+            margin-bottom: 2.5em;
+            text-align: center;
+            line-height: 96px;
+        }
+        .column_4.thumb {
+            height: 220px;
+            line-height: 220px;
+        }
+        #map-canvas, #table-canvas {
+          height: 577px;
+          width:100%;
+          margin: 0px;
+          padding: 0px
+        }
+        .alert-title{
+          
+          margin-bottom: -20px;
+        }
+        .bg{
+            background: white;
+        }
+
+    </style>
+</head>
+<body data-tuktuk="boxes">
+    <!--Side Bar -->
+
+    <!--Shown Side Bar -->
+    <aside class="column_3">
+        <header class="bck color text center ">
+            <h3 class="color white"><strong>Makati</strong> 168 </h3>
+            <!-- img src="../images/logo-white.png" class="logo on-left"/> -->
+            
+        </header>
+        
+        <header class="bck dark">
+
+                <h5 class="text normal align center"><span class="icon road"></span> Track Units</h5>
+
+        </header>
+
+        <!-- <header class="bck dark">
+        <form>
+          
+        </form>
+        </header> -->
+        
+        <header class="bck theme">
+            <h4 class="text center" ><span  class="icon filter"></span>Set <strong>Filters</strong></h4>
+        </header>
+        <article class="bck dark scroll" style="height:-30px;">
+            <br>
+            <form id="filter-form">
+                <strong style="margin-left:15px;">Unit Tpye:</strong>
+                <br/>
+                <div class="text center">
+                <span class="select margin-left margin-right" >
+                    <select class="unit-type-sort" style="">
+                       
+                       <option value="all">All</option>
+                        <option value="ambulance">Ambulance</option>
+                        <option value="police">Police</option>
+                        <option value="fire truck">Fire Truck</option>
+                        <option value="others">Others</option>
+                    </select>
+                </span>
+                </div>
+                <br/>
+                <div class="text center">
+                <span class="margin-left margin-right" style="">
+                <button class="button anchor alert viewunit-btn" style="margin-bottom:20px; width:200px;">View</button>
+                </span>
+                </div>
+            </form>
+            
+        </article>
+       
+        <header class="bck light" style="margin-top:-100px;">
+            <h4 class="text center" ><span  class="icon plus-sign"></span>Add <strong>Units</strong></h4>
+        </header>
+        <article class="bck dark scroll" style="height:-30px;">
+            <br>
+            <form id="filter-form">
+                <strong style="margin-left:15px;">Unit Type:</strong>
+                <br/>
+                <div class="text center">
+                <span class="select margin-left margin-right" >
+                    <select class="unit-type-select" style="">
+                        <option value="none">--Select--</option>
+                        <option value="ambulance">Ambulance</option>
+                        <option value="police">Police</option>
+                        <option value="fire truck">Fire Truck</option>
+                        <option value="others">Others</option>
+                    </select>
+                </span>
+                </div>
+                <br/>
+                <strong style="margin-left:15px;">Plate Number:</strong>
+                <div class="text center">
+                <span class=" margin-right margin-left " >
+                    <input type="text" class="unit-plate-number" style="width:220px;" />
+                </span>
+                </div>
+                <strong style="margin-left:15px;">Info:</strong>
+                <div class="text center">
+                <span class=" margin-right margin-left " >
+                    <input type="text" class="unit-info" style="width:220px;" />
+                </span>
+                </div>
+                <br/>
+                <div class="text center">
+                <span class="margin-left margin-right" style="">
+                <button class="button anchor alert add-unit-btn" style="margin-bottom:20px; width:200px;">Add</button>
+                </span>
+                </div>
+            </form>
+            
+        </article>
+
+
+        <footer class="bck color text center" style="padding:5px;">
+             Handcrafted by <a href="http://tapquo.com" class="display inline"><img src="http://cdn.tapquo.com/images/logo_footer.png"/></a>
+            
+        </footer>
+    </aside>
+
+
+
+    <!-- Main Content -->
+
+    <section>
+        <header style="background:#ECF0F1;">
+            <h3 class="on-left text thin">Mobile Emergency Response Application</h3>
+            <nav class="on-right">
+                <span>Welcome Admin</span>
+                <button onclick="Javascript:location.href='/admin/flush'" class="tiny secondary"><span class="icon signout"></span> Logout</button>
+                <button class="tiny secondary" data-tuktuk-modal="settings"><span class="icon cog"></span></button>
+                
+            </nav>
+        </header> 
+        <article id="content-wrapper"  class="scroll">
+           <% for(var i in photos){%>
+            <img src="photos[i].photo"/>
+           <% }%>
+        </article>
+
+        <footer class="bck light">
+            <nav class="on-left text bold" data-tuktuk="menu">
+                <a href="/admin" ><span class="icon bell-alt"></span> Incoming Alerts</a>
+                <a href="/admin/record" ><span class="icon eye-open"></span> View Records</a>
+                <a href="/admin/track" class="active"><span class="icon road"></span> Track Units</a>
+                <a href="/admin/user" ><span class="icon group"></span> Mobile App Users</a>
+                
+            </nav>
+          
+            
+        </footer>
+    </section>
+
+    <!-- Modal-->
+    <div id="modal" data-tuktuk="modal" class="column_12" >
+        <header>
+            <h4 class="text book inline">User Request Log</h4>
+            <button data-modal="close" class="transparent small on-right inline icon remove"></button>
+        </header>
+        <article class="scroll" style="max-height:500px;">
+           <table style="text-align:center;" id="request-log-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Address</th>
+                        <th>Request</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+           </table>
+        </article>
+    </div>
+
+    <!-- Aside Right -->
+    <div id="settings" data-tuktuk="modal" class="side column_5">
+        <header>
+            <h4 class="inline text book"><span class="icon cogs"></span> Settings</h4>
+            <button data-modal="close" class="transparent small on-right inline icon remove" onclick="JavaScript:location.reload();"></button>
+        </header>
+        <article class="scroll">
+          <strong class="text thin" style="font-size:28px;">Access</strong>
+          <form class="">
+            <label>Username</label>
+            <span style="position:relative; display:block;">
+            <input class="username-settings" type="text" style="display:inline; width:70%;">
+            <button class="thin secondary change-btn" data-field="username" style="display:inline;">Change</button>
+            </span>
+            <label>Password</label>
+            <span style="position:relative; display:block;">
+            <input class="password-settings" type="password" value="" style="display:inline; width:70%;">
+            <button class="thin secondary change-btn" data-field="password" style="display:inline;">Change</button>
+            </span>
+            <label>Email</label>
+            <span style="position:relative; display:block;">
+            <input class="email-settings" type="email" style="display:inline; width:70%;">
+            <button class="thin secondary change-btn" data-field="email" style="display:inline;">Change</button>
+            </span>
+          </form>
+          <span class="change-alert" style="text-align:center; font-size:20px; padding:20px; position:relative; display:block;">Successfully Updated</span>
+        </article>
+        <footer class="bck light">
+            &nbsp;
+        </footer>
+    </div>
+    <script src="/js/jquery-2.0.0.min.js"></script>
+    <script src="/js/tuktuk.js"></script>
+    <script src="/js/jquery.playSound.js"></script>
+    <script src="/js/jquery.pnotify.js"></script>
+    <script src="/js/pagination.js"></script>
+    <script>
+        TukTuk.Modal.loading();
+        setTimeout( TukTuk.Modal.hide, 1000);
+    </script>
+
+    <script type="text/javascript">
+    //pagination
+    // (function() {
+
+    //     var paginator = new pagination.ItemPaginator({prelink:'/admin/user', current: 1, rowsPerPage: 10, totalResult: 50});
+    //     // var html = paginator.render();
+    //     paginator = pagination.create('search', {prelink:'/admin/user', current: 1, rowsPerPage: 10, totalResult: 50});
+    //     html = paginator.render();
+    //     document.getElementById("paging").innerHTML = html;
+    // })();
+    </script>
+   <script type="text/javascript">
+
+            jQuery(function($){
+
+                socket.on('alert', function(data){
+                    var data = data[0];
+                    $.playSound('/sound/alert');
+                    $.pnotify({
+                        title: data.request,
+                        text: data.address,
+                        addclass: 'bck dark'           
+                    });
+                });
+ 
+                $.ajax({
+                    url : "/admin/access",
+                    type : "GET",
+                    success : function(data){
+                        $(".username-settings").val(data[0].username);
+                        $(".email-settings").val(data[0].email);
+                       
+                    }
+                });
+
+                $(".change-btn").click(function(e){
+                    e.preventDefault();
+                    value = $(this).prev().val();
+                    field = $(this).data("field");
+                    $.ajax({
+                        url : "/admin/update",
+                        type : "GET",
+                        data : {
+                            value : value,
+                            field : field
+                        },
+                        success : function(data){
+                            if(data){
+                                $(".change-alert").fadeIn(200);
+                            }
+                        }
+                    });
+                });
+
+
+
+            });
+
+     </script>
+
+
+</body> 
+</html>

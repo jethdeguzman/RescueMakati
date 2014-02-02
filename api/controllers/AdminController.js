@@ -80,6 +80,19 @@ module.exports = {
 		
 		
 	},
+	gallery : function(req, res){
+		if (req.session.username){
+			Gallery.find().done(function(err, gallery){
+				if(err){
+					console.log(err);
+				}else{
+					res.view({photos : gallery});
+				}
+			});
+		}else{
+			res.redirect('/admin/login');
+		}
+	},
 	login : function(req, res){
 		res.view();
 	},
