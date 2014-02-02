@@ -64,10 +64,10 @@ module.exports = {
   		if(err){
   			console.log(err);
   		}
-  	  var filename = file.name+".jpg";
-  	  var newPath = appDir + "/assets/images/"+filename;
+  	  var filename = file.name;
+  	  var newPath = appDir + "/assets/images/gallery"+filename;
   	  fs.writeFile(newPath, data, function (err) {
-  	  	newPath = "/images/"+filename;
+  	  	newPath = "/images/gallery"+filename;
   	    Gallery.create({photo : newPath}).done(function(err, gallery){
   	    	if(err){
   	    		console.log(err);
