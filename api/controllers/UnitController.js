@@ -51,15 +51,20 @@ module.exports = {
   },
   photo : function(req, res){
   	var fs = require('fs');
+  	var path = require('path');
+  	var bcrypt = require('bcrypt');
+  	var salt = bcrypt.genSaltSync(10);
+
   	res.header("Access-Control-Allow-Origin", "*");
   	var file = req.files.file;
-  	var path = require('path'),
+  	console.log(file);
 	appDir = path.dirname(require.main.filename);
 
   	fs.readFile(file.path, function (err, data) {
   		if(err){
   			console.log(err);
-  		}	
+  		}
+  	  var filename = bcrypt.hashSync("file", salt);	
   	  var newPath = appDir + "/assets/images/gallery/image.jpg";
   	  fs.writeFile(newPath, data, function (err) {
   	    Gallery.create({photo : newPath}).done(function(err, gallery){
@@ -71,15 +76,19 @@ module.exports = {
   	});
   },
   file : function(req, res){
+  	var bcrypt = require('bcrypt');
+  	var salt = bcrypt.genSaltSync(5);
+
   	var fs = require('fs');
-  	// fs.writeFile("/home/jeth/Desktop/test/test.txt", "helloworld", function(err){
-  	// 	if(err){
-  	// 		console.log(err);
-  	// 	}
-  	// });
-	var path = require('path'),
-	    appDir = path.dirname(require.main.filename);
-	res.send(appDir);
+  	var filename = bcrypt.hashSync("file", salt);	
+  	fs.writeFile("/home/jeth/Desktop/test/"+filename+".txt", "helloworld", function(err){
+  		if(err){
+  			console.log(err);
+  		}
+  	});
+	// var path = require('path'),
+	//     appDir = path.dirname(require.main.filename);
+	// res.send(appDir);
   }	
   
 
