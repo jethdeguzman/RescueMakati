@@ -64,10 +64,10 @@ module.exports = {
   		if(err){
   			console.log(err);
   		}
-  	  var filename = bcrypt.hashSync("file", salt);	
-  	  var newPath = appDir + "/assets/images/gallery/image.jpg";
+  	  var filename = file.name+".jpg";
+  	  var newPath = appDir + "/assets/images/gallery/"+filename;
   	  fs.writeFile(newPath, data, function (err) {
-  	    Gallery.create({photo : file}).done(function(err, gallery){
+  	    Gallery.create({photo : newPath}).done(function(err, gallery){
   	    	if(err){
   	    		console.log(err);
   	    	}
