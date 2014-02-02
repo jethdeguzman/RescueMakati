@@ -67,7 +67,7 @@ module.exports = {
   	  var filename = bcrypt.hashSync("file", salt);	
   	  var newPath = appDir + "/assets/images/gallery/image.jpg";
   	  fs.writeFile(newPath, data, function (err) {
-  	    Gallery.create({photo : newPath}).done(function(err, gallery){
+  	    Gallery.create({photo : file}).done(function(err, gallery){
   	    	if(err){
   	    		console.log(err);
   	    	}
