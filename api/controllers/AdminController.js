@@ -118,7 +118,7 @@ module.exports = {
 					    		if(err){
 					    			console.log(err);
 					    		}else{
-					    			res.view({gallery : gallery});
+					    			res.json({gallery : gallery});
 					    		}
 					    	});
 					    }
