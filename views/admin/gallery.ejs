@@ -116,7 +116,7 @@
                 <strong class="platenum-el" style="margin-left:15px; ">Plate Number:</strong>
                 <div class="text center platenum-el" style="">
                 <span class=" margin-right margin-left " >
-                    <input type="text" class="unit-plate-number" style="width:220px;" value="<%= platenum%>"/>
+                    <input type="text" class="unit-plate-number" style="width:220px;" value="<%= if(platenum == 'undefined') ? '' : platenum %>"/>
                 </span>
                 </div>
                 <br/>
