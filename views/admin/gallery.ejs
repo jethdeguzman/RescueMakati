@@ -109,8 +109,8 @@
                 </span>
                 </div>
                 <br/>
-                <strong style="margin-left:15px;">Plate Number:</strong>
-                <div class="text center">
+                <strong class="platenum-el" style="margin-left:15px; display:none;">Plate Number:</strong>
+                <div class="text center platenum-el" style="display:none;">
                 <span class=" margin-right margin-left " >
                     <input type="text" class="unit-plate-number" style="width:220px;" value="<%= platenum%>"/>
                 </span>
@@ -332,7 +332,14 @@
                   
                     // location.href = "/admin/gallery"
                 });
-
+                $(".unit-type-sort").change(function(){
+                    
+                    if($(this).val() !== "all"){
+                       $(".platenum-el").fadeIn();
+                    }else{
+                         $(".platenum-el").fadeOut();
+                    }
+                });
 
             });
 
