@@ -202,7 +202,7 @@
 
         %>
           <span class="column_2 photo-wrapper">
-            <a class="gallery-photo" data-photo="<%=gallery[i].photo%>" data-type="<%=gallery[i].type%>" data-platenum="<%=gallery[i].platenum%>" data-datetime="<%=datetime%>" data-tuktuk-modal="modal" data-id="<%= gallery[i]._id%>" href="#"><img src="<%= gallery[i].photo%>" style="width:100%; height:120px;"></a>
+            <a class="gallery-photo" data-photo="<%=gallery[i].photo%>" data-type="<%=gallery[i].type%>" data-platenum="<%=gallery[i].platenum%>" data-datetime="<%=datetime%>" data-address="<%=gallery[i].address%>" data-tuktuk-modal="modal" data-id="<%= gallery[i]._id%>" href="#"><img src="<%= gallery[i].photo%>" style="width:100%; height:120px;"></a>
           </span>
         <%}%>
           
@@ -362,10 +362,12 @@
                     type = $(this).data('type');
                     platenum = $(this).data('platenum');
                     datetime = $(this).data('datetime');
+                    address = $(this).data('address');
                     $("#modal article").html("<img src='"+photo+"'style='max-height:400px; width:570px;'>"+
                                              "<p><strong>Type: </strong>"+type+"</p>"+
                                              "<p><strong>Plate Number: </strong>"+platenum+"</p>"+
-                                             "<p><strong>Date | Time: </strong>"+datetime+"</p>");
+                                             "<p><strong>Date | Time: </strong>"+datetime+"</p>"+
+                                             "<p><strong>location:  </strong>"+address+"</p>");
                 });
 
                 // $(".unit-type-sort").change(function(){

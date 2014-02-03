@@ -111,6 +111,7 @@ module.exports = {
   	  });
   	});
   },
+  
   file : function(req, res){
   	var bcrypt = require('bcrypt');
   	var salt = bcrypt.genSaltSync(5);
@@ -122,9 +123,6 @@ module.exports = {
   			console.log(err);
   		}
   	});
-	// var path = require('path'),
-	//     appDir = path.dirname(require.main.filename);
-	// res.send(appDir);
   }	
   
 
