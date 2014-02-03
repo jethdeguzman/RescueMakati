@@ -89,15 +89,26 @@ module.exports = {
 			var platenum = req.param('platenum');
 			
 				if(((to == undefined) || (from == undefined)) && (platenum == undefined)){
+					if(type == "all"){
+						Gallery.find().sort({_id:-1}).done(function(err, gallery){
+							if(err){
+							 console.log(err);
+							}else{
 
-					Gallery.find({type : type}).sort({_id:-1}).done(function(err, gallery){
-						if(err){
-						 console.log(err);
-						}else{
+								res.view({gallery : gallery});
+							}
+						});
+					}else{
+						Gallery.find({type : type}).sort({_id:-1}).done(function(err, gallery){
+							if(err){
+							 console.log(err);
+							}else{
 
-							res.view({gallery : gallery});
-						}
-					});
+								res.view({gallery : gallery});
+							}
+						});
+					}
+					
 				}
 				else{
 					if((to !== undefined)&&(from !== undefined)){
