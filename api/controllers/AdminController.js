@@ -113,14 +113,14 @@ module.exports = {
 				else{
 					if((to !== undefined)&&(from !== undefined)){
 					    if(platenum !== undefined){
-
-					    	Gallery.find().where({type : type, platenum : platenum, date : {$gte : new Date(from).getTime(), $lte : new Date(to).getTime()}}).sort({_id:-1}).done(function(err, req){
-					    		if(err){
-					    			console.log(err);
-					    		}else{
-					    			res.json({gallery : gallery});
-					    		}
-					    	});
+					    	res.send("hey");
+					    	// Gallery.find().where({type : type, platenum : platenum, date : {$gte : new Date(from).getTime(), $lte : new Date(to).getTime()}}).sort({_id:-1}).done(function(err, req){
+					    	// 	if(err){
+					    	// 		console.log(err);
+					    	// 	}else{
+					    	// 		res.json({gallery : gallery});
+					    	// 	}
+					    	// });
 					    }
 					    else{
 					    	Gallery.find().where({type : type, date : {$gte : new Date(from).getTime(), $lte : new Date(to).getTime()}}).sort({_id:-1}).done(function(err, req){
