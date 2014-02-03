@@ -63,6 +63,9 @@
             margin : 0px;
             font-size:14px;
         }
+        #modal article p{
+            margin : 0px;
+        }
     </style>
 </head>
 <body data-tuktuk="boxes">
@@ -164,9 +167,38 @@
             </nav>
         </header> 
         <article id="content-wrapper"  class="scroll">
-        <% for(var i in gallery){%>
+        <% for(var i in gallery){
+
+        var date = new Date(gallery[i].createdAt);
+         var hour = date.getHours();
+         var min = date.getMinutes();
+         var sec = date.getSeconds();
+         if(min<10){
+            min = '0'+min;
+           
+         }
+         if(sec<10){
+             sec = '0'+sec;
+         }
+         var timenow = hour + ":" + min + ":" + sec;
+         var year = date.getFullYear();
+         var month = date.getMonth()+1;
+
+         var day = date.getDate();
+         if(month < 10 ){
+           
+            month = '0'+month;
+         }
+         if(day < 10){
+             day = '0'+day;
+         }
+        var datenow = year + "-" + month + "-" + day;
+        var datetime = datenow + " | " + timenow;
+
+
+        %>
           <span class="column_2 photo-wrapper">
-            <a data-tuktuk-modal="modal" data-id="<%= gallery[i]._id%>" href="#"><img src="<%= gallery[i].photo%>" style="width:100%; height:120px;"></a>
+            <a class="gallery-photo" data-photo="<%=gallery[i].photo%>" data-type="<%gallery[i].type%>" data-platenum="<%gallery[i].platenum%>" data-datetime="<%datetime%>" data-tuktuk-modal="modal" data-id="<%= gallery[i]._id%>" href="#"><img src="<%= gallery[i].photo%>" style="width:100%; height:120px;"></a>
           </span>
         <%}%>
           
@@ -193,7 +225,7 @@
             <button data-modal="close" class="transparent small on-right inline icon remove"></button>
         </header>
         <article class="scroll" style="max-height:500px;">
-           <img src="#" class="column_8" style="max-height:300px;">
+          
         </article>
     </div>
 
@@ -318,6 +350,15 @@
                     }
                   
                     // location.href = "/admin/gallery"
+                });
+
+                $(".gallery-photo").click(function(e){
+                    e.preventDefault();
+                    photo = $(this).data('photo');
+                    type = $(this).data('type');
+                    platenum = $(this).data('platenum');
+                    datetime = $(this).data('datetime');
+                    $("#modal article").html("<img src='"+photo+"'style='max-height:300px; width:570px;'>");
                 });
 
                 // $(".unit-type-sort").change(function(){
