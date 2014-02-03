@@ -18,7 +18,7 @@ module.exports = {
   			res.send("this");
   		}
   		else{
-  			res.send("not this");
+  			// Gallery.find().where({type : type, date : {$gte : new Date(from).getTime(), $lte : new Date(to).getTime()}}).done(function(err, req){));
   		}
   	}
   }

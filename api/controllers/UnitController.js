@@ -67,6 +67,33 @@ module.exports = {
     var lat = req.param ('lat');
     var lng = req.param('lng');
     var address = req.param('address');
+
+    var date = new Date();
+    var hour = date.getHours();
+    var min = date.getMinutes();
+    var sec = date.getSeconds();
+    if(min<10){
+       min = '0'+min;
+      
+    }
+    if(sec<10){
+       sec = '0'+sec;
+    }
+    var timenow = hour + ":" + min + ":" + sec;
+    var year = date.getFullYear();
+    var month = date.getMonth()+1;
+    var day = date.getDate();
+    if(month < 10 ){
+      
+       month = '0'+month;
+    }
+    if(day < 10){
+       day = '0'+day;
+    }
+    var datenow = year + "-" + month + "-" + day;
+    var datetime = datenow + " " + timenow;
+    var datefinal = new Date(datenow).getTime();    
+
 	  appDir = path.dirname(require.main.filename);
   	fs.readFile(file.path, function (err, data) {
   		if(err){
@@ -76,7 +103,7 @@ module.exports = {
   	  var newPath = appDir + "/assets/images/gallery/"+filename;
   	  fs.writeFile(newPath, data, function (err) {
   	  	newPath = "/images/gallery/"+filename;
-  	    Gallery.create({unitid : id, type : type, platenum : platenum, lat : lat, lng : lng, address : address, photo : newPath}).done(function(err, gallery){
+  	    Gallery.create({unitid : id, type : type, platenum : platenum, lat : lat, lng : lng, address : address, photo : newPath, date : datefinal}).done(function(err, gallery){
   	    	if(err){
   	    		console.log(err);
   	    	}

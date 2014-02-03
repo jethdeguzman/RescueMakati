@@ -109,12 +109,18 @@
                 </span>
                 </div>
                 <br/>
-                
+                <strong style="margin-left:15px;">Plate Number:</strong>
+                <div class="text center">
+                <span class=" margin-right margin-left " >
+                    <input type="text" class="unit-plate-number" style="width:220px;" />
+                </span>
+                </div>
+                <br/>
                 <strong style="margin-left:15px;">From:</strong>
                 <br/>
                 <div class="text center">
                 <span class=" margin-left margin-right" style="position:relative;display:block">
-                <input class="from-date" type="date" />
+                <input class="unit-from-date" type="date" />
                 </span>
                 </div>
                 <br/>
@@ -122,13 +128,13 @@
                 <br/>
                 <div class="text center">
                 <span class=" margin-left margin-right" style="position:relative;display:block">
-                <input class="to-date" type="date" style="">
+                <input class="unit-to-date" type="date" style="">
                 </span>
                 </div>
                 <br/>
                 <div class="text center">
                 <span class="margin-left margin-right" style="">
-                <button class="button anchor alert viewunit-btn" style="margin-bottom:20px; width:200px;">View</button>
+                <button class="button anchor alert viewgallery-btn" style="margin-bottom:20px; width:200px;">View</button>
                 </span>
                 </div>
             </form>
@@ -298,7 +304,34 @@
                         }
                     });
                 });
-
+                $(".viewgallery-btn").click(function(e){
+                    e.preventDefault();
+                    type = $(".unit-type-sort").val();
+                    to = $(".unit-to-date").val();
+                    from = $(".unit-from-date").val();
+                    platenum = $(".unit-plate-number").val();
+                    if((to !== "")&&(from !== "")){
+                        if(platenum !== ""){
+                            alert('complete');
+                            location.href="/admin/gallery?type="+type+"&platenum="+platenum+"&from="+from+"&to="+to;
+                        }else{
+                            alert("no platenum");
+                            location.href="/admin/gallery?type="+type+"&from="+from+"&to="+to;
+                        }
+                    
+                    }else{
+                        alert("this");
+                        if(platenum !== ""){
+                            alert("platenum only");
+                            location.href="/admin/gallery?type="+type+"&platenum="+platenum;
+                        }else{
+                            alert("typeonly");
+                            location.href="/admin/gallery?type="+type;
+                        }
+                    }
+                  
+                    // location.href = "/admin/gallery"
+                });
 
 
             });

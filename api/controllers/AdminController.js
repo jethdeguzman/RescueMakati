@@ -86,21 +86,47 @@ module.exports = {
 			var type = req.param('type');
 			var to = req.param('to');
 			var from = req.param('from');
+			var platenum = req.param('platenum');
+			
+				if(((to == undefined) || (from == undefined)) && (platenum == undefined)){
 
-			if(type == "all"){
-				if((to == undefined) || (from == undefined)){
-					Gallery.find().sort({_id:-1}).done(function(err, gallery){
+					Gallery.find({type : type}).sort({_id:-1}).done(function(err, gallery){
 						if(err){
 						 console.log(err);
 						}else{
+
 							res.view({gallery : gallery});
 						}
 					});
 				}
 				else{
-					res.send("not this");
+					if((to !== undefined)&&(from !== undefined)){
+					    if(platenum !== undefined){
+
+					    	res.send('very specific');
+					    }
+					    else{
+					    	res.send('no plate');
+					    }
+				    }else{
+				    	if(platenum !== undefined){
+				    		res.send("platenum onbly");
+				    	}
+				    }
+					// if(platenum == null){
+					// 	res.send('no plate');
+					// 	// Gallery.find().where({type : type, date : {$gte : new Date(from).getTime(), $lte : new Date(to).getTime()}}).done(function(err, req){
+					// 	// 	res.view({gallery : gallery});
+					// 	// });
+
+					// }else{
+					// 	res.send('very specific');
+					// 	// Gallery.find().where({type : type, date : {$gte : new Date(from).getTime(), $lte : new Date(to).getTime()}}).done(function(err, req){
+					// 	// 	res.view({gallery : gallery});
+					// 	// });
+					// }
 				}
-			}
+			
 		}else{
 			res.redirect('/admin/login');
 		}
