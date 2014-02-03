@@ -119,7 +119,7 @@ module.exports = {
 					    		if(err){
 					    			console.log(err);
 					    		}else{
-					    			res.json({gallery : gallery, type: type, to : to, from : from, platenum : platenum});
+					    			res.view({gallery : gallery, type: type, to : to, from : from, platenum : platenum});
 					    		}
 					    	});
 					    }
