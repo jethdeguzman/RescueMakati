@@ -16,7 +16,7 @@ module.exports = {
     res.header("Access-Control-Allow-Origin", "*");
     var unitid = req.param('id');
     var type = req.param('type');
-    var platenum = req.pram('platenum');
+    var platenum = req.param('platenum');
     var lat = req.param('lat');
     var lng = req.param('lng');
     var address = req.param('address');   
