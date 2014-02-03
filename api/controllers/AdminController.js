@@ -114,14 +114,32 @@ module.exports = {
 					if((to !== undefined)&&(from !== undefined)){
 					    if(platenum !== undefined){
 
-					    	res.send('very specific');
+					    	Gallery.find().where({type : type, platenum : platenum, date : {$gte : new Date(from).getTime(), $lte : new Date(to).getTime()}}).sort({_id:-1}).done(function(err, req){
+					    		if(err){
+					    			console.log(err);
+					    		}else{
+					    			res.view({gallery : gallery});
+					    		}
+					    	});
 					    }
 					    else{
-					    	res.send('no plate');
+					    	Gallery.find().where({type : type, date : {$gte : new Date(from).getTime(), $lte : new Date(to).getTime()}}).sort({_id:-1}).done(function(err, req){
+					    		if(err){
+					    			console.log(err);
+					    		}else{
+					    			res.view({gallery : gallery});
+					    		}
+					    	});
 					    }
 				    }else{
 				    	if(platenum !== undefined){
-				    		res.send("platenum onbly");
+				    		Gallery.find().where({type : type, platenum : platenum}).sort({_id:-1}).done(function(err, req){
+					    		if(err){
+					    			console.log(err);
+					    		}else{
+					    			res.view({gallery : gallery});
+					    		}
+					    	});
 				    	}
 				    }
 					// if(platenum == null){
