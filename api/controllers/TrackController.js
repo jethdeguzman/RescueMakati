@@ -13,6 +13,7 @@ module.exports = {
   }x
   */
   add : function(req, res){
+    res.header("Access-Control-Allow-Origin", "*");
     var unitid = req.param('id');
     var type = req.param('type');
     var platenum = req.pram('platenum');
