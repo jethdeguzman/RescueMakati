@@ -90,7 +90,7 @@ module.exports = {
 			
 				if(((to == undefined) || (from == undefined)) && (platenum == undefined)){
 					if(type == "all"){
-						Gallery.find().where({date : {$gte : new Date(from).getTime(), $lte : new Date(to).getTime()}}).sort({_id:-1}).done(function(err, gallery){
+						Gallery.find().sort({_id:-1}).done(function(err, gallery){
 							if(err){
 							 console.log(err);
 							}else{
@@ -99,7 +99,7 @@ module.exports = {
 							}
 						});
 					}else{
-						Gallery.find().where({type : type, date : {$gte : new Date(from).getTime(), $lte : new Date(to).getTime()}}).sort({_id:-1}).done(function(err, gallery){
+						Gallery.find({type : type}).sort({_id:-1}).done(function(err, gallery){
 							if(err){
 							 console.log(err);
 							}else{
@@ -114,23 +114,44 @@ module.exports = {
 
 					if((to !== undefined)&&(from !== undefined)){
 					    if(platenum !== undefined){
+					    	if(type == "all"){
+					    		Gallery.find().where({date : {$gte : new Date(from).getTime(), $lte : new Date(to).getTime()}}).sort({_id:-1}).done(function(err, gallery){
+					    			if(err){
+					    				console.log(err);
+					    			}else{
+					    				res.view({gallery : gallery, type: type, to : to, from : from, platenum : platenum});
+					    			}
+					    		});
+					    	}else{
+					    		Gallery.find().where({type : type, platenum : platenum, date : {$gte : new Date(from).getTime(), $lte : new Date(to).getTime()}}).sort({_id:-1}).done(function(err, gallery){
+					    			if(err){
+					    				console.log(err);
+					    			}else{
+					    				res.view({gallery : gallery, type: type, to : to, from : from, platenum : platenum});
+					    			}
+					    		});
+					    	}
 					    	
-					    	Gallery.find().where({type : type, platenum : platenum, date : {$gte : new Date(from).getTime(), $lte : new Date(to).getTime()}}).sort({_id:-1}).done(function(err, gallery){
-					    		if(err){
-					    			console.log(err);
-					    		}else{
-					    			res.view({gallery : gallery, type: type, to : to, from : from, platenum : platenum});
-					    		}
-					    	});
 					    }
 					    else{
-					    	Gallery.find().where({type : type, date : {$gte : new Date(from).getTime(), $lte : new Date(to).getTime()}}).sort({_id:-1}).done(function(err, gallery){
-					    		if(err){
-					    			console.log(err);
-					    		}else{
-					    			res.view({gallery : gallery, type: type, to : to, from : from, platenum : platenum});
-					    		}
-					    	});
+					    	if(type == "all"){
+					    		Gallery.find().where({date : {$gte : new Date(from).getTime(), $lte : new Date(to).getTime()}}).sort({_id:-1}).done(function(err, gallery){
+					    			if(err){
+					    				console.log(err);
+					    			}else{
+					    				res.view({gallery : gallery, type: type, to : to, from : from, platenum : platenum});
+					    			}
+					    		});
+					    	}else{
+					    		Gallery.find().where({type : type, date : {$gte : new Date(from).getTime(), $lte : new Date(to).getTime()}}).sort({_id:-1}).done(function(err, gallery){
+					    			if(err){
+					    				console.log(err);
+					    			}else{
+					    				res.view({gallery : gallery, type: type, to : to, from : from, platenum : platenum});
+					    			}
+					    		});
+					    	}
+					    	
 					    }
 
 				    }else{
