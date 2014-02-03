@@ -23,7 +23,9 @@ module.exports = {
     Track.create({unitid : unitid, type : type, platenum : platenum, lat : lat, lng : lng, address : address}).done(function(err, track){
     	if(err){
     		console.log(err);
-    	}
+    	}else{
+        res.json({status : "ok"});
+      }
     });
   },
   view : function(req, res){
