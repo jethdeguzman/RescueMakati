@@ -25,6 +25,9 @@ module.exports = {
     		console.log(err);
     	}
     });
+  },
+  view : function(req, res){
+    res.send("view");
   }
 
 };
