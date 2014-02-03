@@ -10,9 +10,9 @@ module.exports = {
 
   attributes: {
   	
-  	/* e.g.
-  	nickname: 'string'
-  	*/
+  	type : 'STRING',
+  	platenum : 'STRING',
+  	info : 'STRING'
     
   }
 

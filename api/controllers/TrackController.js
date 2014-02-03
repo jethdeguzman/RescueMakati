@@ -19,8 +19,35 @@ module.exports = {
     var platenum = req.param('platenum');
     var lat = req.param('lat');
     var lng = req.param('lng');
-    var address = req.param('address');   
-    Track.create({unitid : unitid, type : type, platenum : platenum, lat : lat, lng : lng, address : address}).done(function(err, track){
+    var address = req.param('address');
+
+    var date = new Date();
+    var hour = date.getHours();
+    var min = date.getMinutes();
+    var sec = date.getSeconds();
+    if(min<10){
+       min = '0'+min;
+      
+    }
+    if(sec<10){
+       sec = '0'+sec;
+    }
+    var timenow = hour + ":" + min + ":" + sec;
+    var year = date.getFullYear();
+    var month = date.getMonth()+1;
+    var day = date.getDate();
+    if(month < 10 ){
+      
+       month = '0'+month;
+    }
+    if(day < 10){
+       day = '0'+day;
+    }
+    var datenow = year + "-" + month + "-" + day;
+    var datetime = datenow + " " + timenow;
+    var datefinal = new Date(datenow).getTime();   
+
+    Track.create({unitid : unitid, type : type, platenum : platenum, lat : lat, lng : lng, address : address, date : datefinal}).done(function(err, track){
     	if(err){
     		console.log(err);
     	}else{
@@ -29,7 +56,7 @@ module.exports = {
     });
   },
   view : function(req, res){
-    res.send("view");
+    var unitid = req.param("unitid");
   }
 
 };

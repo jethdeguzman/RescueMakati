@@ -10,9 +10,13 @@ module.exports = {
 
   attributes: {
   	
-  	/* e.g.
-  	nickname: 'string'
-  	*/
+  	unitid : 'STRING',
+  	type : 'STRING',
+  	platenum : 'STRING',
+  	lat : 'FLOAT',
+  	lng : 'FLOAT',
+  	address : 'STRING',
+  	date : 'INTEGER'
     
   }
 
