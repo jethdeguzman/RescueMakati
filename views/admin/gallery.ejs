@@ -199,7 +199,7 @@
 
         %>
           <span class="column_2 photo-wrapper">
-            <a class="gallery-photo" data-photo="<%=gallery[i].photo%>" data-type="<%gallery[i].type%>" data-platenum="<%gallery[i].platenum%>" data-datetime="<%datetime%>" data-tuktuk-modal="modal" data-id="<%= gallery[i]._id%>" href="#"><img src="<%= gallery[i].photo%>" style="width:100%; height:120px;"></a>
+            <a class="gallery-photo" data-photo="<%=gallery[i].photo%>" data-type="<%=gallery[i].type%>" data-platenum="<%=gallery[i].platenum%>" data-datetime="<%=datetime%>" data-tuktuk-modal="modal" data-id="<%= gallery[i]._id%>" href="#"><img src="<%= gallery[i].photo%>" style="width:100%; height:120px;"></a>
           </span>
         <%}%>
           
@@ -222,7 +222,7 @@
     <!-- Modal-->
     <div id="modal" data-tuktuk="modal" class="column_8" >
         <header>
-            <h4 class="text book inline"></h4>
+            <h4 class="text book inline">Photo Info</h4>
             <button data-modal="close" class="transparent small on-right inline icon remove"></button>
         </header>
         <article class="scroll" style="max-height:500px; text-align:center">
