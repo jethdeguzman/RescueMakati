@@ -14,7 +14,7 @@ module.exports = {
   	type : 'STRING',
   	platenum : 'STRING',
   	lat : 'FLOAT',
-  	lng : 'FLOAT'
+  	lng : 'FLOAT',
     address : 'STRING',
     photo : 'STRING',
     date : 'INTEGER'
