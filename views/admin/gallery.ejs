@@ -65,6 +65,7 @@
         }
         #modal article p{
             margin : 0px;
+            text-align:left;
         }
     </style>
 </head>
@@ -224,7 +225,7 @@
             <h4 class="text book inline"></h4>
             <button data-modal="close" class="transparent small on-right inline icon remove"></button>
         </header>
-        <article class="scroll" style="max-height:500px;">
+        <article class="scroll" style="max-height:500px; text-align:center">
           
         </article>
     </div>
@@ -358,7 +359,10 @@
                     type = $(this).data('type');
                     platenum = $(this).data('platenum');
                     datetime = $(this).data('datetime');
-                    $("#modal article").html("<img src='"+photo+"'style='max-height:300px; width:570px;'>");
+                    $("#modal article").html("<img src='"+photo+"'style='max-height:300px; width:570px;'>"+
+                                             "<p><strong>Type: </strong>"+type+"</p>"+
+                                             "<p><strong>Plate Number: </strong>"+platenum+"</p>"+
+                                             "<p><strong>Date | Time: </strong>"+datetime+"</p>");
                 });
 
                 // $(".unit-type-sort").change(function(){
