@@ -95,7 +95,7 @@ module.exports = {
 							 console.log(err);
 							}else{
 
-								res.view({gallery : gallery});
+								res.view({gallery : gallery, type: type, to : to, from : from, platenum : platenum});
 							}
 						});
 					}else{
@@ -104,7 +104,7 @@ module.exports = {
 							 console.log(err);
 							}else{
 
-								res.view({gallery : gallery});
+								res.view({gallery : gallery, type: type, to : to, from : from, platenum : platenum});
 							}
 						});
 					}
@@ -119,7 +119,7 @@ module.exports = {
 					    		if(err){
 					    			console.log(err);
 					    		}else{
-					    			res.json({gallery : gallery});
+					    			res.json({gallery : gallery, type: type, to : to, from : from, platenum : platenum});
 					    		}
 					    	});
 					    }
@@ -128,7 +128,7 @@ module.exports = {
 					    		if(err){
 					    			console.log(err);
 					    		}else{
-					    			res.view({gallery : gallery});
+					    			res.view({gallery : gallery, type: type, to : to, from : from, platenum : platenum});
 					    		}
 					    	});
 					    }
@@ -140,7 +140,7 @@ module.exports = {
 					    		if(err){
 					    			console.log(err);
 					    		}else{
-					    			res.view({gallery : gallery});
+					    			res.view({gallery : gallery, type: type, to : to, from : from, platenum : platenum});
 					    		}
 					    	});
 				    	}

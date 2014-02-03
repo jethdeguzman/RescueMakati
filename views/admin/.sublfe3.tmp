@@ -312,20 +312,20 @@
                     platenum = $(".unit-plate-number").val();
                     if((to !== "")&&(from !== "")){
                         if(platenum !== ""){
-                            alert('complete');
+                           
                             location.href="/admin/gallery?type="+type+"&platenum="+platenum+"&from="+from+"&to="+to;
                         }else{
-                            alert("no platenum");
+                           
                             location.href="/admin/gallery?type="+type+"&from="+from+"&to="+to;
                         }
                     
                     }else{
                         alert("this");
                         if(platenum !== ""){
-                            alert("platenum only");
+                           
                             location.href="/admin/gallery?type="+type+"&platenum="+platenum;
                         }else{
-                            alert("typeonly");
+                            
                             location.href="/admin/gallery?type="+type;
                         }
                     }
