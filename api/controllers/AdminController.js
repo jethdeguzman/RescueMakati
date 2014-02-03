@@ -90,7 +90,7 @@ module.exports = {
 			
 				if(((to == undefined) || (from == undefined)) && (platenum == undefined)){
 					if(type == "all"){
-						Gallery.find().sort({_id:-1}).done(function(err, gallery){
+						Gallery.find().where({date : {$gte : new Date(from).getTime(), $lte : new Date(to).getTime()}}).sort({_id:-1}).done(function(err, gallery){
 							if(err){
 							 console.log(err);
 							}else{
@@ -99,7 +99,7 @@ module.exports = {
 							}
 						});
 					}else{
-						Gallery.find({type : type}).sort({_id:-1}).done(function(err, gallery){
+						Gallery.find().where({type : type, date : {$gte : new Date(from).getTime(), $lte : new Date(to).getTime()}}).sort({_id:-1}).done(function(err, gallery){
 							if(err){
 							 console.log(err);
 							}else{
