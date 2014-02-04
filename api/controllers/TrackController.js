@@ -53,16 +53,11 @@ module.exports = {
     Track.create({unitid : unitid, type : type, platenum : platenum, lat : lat, lng : lng, address : address, date : datefinal}).done(function(err, track){
     	if(err){
     		console.log(err);
-    	}
-    });
-    Track.find().sort({_id:-1}).limit(1).done(function(err, track){
-      if(err){
-        console.log(err);
-      }else{
+    	}else{
         io.sockets.emit(track.unitid, track);
-        res.json({status : 'successfully sent'});
       }
     });
+    
 
   },
   view : function(req, res){
