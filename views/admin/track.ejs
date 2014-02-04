@@ -415,8 +415,10 @@
                               var datetime = datenow + " " + timenow;
                               var datefinal = new Date(datenow).getTime();
 
-                              $("#modal article table tbody").append("<tr><td>"+datenow+"</td><td>"+timenow+"</td><td>"+data[i].address+"</td><td><a>target='_blank' href='https://maps.googleapis.com/maps/api/staticmap?zoom=16&size=500x500&sensor=false&maptype=roadmap&markers=color:red|"+data[i].lat+","+data[i].lng+'">View on Map</a></td></tr>");  
+                              $("#modal article table tbody").append("<tr><td>"+datenow+"</td><td>"+timenow+"</td><td>"+data[i].address+"</td><td><a target='_blank' href='https://maps.googleapis.com/maps/api/staticmap?zoom=16&size=500x500&sensor=false&maptype=roadmap&markers=color:red|'"+data[i].lat+","+data[i].lng+"'></a></td></tr>");  
                             }
+                        
+
                         }
                     });
                 });
