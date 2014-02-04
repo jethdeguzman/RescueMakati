@@ -65,6 +65,16 @@ module.exports = {
     var io = sails.io;
     io.set('transports', ['xhr-polling']);
     io.sockets.emit('52ea8f67900f857a1561f869',{ "unitid" : "52ea8f67900f857a1561f869", "type" : "ambulance", "platenum" : "AMB-123", "lat" : 14.6424393, "lng" : 120.9914274, "address" : "Dome, Manila, Philippines", "date" : 1391558400000, "createdAt" : "2014-02-04T22:12:37.053Z",  "_id" : "52f165d5cf0f898bbdd4294d" });
+  },
+  all : function(req, res){
+    var unitid = req.param('unitid');
+    Track.find({unitid : unitid}).sort({_id:-1}).done(function(err, track){
+      if(err){
+        console.log(err);
+      }else{
+        res.json({result : track});
+      }
+    });
   }
 
 };

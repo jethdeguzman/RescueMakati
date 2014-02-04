@@ -236,9 +236,9 @@
                     <tr>
                         <th>Date</th>
                         <th>Time</th>
-                        <th>Address</th>
-                        <th>Request</th>
-                        <th>Status</th>
+                        <th>Location</th>
+                        <th>Map Link</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -375,6 +375,49 @@
                     socket.on(unitid, function(data){
                         $(".side-bar-track").prepend(displayTrack(data));
                         updateMarker(data.lat, data.lng);
+                    });
+                });
+
+                $(".logs-btn").click(function(e){
+                    e.preventDefault();
+                    var unitid = $(this).data('id');
+                    $.ajax({
+                        url : '/track/all',
+                        type : 'GET',
+                        dataType : 'JSON',
+                        data : {unitid : unitid},
+                        success : function(data){
+                            data = data.result;
+                            for(var i in data){
+                              var date = new Date(data.createdAt);
+                              var hour = date.getHours();
+                              var min = date.getMinutes();
+                              var sec = date.getSeconds();
+                              if(min<10){
+                                 min = '0'+min;
+                                
+                              }
+                              if(sec<10){
+                                 sec = '0'+sec;
+                              }
+                              var timenow = hour + ":" + min + ":" + sec;
+                              var year = date.getFullYear();
+                              var month = date.getMonth()+1;
+                              var day = date.getDate();
+                              if(month < 10 ){
+                                
+                                 month = '0'+month;
+                              }
+                              if(day < 10){
+                                 day = '0'+day;
+                              }
+                              var datenow = year + "-" + month + "-" + day;
+                              var datetime = datenow + " " + timenow;
+                              var datefinal = new Date(datenow).getTime();
+
+                              $("#modal article table tbody").append("<tr><td>"+datenow+"</td><td>"+timenow+"</td><td>"+data[i].address+"</td><td><a>target='_blank' href='https://maps.googleapis.com/maps/api/staticmap?zoom=16&size=500x500&sensor=false&maptype=roadmap&markers=color:red|"+data[i].lat+","+data[i].lng+'">View on Map</a></td></tr>");  
+                            }
+                        }
                     });
                 });
 
