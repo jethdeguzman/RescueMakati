@@ -374,6 +374,7 @@
                     initialize();
                     socket.on(unitid, function(data){
                         $(".side-bar-track").prepend(displayTrack(data));
+                        updateMarker(data.lat, data.lng);
                     });
                 });
 
@@ -394,6 +395,7 @@
 
             });
             var map;
+            var marker = new google.maps.Marker({});
             function initialize() {
               
               var mapOptions = {
@@ -406,7 +408,12 @@
                   mapOptions);
 
             }
-
+            function updateMarker(lat, lng){
+                var pos = new google.maps.LatLng(lat, lng);
+                map.panTo(pos);
+                marker.setMap(map);
+                marker.setPosition(pos);
+            }   
             function displayTrack(data){
                 var date = new Date(data.createdAt);
                  var hour = date.getHours();
