@@ -13,6 +13,9 @@ module.exports = {
   }x
   */
   add : function(req, res){
+    var socket = req.socket;
+    var io = sails.io;
+    io.set('transports', ['xhr-polling']);
     res.header("Access-Control-Allow-Origin", "*");
     var unitid = req.param('id');
     var type = req.param('type');
@@ -50,9 +53,7 @@ module.exports = {
     Track.create({unitid : unitid, type : type, platenum : platenum, lat : lat, lng : lng, address : address, date : datefinal}).done(function(err, track){
     	if(err){
     		console.log(err);
-    	}else{
-        res.json({status : "ok"});
-      }
+    	}
     });
   },
   view : function(req, res){

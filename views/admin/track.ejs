@@ -51,6 +51,29 @@
 </head>
 <body data-tuktuk="boxes">
     <!--Side Bar -->
+    <aside id="menu" class="absolute bck dark column_3">
+            <header class="bck color">
+                <div class="session on-left" >
+                    <h3 class="color white margin-left margin-right" style=""><strong>Makati</strong> 168 </h3>
+                </div>
+                <a href="#" data-box="close" class="on-right text big icon remove color white" onclick="JavaScript:location.reload();"></a>
+            </header>
+            <header class="bck">
+                    <h5 class="text normal align center"><span class="icon road"></span> Track Units</h5>
+            </header>
+            <header class="bck theme">
+                <h4 class="text center" id="platenum"><span  class="icon filter"></span></h4>
+            </header>
+            <article class="scroll bck dark">
+                <ul class="margin side-bar-track" style="list-style:none;">
+                   
+                </ul>
+            </article>
+            <footer class="bck color text center" style="padding:5px;">
+                 Handcrafted by <a href="http://tapquo.com" class="display inline"><img src="http://cdn.tapquo.com/images/logo_footer.png"/></a>
+                
+            </footer>
+        </aside>
 
     <!--Shown Side Bar -->
     <aside class="column_3">
@@ -65,12 +88,6 @@
                 <h5 class="text normal align center"><span class="icon road"></span> Track Units</h5>
 
         </header>
-
-        <!-- <header class="bck dark">
-        <form>
-          
-        </form>
-        </header> -->
         
         <header class="bck theme">
             <h4 class="text center" ><span  class="icon filter"></span>Set <strong>Filters</strong></h4>
@@ -81,8 +98,8 @@
                 <strong style="margin-left:15px;">Unit Tpye:</strong>
                 <br/>
                 <div class="text center">
-                <span class="select margin-left margin-right" >
-                    <select class="unit-type-sort" style="">
+                <span class="margin-left margin-right" >
+                    <select class="unit-type-sort" style="width:220px;">
                        
                        <option value="all">All</option>
                         <option value="ambulance">Ambulance</option>
@@ -111,8 +128,8 @@
                 <strong style="margin-left:15px;">Unit Type:</strong>
                 <br/>
                 <div class="text center">
-                <span class="select margin-left margin-right" >
-                    <select class="unit-type-select" style="">
+                <span class=" margin-left margin-right" >
+                    <select class="unit-type-select" style="width:220px;">
                         <option value="none">--Select--</option>
                         <option value="ambulance">Ambulance</option>
                         <option value="police">Police</option>
@@ -183,20 +200,21 @@
                            <td><%= units[i].type %></td>
                            <td><%= units[i].platenum %></td>
                            <td><%= units[i].info %></td> 
-                           <td><button  data-tuktuk-modal="modal" class='btn tiny monitor-btn' data-id='<%= units[i].id %>'>Monitor</button> <button  data-tuktuk-modal="modal" class='btn tiny secondary Logs-btn' data-id='<%= units[i].id %>'>Logs</button> <button class="btn tiny alert delete-btn" data-id='<%= units[i].id %>'>Delete</button></td>
+                           <td><button  data-tuktuk-box="menu" class='btn tiny monitor-btn' data-platenum='<%= units[i].platenum%>' data-id='<%= units[i].id %>'>Monitor</button> <button  data-tuktuk-modal="modal" class='btn tiny secondary Logs-btn' data-id='<%= units[i].id %>'>Logs</button> <button class="btn tiny alert delete-btn" data-id='<%= units[i].id %>'>Delete</button></td>
                          </tr>
                        <% }%>
                     </tbody>
                  </table> 
-                 <div id="paging"></div>
+                
              </div>
+             <div id="map-canvas" style="display:none;"></div>
         </article>
 
         <footer class="bck light">
             <nav class="on-left text bold" data-tuktuk="menu">
                 <a href="/admin" ><span class="icon bell-alt"></span> Incoming Alerts</a>
                 <a href="/admin/record" ><span class="icon eye-open"></span> View Records</a>
-                <a href="/admin/track" class="active"><span class="icon road"></span> Track Units</a>
+                <a href="/admin/track" class="active"><span class="icon road"></span> Track Unit</a>
                 <a href="/admin/user" ><span class="icon group"></span> Mobile App Users</a>
                 <a href="/admin/gallery?type=all"><span class="icon picture"></span> Gallery</a>
                 
@@ -261,6 +279,7 @@
             &nbsp;
         </footer>
     </div>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script src="/js/jquery-2.0.0.min.js"></script>
     <script src="/js/tuktuk.js"></script>
     <script src="/js/jquery.playSound.js"></script>
@@ -269,18 +288,6 @@
     <script>
         TukTuk.Modal.loading();
         setTimeout( TukTuk.Modal.hide, 1000);
-    </script>
-
-    <script type="text/javascript">
-    //pagination
-    // (function() {
-
-    //     var paginator = new pagination.ItemPaginator({prelink:'/admin/user', current: 1, rowsPerPage: 10, totalResult: 50});
-    //     // var html = paginator.render();
-    //     paginator = pagination.create('search', {prelink:'/admin/user', current: 1, rowsPerPage: 10, totalResult: 50});
-    //     html = paginator.render();
-    //     document.getElementById("paging").innerHTML = html;
-    // })();
     </script>
    <script type="text/javascript">
 
@@ -357,10 +364,79 @@
                     type = $(".unit-type-sort").val();
                     location.href = "/admin/track?type="+type;
                 });
-                    
+                $(".monitor-btn").click(function(e){
+                    e.preventDefault();
+                    platenum = $(this).data('platenum');
+                    unitid = $(this).data('id');
+                    $("#platenum").html(platenum);
+                    $("#table-canvas").hide();
+                    $("#map-canvas").show();
+                    initialize();
+                    socket.on(unitid, function(data){
+                        $(".side-bar-track").prepend(displayTrack(data));
+                    });
+                });
+
+                // resize the map when window resize
+                var mapHeight = $("#map-wrapper").height();
+                $("#map-canvas").css({
+                    height : mapHeight
+                });
+                $(window).resize(function(){
+                    var mapHeight = $("#map-wrapper").height();
+                    $("#map-canvas").css({
+                        height : mapHeight
+                    });
+                    initialize();
+                });
+
 
 
             });
+            var map;
+            function initialize() {
+              
+              var mapOptions = {
+                zoom: 14,
+                center: new google.maps.LatLng(14.554729,121.024445),
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+              };
+
+              map = new google.maps.Map(document.getElementById('map-canvas'),
+                  mapOptions);
+
+            }
+
+            function displayTrack(data){
+                var date = new Date(data.createdAt);
+                 var hour = date.getHours();
+                 var min = date.getMinutes();
+                 var sec = date.getSeconds();
+                 if(min<10){
+                    min = '0'+min;
+                   
+                 }
+                 if(sec<10){
+                     sec = '0'+sec;
+                 }
+                 var timenow = hour + ":" + min + ":" + sec;
+                 var year = date.getFullYear();
+                 var month = date.getMonth()+1;
+
+                 var day = date.getDate();
+                 if(month < 10 ){
+                   
+                    month = '0'+month;
+                 }
+                 if(day < 10){
+                     day = '0'+day;
+                 }
+                var datenow = year + "-" + month + "-" + day;
+                var datetime = datenow + " | " + timenow;
+
+                html =  '<li><strong><span class="icon map-marker"></span> Location:</strong><br><span>'+data.address+'</span><br><strong><span class="icon calendar"></span> Date | Time:</strong><br><span> '+datetime+'</span><hr></li>';
+                return html;
+            }
 
      </script>
 
