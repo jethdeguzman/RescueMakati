@@ -115,10 +115,6 @@ module.exports = {
       }
     });
    
-
-  	// io.sockets.emit('alert', {data : data, datetime : datetime});
-  
-  	// res.send('request');
   },
 
   sort : function(req, res){
