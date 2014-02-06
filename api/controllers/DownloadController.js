@@ -11,16 +11,16 @@ module.exports = {
 	var path = require('path');
 	var mime = require('mime');
 	var appDir = path.dirname(require.main.filename);
-	var file = appDir + '/assets/images/screen.png';
-	res.send(file);
-	// var filename = path.basename(file);
-	// var mimetype = mime.lookup(file);
+	var file = appDir + '/assets/app/Makati168.apk';
+	// res.send(file);
+	var filename = path.basename(file);
+	var mimetype = mime.lookup(file);
 
-	// res.setHeader('Content-disposition', 'attachment; filename=' + filename);
-	// res.setHeader('Content-type', mimetype);
+	res.setHeader('Content-disposition', 'attachment; filename=' + filename);
+	res.setHeader('Content-type', mimetype);
 
-	// var filestream = fs.createReadStream(file);
-	// filestream.pipe(res);
+	var filestream = fs.createReadStream(file);
+	filestream.pipe(res);
 
   }
   
