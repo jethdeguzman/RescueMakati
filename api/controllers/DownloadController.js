@@ -10,7 +10,8 @@ module.exports = {
   index : function(req, res){
 	var path = require('path');
 	var mime = require('mime');
-	var file = __dirname + '/assets/images/screen.png';
+	var appDir = path.dirname(require.main.filename);
+	var file = appDir + '/assets/images/screen.png';
 	res.send(file);
 	// var filename = path.basename(file);
 	// var mimetype = mime.lookup(file);
