@@ -95,7 +95,7 @@ module.exports = {
 							 console.log(err);
 							}else{
 
-								res.view({gallery : gallery, type: type, to : to, from : from, platenum : ' '});
+								res.view({gallery : gallery, type: type, to : to, from : from, platenum : platenum});
 							}
 						});
 					}else{
@@ -119,7 +119,7 @@ module.exports = {
 					    			if(err){
 					    				console.log(err);
 					    			}else{
-					    				res.view({gallery : gallery, type: type, to : to, from : from, platenum : ''});
+					    				res.view({gallery : gallery, type: type, to : to, from : from, platenum : platenum});
 					    			}
 					    		});
 					    	}else{
@@ -139,7 +139,7 @@ module.exports = {
 					    			if(err){
 					    				console.log(err);
 					    			}else{
-					    				res.view({gallery : gallery, type: type, to : to, from : from, platenum : ' '});
+					    				res.view({gallery : gallery, type: type, to : to, from : from, platenum : platenum});
 					    			}
 					    		});
 					    	}else{
@@ -156,22 +156,14 @@ module.exports = {
 
 				    }else{
 
-				    	if(type == "all"){
-				    		Gallery.find().where({type : type, date : {$gte : new Date(from).getTime(), $lte : new Date(to).getTime()}}).sort({_id:-1}).done(function(err, gallery){
+				    	if(platenum !== undefined){
+				    		Gallery.find().where({type : type, platenum : platenum}).sort({_id:-1}).done(function(err, gallery){
 					    		if(err){
 					    			console.log(err);
 					    		}else{
-					    			res.view({gallery : gallery, type: type, to : to, from : from, platenum : ''});
+					    			res.view({gallery : gallery, type: type, to : to, from : from, platenum : platenum});
 					    		}
 					    	});
-				    	}else{
-	    		    		Gallery.find().where({type : type, platenum : platenum,  date : {$gte : new Date(from).getTime(), $lte : new Date(to).getTime()}}).sort({_id:-1}).done(function(err, gallery){
-	    			    		if(err){
-	    			    			console.log(err);
-	    			    		}else{
-	    			    			res.view({gallery : gallery, type: type, to : to, from : from, platenum : platenum});
-	    			    		}
-	    			    	});
 				    	}
 				    }
 				
