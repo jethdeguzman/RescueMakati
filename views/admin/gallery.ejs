@@ -286,7 +286,8 @@
    <script type="text/javascript">
 
             jQuery(function($){
-
+                $(".unit-type-sort").val("<%=type%>");
+                $(".unit-plate-number").val("<%=platenum%>");
                 socket.on('alert', function(data){
                     var data = data[0];
                     $.playSound('/sound/alert');
