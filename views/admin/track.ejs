@@ -379,6 +379,7 @@
                 });
 
                 $(".logs-btn").click(function(e){
+                    $("#modal article table tbody tr").remove();
                     e.preventDefault();
                     var unitid = $(this).data('id');
                     $.ajax({
